@@ -13,7 +13,7 @@ class PopularDishesProvider with ChangeNotifier {
   Future<void> fetchData() async {
     final url = Uri.parse(baseUrl + 'api/all_products');
     final response = await http.get(url);
-    // print(response.body);
+    print(response.body);
     PopularDishes popularDishes = popularDishesFromJson(response.body);
     _popularDishes = popularDishes.toJson();
     // print(_popularDishes);

@@ -89,6 +89,10 @@ class PaymentScreenState extends State<PaymentScreen> {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     final textScale = MediaQuery.of(context).textScaleFactor * 1.2;
+    final withDeliveryCost =
+        (Provider.of<CartItemProvider>(context).itemAmount +
+                Provider.of<CartItemProvider>(context).deliveryCost) -
+            Provider.of<CartItemProvider>(context).discountCost;
 
     // TODO: implement build
     return Scaffold(
@@ -200,9 +204,12 @@ class PaymentScreenState extends State<PaymentScreen> {
                               fontSize: 12)),
                       SizedBox(width: width * 0.02),
                       Text(
-                          (Provider.of<CartItemProvider>(context).totalAmount -
-                                  Provider.of<CartItemProvider>(context)
-                                      .deliveryCost)
+                          // (Provider.of<CartItemProvider>(context).totalAmount -
+                          //         Provider.of<CartItemProvider>(context)
+                          //             .deliveryCost)
+                          //     .toString(),
+                          Provider.of<CartItemProvider>(context)
+                              .itemAmount
                               .toString(),
                           textScaleFactor: textScale,
                           style: const TextStyle(
@@ -325,9 +332,10 @@ class PaymentScreenState extends State<PaymentScreen> {
                               fontSize: 12)),
                       SizedBox(width: width * 0.02),
                       Text(
-                          Provider.of<CartItemProvider>(context)
-                              .checkOutAmount
-                              .toString(),
+                          // Provider.of<CartItemProvider>(context)
+                          //     .checkOutAmount
+                          //     .toString(),
+                          withDeliveryCost.toString(),
                           textScaleFactor: textScale,
                           style: const TextStyle(
                             color: Colors.red,
@@ -425,8 +433,9 @@ class PaymentScreenState extends State<PaymentScreen> {
                       ),
                     )
                   : openCheckOut(
-                      Provider.of<CartItemProvider>(context, listen: false)
-                          .checkOutAmount),
+                      // Provider.of<CartItemProvider>(context, listen: false)
+                      //     .checkOutAmount
+                      withDeliveryCost),
               // onTap: () => RazorpayGateWay(
               //     Provider.of<CartItemProvider>(context, listen: false)
               //         .checkOutAmount),

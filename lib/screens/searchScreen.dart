@@ -1,5 +1,3 @@
-// ignore_for_file: sized_box_for_whitespace
-
 import 'package:flutter/material.dart';
 import '../widgets/home/homeContent.dart';
 import 'package:provider/provider.dart';
@@ -10,14 +8,15 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import '../model/location/location.dart';
 import '../model/popular_dishes/popular_dishes_provider.dart';
+import '../widgets/searchScreen.dart';
 
-class HomeScreen extends StatefulWidget {
-  HomeScreenState createState() => HomeScreenState();
+class SearchScreen extends StatefulWidget {
+  SearchScreenState createState() => SearchScreenState();
 }
 
-class HomeScreenState extends State<HomeScreen> {
+class SearchScreenState extends State<SearchScreen> {
   bool _toggleDropDown = false;
-  bool _searchIcon = false;
+  // bool _searchIcon = false;
   final _controller = TextEditingController();
 
   // @override
@@ -141,39 +140,61 @@ class HomeScreenState extends State<HomeScreen> {
                         // if (_searchIcon)
                         Expanded(
                           child: Center(
-                            child: InkWell(
-                              onTap: () => Navigator.of(context)
-                                  .pushNamed('/search-screen'),
-                              child: Container(
-                                margin:
-                                    const EdgeInsets.only(bottom: 6, right: 4),
-                                padding: const EdgeInsets.only(left: 6),
-                                // height: double.infinity,
-                                height: 45,
-                                width: width * 0.7,
-                                decoration: BoxDecoration(
-                                    // color: Colors.transparent,
-                                    // color: Colors.amber,
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(14)),
-                                    border: Border.all(
-                                        color: Colors.grey, width: 2)),
-                                child: Row(
-                                  children: const [
-                                    Text(
-                                      'Search By Restaurant or Food',
-                                      style: TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 16,
-                                      ),
-                                    )
-                                  ],
-                                ),
+                            child: Container(
+                              margin:
+                                  const EdgeInsets.only(bottom: 6, right: 4),
+                              padding: const EdgeInsets.only(left: 6),
+                              // height: double.infinity,
+                              height: 45,
+                              width: width * 0.7,
+                              decoration: BoxDecoration(
+                                  // color: Colors.transparent,
+                                  // color: Colors.amber,
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(14)),
+                                  border:
+                                      Border.all(color: Colors.grey, width: 2)),
+                              child: Row(
+                                children: [
+                                  Flexible(
+                                      flex: 9,
+                                      fit: FlexFit.tight,
+                                      child: Center(
+                                        child: TextField(
+                                          controller: _controller,
+                                          autofocus: true,
+                                          cursorColor: Colors.grey,
+                                          style: const TextStyle(
+                                              color: Colors.grey, fontSize: 18),
+                                          decoration: const InputDecoration(
+                                            border: InputBorder.none,
+                                            hintText:
+                                                'Search By Restaurant or Food',
+                                            hintStyle:
+                                                TextStyle(color: Colors.grey),
+                                            // suffixIcon: Icon(
+                                            //   Icons.send,
+                                            //   color: Colors.grey,
+                                            //   size: 20,
+                                            // )
+                                          ),
+                                        ),
+                                      )),
+                                  Flexible(
+                                    flex: 1,
+                                    fit: FlexFit.tight,
+                                    child: InkWell(
+                                      onTap: () => Navigator.of(context).pop(),
+                                      child: const Icon(Icons.close,
+                                          color: Colors.grey),
+                                    ),
+                                  )
+                                ],
                               ),
                             ),
                           ),
                         ),
-                        SizedBox(width: width * 0.01),
+                        // SizedBox(width: width * 0.01),
                         Row(
                           children: [
                             InkWell(
@@ -236,44 +257,7 @@ class HomeScreenState extends State<HomeScreen> {
               )
             ],
           )),
-      body: Stack(
-        children: [
-          Container(
-              height: MediaQuery.of(context).size.height -
-                  MediaQuery.of(context).padding.top * 1,
-              width: MediaQuery.of(context).size.width * 1,
-              // color: Colors.red,
-              child: HomeContent()),
-          // Positioned(
-          //   right: width * 0.02,
-          //   bottom: height * 0.05,
-          //   child: Container(
-          //     width: width * 0.15,
-          //     height: height * 0.15,
-          //     decoration: const BoxDecoration(
-          //         color: Colors.black, shape: BoxShape.circle),
-          //     child: Image.asset(
-          //       'assets/images/3D Torus Loading.png',
-          //       fit: BoxFit.cover,
-          //     ),
-          //   ),
-          // ),
-          // Positioned(
-          //   right: width * 0.05,
-          //   bottom: height * 0.115,
-          //   child: Padding(
-          //     padding: EdgeInsets.only(left: width * 0.05),
-          //     child: const Text(
-          //       'Hello',
-          //       style: TextStyle(
-          //           color: Colors.white,
-          //           fontWeight: FontWeight.bold,
-          //           fontSize: 15),
-          //     ),
-          //   ),
-          // )
-        ],
-      ),
+      body: SearchScreenWidget(),
     );
   }
 }

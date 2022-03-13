@@ -17,7 +17,7 @@ class Network with ChangeNotifier {
     // token = jsonDecode(localStorage.getString('token') ?? '')['access_token'];
     // token = jsonDecode(localStorage.getString('token') ?? '')['token'];
     token = localStorage.getString('token');
-    print('Token $token');
+    // print('Token $token');
   }
 
   authData(data, apiUrl) async {

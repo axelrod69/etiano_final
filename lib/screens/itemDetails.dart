@@ -22,12 +22,19 @@ class ItemDetailsState extends State<ItemDetails> {
     final routes =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final id = routes["id"];
+    final restaurantName = routes['restaurantName'];
+    final restaurantId = routes['restaurantId'];
     final name = routes['name'];
+    final description = routes['description'];
     final image = routes['image'];
     final price = routes['price'];
-    final restaurantName = routes['restaurantName'];
+
     final rating = routes["rating"];
     final totalRatings = routes["totalRatings"];
+
+    // print('Fetched Restaurant ID $restaurantId');
+    // print('Fetched Restaurant Description $description');
+
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     var textScale = MediaQuery.of(context).textScaleFactor * 1.2;
@@ -190,23 +197,9 @@ class ItemDetailsState extends State<ItemDetails> {
         quantity > 0
             ? InkWell(
                 onTap: () {
-                  // Navigator.of(context).pushNamed('/cart-screen', arguments: {
-                  //   'id': routes["id"],
-                  //   // 'name': routes["name"],
-                  //   // 'price': routes["price"],
-                  //   // 'restaurantName': routes["restaurantName"],
-                  //   'quantity': quantity,
-                  // });
-
                   Provider.of<CartItemProvider>(context, listen: false)
                       .addItems(id, name, restaurantName, price, quantity,
-                          image, rating, totalRatings);
-                  // print(Provider.of<CartItemProvider>(context, listen: false)
-                  //     .cartItems);
-                  // print(Provider.of<CartItemProvider>(context, listen: false)
-                  //     .cartItems
-                  //     .length);
-                  // HomeScreen(id);
+                          image, rating, totalRatings, restaurantId);
                 },
                 child: Container(
                   width: width * 0.5,
@@ -279,3 +272,27 @@ class ItemDetailsState extends State<ItemDetails> {
     ));
   }
 }
+// Navigator.of(context).pushNamed('/cart-screen', arguments: {
+                  //   'id': routes["id"],
+                  //   // 'name': routes["name"],
+                  //   // 'price': routes["price"],
+                  //   // 'restaurantName': routes["restaurantName"],
+                  //   'quantity': quantity,
+                  // });
+
+                  // Provider.of<CartItemProvider>(context, listen: false)
+                  //     .addItems(id, name, restaurantName, price, quantity,
+                  //         image, rating, totalRatings, restaurantId);
+                  // print('id $id');
+                  // print('quantity $quantity');
+                  // print('restaurantId $restaurantId');
+                  // print(Provider.of<CartItemProvider>(context, listen: false)
+                  //     .cartItems);
+                  // print(Provider.of<CartItemProvider>(context, listen: false)
+                  //     .cartItems
+                  //     .length);
+                  // HomeScreen(id);
+
+
+
+                  

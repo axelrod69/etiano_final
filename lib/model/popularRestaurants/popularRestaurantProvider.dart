@@ -5,10 +5,15 @@ import './popularRestaurantModel.dart';
 class PopularRestaurantProvider with ChangeNotifier {
   String baseUrl = 'https://achievexsolutions.in/current_work/eatiano/';
   Map<String, dynamic> _restaurants = {};
+  Map<String, dynamic> _searchRestaurants = {};
   final queryParams = {'lat': '22.5735314', 'lng': '88.4331189'};
 
   Map<String, dynamic> get restaurants {
     return {..._restaurants};
+  }
+
+  Map<String, dynamic> get searchRestaurants {
+    return {..._searchRestaurants};
   }
 
   Future<void> fetchRestaurants() async {
@@ -26,4 +31,21 @@ class PopularRestaurantProvider with ChangeNotifier {
         popularRestaurantsFromJson(response.body);
     _restaurants = popularRestaurants.toJson();
   }
+
+  // Future<void> searchRestaurants(String query) async {
+  //   final url = Uri.parse(baseUrl +
+  //       'api/all_restaurant' +
+  //       '?' +
+  //       'lat=${queryParams['lat']}' +
+  //       '&' +
+  //       'lng=${queryParams['lng']}');
+  //   final response = await http.get(url);
+  //   PopularRestaurants popularRestaurants =
+  //       popularRestaurantsFromJson(response.body);
+  //   _searchRestaurants = popularRestaurants
+  //       .toJson()
+  //       .map((key, value) => value.where((value) {
+  //         return value['data']['data'][]
+  //       }));
+  // }
 }

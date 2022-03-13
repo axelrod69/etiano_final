@@ -19,11 +19,12 @@ class CartDetailScreenState extends State<CartDetailScreen> {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     final textScale = MediaQuery.of(context).textScaleFactor * 1.2;
-    final route =
-        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-    final id = route['id'];
-    final provider = Provider.of<CartItemProvider>(context).getProductById(id);
-    final totalAmount = Provider.of<CartItemProvider>(context).itemTotal;
+    // final route =
+    //     ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    // final id = route['id'];
+    // final provider = Provider.of<CartItemProvider>(context).getProductById(id);
+    // final totalAmount = Provider.of<CartItemProvider>(context).itemTotal;
+    final cartItems = Provider.of<CartItemProvider>(context).cartItems;
 
     // TODO: implement build
     return Scaffold(
@@ -50,16 +51,17 @@ class CartDetailScreenState extends State<CartDetailScreen> {
               padding: EdgeInsets.only(left: width * 0.1),
               child: Container(
                 width: double.infinity,
-                margin: EdgeInsets.only(top: height * 0.06),
+                margin:
+                    EdgeInsets.only(top: height * 0.06, bottom: height * 0.02),
                 // height: height * 0.15,
                 // color: Colors.red,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Image.asset(
-                      provider[0].image,
-                      height: height * 0.12,
-                    ),
+                    // Image.asset(
+                    //   cartItems[0].image,
+                    //   height: height * 0.12,
+                    // ),
                     SizedBox(width: width * 0.02),
                     Container(
                       // height: double.infinity,
@@ -69,7 +71,7 @@ class CartDetailScreenState extends State<CartDetailScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            provider[0].restaurantName,
+                            cartItems[0].restaurantName,
                             textScaleFactor: textScale,
                             style: const TextStyle(
                                 color: Colors.white,
@@ -79,9 +81,9 @@ class CartDetailScreenState extends State<CartDetailScreen> {
                           Row(
                             // mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Image.asset('assets/images/Path 8561.png'),
+                              // Image.asset('assets/images/Path 8561.png'),
                               Text(
-                                provider[0].rating,
+                                cartItems[0].rating,
                                 textScaleFactor: textScale,
                                 style: const TextStyle(
                                     color: Colors.red,
@@ -90,7 +92,7 @@ class CartDetailScreenState extends State<CartDetailScreen> {
                               ),
                               SizedBox(width: width * 0.02),
                               Text(
-                                '(${provider[0].totalRatings})',
+                                '(${cartItems[0].totalRatings})',
                                 textScaleFactor: textScale,
                                 style: const TextStyle(
                                     color: Colors.grey, fontSize: 11),
@@ -143,35 +145,48 @@ class CartDetailScreenState extends State<CartDetailScreen> {
             ),
             ListView.builder(
               shrinkWrap: true,
-              itemBuilder: (context, index) => Container(
-                width: double.infinity,
-                height: height * 0.06,
-                color: Colors.white,
-                margin: EdgeInsets.only(
-                    left: width * 0.04,
-                    top: height * 0.02,
-                    right: width * 0.04),
-                padding:
-                    EdgeInsets.only(left: width * 0.04, right: width * 0.04),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      '${provider[index].name} x ${provider[index].quantity}',
-                      textScaleFactor: textScale,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 12),
+              itemBuilder: (context, index) => Column(
+                children: [
+                  Container(
+                    width: double.infinity,
+                    height: height * 0.06,
+                    color: Colors.white,
+                    margin: EdgeInsets.only(
+                        left: width * 0.04,
+                        // top: height * 0.02,
+                        right: width * 0.04),
+                    padding: EdgeInsets.only(
+                        left: width * 0.04, right: width * 0.04),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          // '${provider[index].name} x ${provider[index].quantity}',
+                          '${cartItems[index].name} x ${cartItems[index].quantity}',
+                          textScaleFactor: textScale,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 12),
+                        ),
+                        Text(
+                          '₹ ${(cartItems[index].price) * cartItems[index].quantity}',
+                          textScaleFactor: textScale,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 12),
+                        )
+                      ],
                     ),
-                    Text(
-                      '₹ ${double.parse(provider[index].price) * provider[index].quantity}',
-                      textScaleFactor: textScale,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 12),
-                    )
-                  ],
-                ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: width * 0.08, right: width * 0.08),
+                    child: Divider(
+                        height: height * 0.001,
+                        thickness: 1,
+                        color: Colors.grey),
+                  )
+                ],
               ),
-              itemCount: provider.length,
+              itemCount: cartItems.length,
             ),
             SizedBox(height: height * 0.02),
             Container(
@@ -379,7 +394,9 @@ class CartDetailScreenState extends State<CartDetailScreen> {
                         ),
                         Text(
                             // '₹ ${totalAmount.toString()}',
-                            '₹ ${Provider.of<CartItemProvider>(context).totalAmount - Provider.of<CartItemProvider>(context).deliveryCost}',
+                            '₹ ${Provider.of<CartItemProvider>(context).itemAmount
+                            //  - Provider.of<CartItemProvider>(context).deliveryCost
+                            }',
                             textScaleFactor: textScale,
                             style: const TextStyle(
                                 color: Colors.red,
@@ -438,7 +455,7 @@ class CartDetailScreenState extends State<CartDetailScreen> {
                             color: Colors.white,
                             fontSize: 12)),
                     Text(
-                        '₹ ${Provider.of<CartItemProvider>(context).totalAmount}'
+                        '₹ ${Provider.of<CartItemProvider>(context).itemAmount + Provider.of<CartItemProvider>(context).deliveryCost}'
                             .toString(),
                         textScaleFactor: textScale,
                         style: const TextStyle(
@@ -456,7 +473,8 @@ class CartDetailScreenState extends State<CartDetailScreen> {
                 child: Container(
                   width: double.infinity,
                   height: height * 0.06,
-                  margin: EdgeInsets.only(top: height * 0.05),
+                  margin: EdgeInsets.only(
+                      top: height * 0.05, bottom: height * 0.05),
                   // color: Colors.white,
                   decoration: BoxDecoration(
                       border: Border.all(

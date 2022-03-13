@@ -36,6 +36,7 @@ import './model/network_utils/authentication.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import './model/blogs/blogs_provider.dart';
 import './model/popularRestaurants/popularRestaurantProvider.dart';
+import './screens/searchScreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -103,6 +104,7 @@ class MyApp extends StatelessWidget {
             '/payment-screen': (context) => PaymentScreen(),
             '/change-location': (context) => ChangeLocation(),
             '/device-location': (context) => DeviceLocationPage(),
+            '/search-screen': (context) => SearchScreen(),
           },
         );
       },

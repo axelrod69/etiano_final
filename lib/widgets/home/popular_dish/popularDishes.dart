@@ -28,6 +28,16 @@ class PopularDishesState extends State<PopularDishes> {
     var subTitleScale = MediaQuery.of(context).textScaleFactor * 1.4;
     final provider = Provider.of<PopularDishesProvider>(context).popularDishes;
 
+    // print(
+    //     'Provider product_selling_price ${provider['data'][0]['product_selling_price']}');
+    // print('Provider product_image ${provider['data'][0]['product_image']}');
+    // print('Provider product_name ${provider['data'][0]['product_name']}');
+    // print('Provider product_id ${provider['data'][0]['product_id']}');
+    // print('Provider restaurantName ${provider['data'][0]['restaurant_name']}');
+    // print(
+    //     'Provider Restaurant ID ${provider['data'][0]['restaurant_id'].toString()}');
+    // print(
+    //     'Provider Restaurant Description ${provider['data'][0]['product_description'].toString()}');
     // print(provider);
 
     // TODO: implement build
@@ -46,16 +56,19 @@ class PopularDishesState extends State<PopularDishes> {
               itemBuilder: (context, index) => InkWell(
                 onTap: () {
                   Navigator.of(context).pushNamed('/item-details', arguments: {
-                    'id': provider["data"][index]["product_id"].toString(),
-                    'name': provider["data"][index]["product_name"],
-                    'image': provider["data"][index]["product_image"],
-                    'price': provider["data"][index]["product_selling_price"],
+                    'id': provider["data"][index]["product_id"],
                     'restaurantName': provider["data"][index]
                         ["restaurant_name"],
+                    'restaurantId': provider["data"][index]["restaurant_id"],
+                    'name': provider["data"][index]["product_name"],
+                    'description': provider["data"][index]
+                        ["product_description"],
+                    'image': provider["data"][index]["product_image"],
+                    'price': provider["data"][index]["product_selling_price"],
                     // 'rating': provider["data"][index]["rating"],
                     'rating': "4.5",
                     // 'totalRatings': provider["data"][index]["totalRatings"]
-                    'totalRatings': "124"
+                    'totalRatings': "124",
                   });
                   // print(provider["data"][index]["name"]);
                 },
