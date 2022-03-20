@@ -26,7 +26,7 @@ class PopularRestaurantProvider with ChangeNotifier {
         '&' +
         'lng=${queryParams['lng']}');
     final response = await http.get(url);
-    print(response.body);
+    // print(response.body);
     PopularRestaurants popularRestaurants =
         popularRestaurantsFromJson(response.body);
     _restaurants = popularRestaurants.toJson();

@@ -71,7 +71,7 @@ class CartDetailScreenState extends State<CartDetailScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            cartItems[0].restaurantName,
+                            cartItems['data'][0]['restaurant_name'],
                             textScaleFactor: textScale,
                             style: const TextStyle(
                                 color: Colors.white,
@@ -83,7 +83,8 @@ class CartDetailScreenState extends State<CartDetailScreen> {
                             children: [
                               // Image.asset('assets/images/Path 8561.png'),
                               Text(
-                                cartItems[0].rating,
+                                // cartItems[0].rating,
+                                '4.8',
                                 textScaleFactor: textScale,
                                 style: const TextStyle(
                                     color: Colors.red,
@@ -92,7 +93,7 @@ class CartDetailScreenState extends State<CartDetailScreen> {
                               ),
                               SizedBox(width: width * 0.02),
                               Text(
-                                '(${cartItems[0].totalRatings})',
+                                '124',
                                 textScaleFactor: textScale,
                                 style: const TextStyle(
                                     color: Colors.grey, fontSize: 11),
@@ -162,13 +163,14 @@ class CartDetailScreenState extends State<CartDetailScreen> {
                       children: [
                         Text(
                           // '${provider[index].name} x ${provider[index].quantity}',
-                          '${cartItems[index].name} x ${cartItems[index].quantity}',
+                          // '${cartItems[index].name} x ${cartItems[index].quantity}',
+                          '${cartItems['data'][index]['product_name']} x ${cartItems['data'][index]['quantity']}',
                           textScaleFactor: textScale,
                           style: const TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 12),
                         ),
                         Text(
-                          '₹ ${(cartItems[index].price) * cartItems[index].quantity}',
+                          '₹ ${(double.parse(cartItems['data'][index]['product_selling_price'])) * double.parse(cartItems['data'][index]['quantity'])}',
                           textScaleFactor: textScale,
                           style: const TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 12),
@@ -186,7 +188,7 @@ class CartDetailScreenState extends State<CartDetailScreen> {
                   )
                 ],
               ),
-              itemCount: cartItems.length,
+              itemCount: cartItems['data'].length,
             ),
             SizedBox(height: height * 0.02),
             Container(
@@ -394,7 +396,7 @@ class CartDetailScreenState extends State<CartDetailScreen> {
                         ),
                         Text(
                             // '₹ ${totalAmount.toString()}',
-                            '₹ ${Provider.of<CartItemProvider>(context).itemAmount
+                            '₹ ${Provider.of<CartItemProvider>(context).itemAmount.toString()
                             //  - Provider.of<CartItemProvider>(context).deliveryCost
                             }',
                             textScaleFactor: textScale,

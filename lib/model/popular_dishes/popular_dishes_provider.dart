@@ -1,29 +1,75 @@
 import 'package:flutter/material.dart';
 import './popular_dishes_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PopularDishesProvider with ChangeNotifier {
   Map<String, dynamic> _popularDishes = {};
+  Map<String, dynamic> _favouriteDishes = {};
   String baseUrl = 'https://achievexsolutions.in/current_work/eatiano/';
+  final bool _favourite = false;
+
+  bool get favourite {
+    return _favourite;
+  }
 
   Map<String, dynamic> get popularDishes {
     return {..._popularDishes};
   }
 
+  Map<String, dynamic> get favouriteDishes {
+    return {..._favouriteDishes};
+  }
+
   Future<void> fetchData() async {
     final url = Uri.parse(baseUrl + 'api/all_products');
     final response = await http.get(url);
-    print(response.body);
+    // print(response.body);
     PopularDishes popularDishes = popularDishesFromJson(response.body);
     _popularDishes = popularDishes.toJson();
     // print(_popularDishes);
   }
-}
 
+  Future<void> fetchFavouriteData() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    // localStorage.getString('token');
+    final url = Uri.parse(baseUrl + 'api/auth/wishlist');
+    final response = await http.get(url, headers: {
+      'Authorization': 'Bearer ${localStorage.getString('token')}',
+      'Accept': 'application/json'
+    });
+
+    PopularDishes favouriteDishes = popularDishesFromJson(response.body);
+    _favouriteDishes = favouriteDishes.toJson();
+  }
+
+  Future<void> postFavouriteData(String productId, String restaurantId) async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    final url = Uri.parse(baseUrl + 'api/auth/wishlist');
+    final response = await http.post(url, body: {
+      'product_id': productId,
+      'restaurant_id': restaurantId
+    }, headers: {
+      'Authorization': 'Bearer ${localStorage.getString('token')}',
+      'Accept': 'application/json'
+    });
+  }
+
+  Future<void> deleteFavouriteData(String productId) async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    final url = Uri.parse(baseUrl + 'api/auth/wishlist/$productId');
+    final response = await http.delete(url, headers: {
+      'Authorization': 'Bearer ${localStorage.getString('token')}',
+      'Accept': 'application/json'
+    });
+  }
+  // void markAsFavourite(String productId) {
+  //   _popularDishes
+  // }
+}
 
 // import 'package:flutter/material.dart';
 // import './popular_dishes_model.dart';
-
 
 // class PopularDishesProvider with ChangeNotifier {
 //   final Map<String, dynamic> _popularDishes = {

@@ -28,7 +28,8 @@ class CartScreenState extends State<CartScreen> {
     final height = MediaQuery.of(context).size.height;
     final textScale = MediaQuery.of(context).textScaleFactor * 1.2;
     final cartProvider = Provider.of<CartItemProvider>(context).cartItems;
-    final totalAmount = Provider.of<CartItemProvider>(context).itemAmount;
+    // final cartProvider = Provider.of<CartItemProvider>(context).cartItemList;
+    // final totalAmount = Provider.of<CartItemProvider>(context).itemAmount;
 
     // TODO: implement build
     return Scaffold(
@@ -56,7 +57,7 @@ class CartScreenState extends State<CartScreen> {
                 color: Colors.red,
               ),
             )
-          : cartProvider.length > 0
+          : cartProvider['data'].length > 0
               ? Column(
                   children: [
                     Container(
@@ -97,7 +98,7 @@ class CartScreenState extends State<CartScreen> {
                                             //   height: height * 0.1,
                                             // ),
                                             child: Image.network(
-                                              'https://achievexsolutions.in/current_work/eatiano/${cartProvider[index].image}',
+                                              'https://achievexsolutions.in/current_work/eatiano/${cartProvider['data'][index]['product_image']}',
                                               width: width * 0.22,
                                               height: height * 0.1,
                                             ),
@@ -119,7 +120,8 @@ class CartScreenState extends State<CartScreen> {
                                                 children: [
                                                   Text(
                                                     // cartProvider[index].restaurantName,
-                                                    cartProvider[index].name,
+                                                    cartProvider['data'][index]
+                                                        ['product_name'],
                                                     textScaleFactor: textScale,
                                                     style: const TextStyle(
                                                         color: Colors.white,
@@ -147,11 +149,22 @@ class CartScreenState extends State<CartScreen> {
                                                             width:
                                                                 width * 0.005),
                                                         Text(
-                                                          (cartProvider[index]
-                                                                      .price *
-                                                                  cartProvider[
+                                                          // (cartProvider[index]
+                                                          //             .price *
+                                                          //         cartProvider[
+                                                          //                 index]
+                                                          //             .quantity)
+                                                          //     .toString(),
+                                                          (double.parse(cartProvider[
+                                                                              'data']
+                                                                          [index][
+                                                                      'product_selling_price']) *
+                                                                  double.parse(cartProvider[
+                                                                              'data']
+                                                                          [
                                                                           index]
-                                                                      .quantity)
+                                                                      [
+                                                                      'quantity']))
                                                               .toString(),
                                                           // totalAmount.toString(),
                                                           // Provider.of<CartItemProvider>(
@@ -187,8 +200,9 @@ class CartScreenState extends State<CartScreen> {
                                                             'assets/images/Path 8561.png'),
                                                         // SizedBox(width: width * 0.005),
                                                         Text(
-                                                          cartProvider[index]
-                                                              .rating,
+                                                          // cartProvider[index]
+                                                          //     .rating,
+                                                          '4.8',
                                                           textScaleFactor:
                                                               textScale,
                                                           style:
@@ -204,7 +218,8 @@ class CartScreenState extends State<CartScreen> {
                                                             width:
                                                                 width * 0.01),
                                                         Text(
-                                                          '(${cartProvider[index].totalRatings})',
+                                                          // '(${cartProvider[index].totalRatings})',
+                                                          '124',
                                                           textScaleFactor:
                                                               textScale,
                                                           style:
@@ -220,14 +235,25 @@ class CartScreenState extends State<CartScreen> {
                                                     ),
                                                   ),
                                                   InkWell(
+                                                      // onTap: () => Provider.of<
+                                                      //             CartItemProvider>(
+                                                      //         context,
+                                                      //         listen: false)
+                                                      //     .deleteItems(
+                                                      //         cartProvider[
+                                                      //                 index]
+                                                      //             .id),
                                                       onTap: () => Provider.of<
                                                                   CartItemProvider>(
                                                               context,
                                                               listen: false)
-                                                          .deleteItems(
-                                                              cartProvider[
-                                                                      index]
-                                                                  .id),
+                                                          .deleteCartItems(
+                                                              cartProvider['data']
+                                                                          [
+                                                                          index]
+                                                                      [
+                                                                      'cart_id']
+                                                                  .toString()),
                                                       child: const Icon(
                                                           Icons.delete,
                                                           color: Colors.red)),
@@ -321,7 +347,8 @@ class CartScreenState extends State<CartScreen> {
                             ],
                           ),
                         ),
-                        itemCount: cartProvider.length,
+                        itemCount: cartProvider['data'].length,
+                        // itemCount: cartProvider['data'].length,
                       ),
                     ),
                     Padding(

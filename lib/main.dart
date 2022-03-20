@@ -37,16 +37,36 @@ import 'package:shared_preferences/shared_preferences.dart';
 import './model/blogs/blogs_provider.dart';
 import './model/popularRestaurants/popularRestaurantProvider.dart';
 import './screens/searchScreen.dart';
+import './model/membership/membership.dart';
 
 void main() {
   runApp(MyApp());
 }
 
-// class MyApp extends StatefulWidget {
-//   MyAppState createState() => MyAppState();
-// }
+class MyApp extends StatefulWidget {
+  MyAppState createState() => MyAppState();
+}
 
-class MyApp extends StatelessWidget {
+class MyAppState extends State<MyApp> {
+  bool isAuth = false;
+
+  @override
+  void initState() {
+    _checkIfLoggedIn();
+    super.initState();
+  }
+
+  void _checkIfLoggedIn() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    var token = localStorage.getString('token');
+    print(token);
+    if (token != null) {
+      setState(() {
+        isAuth = true;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -58,11 +78,14 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => Network()),
         ChangeNotifierProvider(create: (context) => PopularDishesProvider()),
         ChangeNotifierProvider(create: (context) => CartItemProvider()),
-        ChangeNotifierProvider(create: ((context) => LocationProvider()))
+        ChangeNotifierProvider(create: ((context) => LocationProvider())),
+        ChangeNotifierProvider(create: ((context) => MembershipProvider()))
       ],
       builder: (context, child) {
         final provider = Provider.of<LocationProvider>(context).loading;
-        final authProvider = Provider.of<Network>(context).checkIfLoggedIn;
+        // final authProvider = Provider.of<Network>(context).checkIfLoggedIn;
+        // final authToken = Provider.of<Network>(context).authToken;
+        // final authToken = Provider.of<Network>(context).auth;
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
@@ -76,7 +99,7 @@ class MyApp extends StatelessWidget {
           //         ? DeviceLocationPage()
           //         : BottomNavigation(),
           // home: !isAuth ? SignIn() : BottomNavigation(),
-          home: authProvider == true ? BottomNavigation() : SignIn(),
+          home: isAuth ? BottomNavigation() : SignIn(),
           routes: {
             '/sign-in': (context) => SignIn(),
             '/sign-up': (context) => SignUp(),

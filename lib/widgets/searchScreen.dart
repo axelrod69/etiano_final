@@ -5,10 +5,22 @@ import '../model/popular_dishes/popular_dishes_provider.dart';
 
 class SearchScreenWidget extends StatefulWidget {
   SearchScreenWidgetState createState() => SearchScreenWidgetState();
+  final TextEditingController _controller;
+
+  SearchScreenWidget(this._controller);
 }
 
 class SearchScreenWidgetState extends State<SearchScreenWidget> {
   bool value = true;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    Provider.of<PopularRestaurantProvider>(context, listen: false)
+        .fetchRestaurants();
+    Provider.of<PopularDishesProvider>(context, listen: false).fetchData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

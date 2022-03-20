@@ -95,10 +95,13 @@ class ProfileState extends State<Profile> {
                     SharedPreferences localStorage =
                         await SharedPreferences.getInstance();
                     // localStorage.remove('user');
-                    localStorage.remove('token');
+                    localStorage.setString('token', '').then(
+                        (_) => Navigator.of(context).pushNamed('/sign-in'));
+                    localStorage.clear();
+                    print('Token Value ${localStorage.getString('token')}');
                     // Navigator.push(context,
                     //     MaterialPageRoute(builder: (context) => SignIn()));
-                    Navigator.of(context).pushReplacementNamed('/sign-in');
+                    // Navigator.of(context).pushReplacementNamed('/sign-in');
                   },
                   child: Text(
                     'Sign Out',

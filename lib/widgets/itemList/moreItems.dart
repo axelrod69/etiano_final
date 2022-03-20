@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
@@ -15,11 +14,11 @@ class MoreItems extends StatefulWidget {
 class MoreItemsState extends State<MoreItems> {
   bool clicked = false;
 
-  void _onClicked() {
-    setState(() {
-      clicked = !clicked;
-    });
-  }
+  // void _onClicked(String id) {
+  //   setState(() {
+  //     clicked = !clicked;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +92,16 @@ class MoreItemsState extends State<MoreItems> {
                           padding: EdgeInsets.only(
                               right: width * 0.01, bottom: height * 0.004),
                           child: InkWell(
-                            onTap: _onClicked,
+                            // onTap: () => _onClicked(provider["data"][index]["product_id"].toString()),
+                            // onTap: () {
+                            //   if (provider["data"][index]["product_id"]) {
+                            //     setState(() {
+                            //       clicked = !clicked;
+                            //     });
+                            //   }
+                            // },
+                            // onTap: () => Provider.of<PopularDishesProvider>(context).markAsFavourite(provider["data"][index]["product_id"].toString()),
+                            onTap: () {},
                             child: !clicked
                                 ? const Icon(Icons.favorite_border_outlined,
                                     color: Colors.white, size: 16)

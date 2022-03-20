@@ -32,6 +32,8 @@ class SearchScreenState extends State<SearchScreen> {
     final width = MediaQuery.of(context).size.width;
     final provider = Provider.of<CartItemProvider>(context).cartItems;
 
+    print('Controller ${_controller.text}');
+
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
@@ -162,6 +164,9 @@ class SearchScreenState extends State<SearchScreen> {
                                       child: Center(
                                         child: TextField(
                                           controller: _controller,
+                                          onChanged: (value) {
+                                            
+                                          },
                                           autofocus: true,
                                           cursorColor: Colors.grey,
                                           style: const TextStyle(
@@ -257,7 +262,7 @@ class SearchScreenState extends State<SearchScreen> {
               )
             ],
           )),
-      body: SearchScreenWidget(),
+      body: SearchScreenWidget(_controller),
     );
   }
 }

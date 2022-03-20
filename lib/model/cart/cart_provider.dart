@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../network_utils/authentication.dart';
 import 'package:http/http.dart' as http;
 import './cartModel.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // class CartItem {
 //   final int id;
@@ -11,8 +12,8 @@ import './cartModel.dart';
 //   final double price;
 //   final double quantity;
 //   final String image;
-//   final String rating;
-//   final String totalRatings;
+//   // final String rating;
+//   // final String totalRatings;
 //   // final String restaurantId;
 //   final String restaurantId;
 
@@ -23,15 +24,15 @@ import './cartModel.dart';
 //       required this.price,
 //       required this.quantity,
 //       required this.image,
-//       required this.rating,
-//       required this.totalRatings,
+//       // required this.rating,
+//       // required this.totalRatings,
 //       required this.restaurantId});
 // }
 
 class CartItemProvider with ChangeNotifier {
   Map<String, dynamic> _cartItems = {};
   // Map<String, dynamic> _individualItems = {};
-  var _cartItemList = [];
+  final List<dynamic> _cartItemList = [];
   List<dynamic> _individualItems = [];
   // List<CartItem> _restaurantTotal = [];
 
@@ -46,21 +47,43 @@ class CartItemProvider with ChangeNotifier {
   //   return [..._cartItems.toSet().toList()];
   // }
 
+  List<dynamic> get cartItemList {
+    return [..._cartItemList];
+  }
+
   Map<String, dynamic> get cartItems {
     return {..._cartItems};
   }
 
   Future<void> fetchCartItems() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
     final url = Uri.parse(baseUrl + 'api/auth/cart');
+    // final response = await http.get(url, headers: {
+    //   // 'Authorization': 'Bearer ${network.getToken()}',
+    //   'Authorization': 'Bearer ${network.setHeaders()}',
+    //   'Accept': 'application/json'
+    // });
     final response = await http.get(url, headers: {
-      'Authorization': 'Bearer ${network.getToken()}',
+      'Authorization': 'Bearer ${localStorage.getString('token')}',
       'Accept': 'application/json'
     });
     Cart cartJson = cartFromJson(response.body);
-    _cartItems = cartJson.toJson();
-    _cartItems.forEach((key, values) => _cartItemList.add(values['data']));
 
-    print(_cartItemList);
+    _cartItems = cartJson.toJson();
+    // _cartItems.forEach((key, values) => _cartItemList.add(values['data']));
+
+    // print('Cart Item $_cartItems');
+  }
+
+  Future<void> deleteCartItems(String id) async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    final url = Uri.parse(baseUrl + 'api/auth/cart/$id');
+    final response = await http.delete(url, headers: {
+      'Authorization': 'Bearer ${localStorage.getString('token')}',
+      'Accept': 'application/json'
+    });
+    // print(response.body);
+    notifyListeners();
   }
 
   Future<void> addItems(
@@ -73,9 +96,10 @@ class CartItemProvider with ChangeNotifier {
       String rating,
       String totalRatings,
       String restaurantId) async {
-    print(id);
-    print(quantity);
-    print(restaurantId);
+    // print(id);
+    // print(quantity);
+    // print(restaurantId);
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
     final url = Uri.parse(baseUrl + 'api/auth/cart');
     final response = await http.post(url,
         // body: jsonEncode({
@@ -87,11 +111,17 @@ class CartItemProvider with ChangeNotifier {
           'product_id': id.toString(),
           'restaurant_id': restaurantId,
           'quantity': quantity.toString(),
-        }, headers: {
-      'Authorization': 'Bearer ${network.getToken()}',
-      'Accept': 'application/json'
-    });
-    print(response.body);
+        },
+        //     headers: {
+        //   'Authorization': 'Bearer ${network.getToken()}',
+        //   'Accept': 'application/json'
+        // }
+        headers: {
+          'Authorization': 'Bearer ${localStorage.getString('token')}',
+          'Accept': 'application/json'
+        });
+    // print(response.body);
+    // print('Token ${network.getToken()}');
   }
 
   // String id
@@ -128,9 +158,16 @@ class CartItemProvider with ChangeNotifier {
   // }
   double get itemAmount {
     double total = 0.0;
-    _cartItems.forEach((key, value) => total +=
-        double.parse(value['data']['product_selling_price']) *
-            value['data']['quantity']);
+    // _cartItems['data'].forEach((key, value) => total +=
+    //     double.parse(value['product_selling_price']) *
+    //         double.parse(value['quantity']));
+    // return total;
+    total = _cartItems['data'].fold(
+        0,
+        (price, value) =>
+            price +
+            (double.parse(value['product_selling_price']) *
+                double.parse(value['quantity'])));
     return total;
   }
 
@@ -138,7 +175,7 @@ class CartItemProvider with ChangeNotifier {
     double total = 0.0;
     _individualItems.forEach((value) => total +=
         double.parse(value['data']['product_selling_price']) *
-            value['data']['quantity']);
+            double.parse(value['data']['quantity']));
     // notifyListeners();
     return deliveryCost + total;
   }

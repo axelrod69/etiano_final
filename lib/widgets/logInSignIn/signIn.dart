@@ -246,6 +246,7 @@ class SignInFormState extends State<SignInForm> {
         Provider.of<LocationProvider>(context, listen: false).loading;
     print(json.decode(res.body));
     var body = json.decode(res.body);
+
     if (body['error'] == 'Unauthorized') {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('Email or Password invalid',
@@ -262,6 +263,8 @@ class SignInFormState extends State<SignInForm> {
       Navigator.of(context).pushReplacementNamed('/bottom-bar');
       Provider.of<Network>(context, listen: false)
           .getToken(); //This is where I access the token from
+      print(
+          'print Token ${Provider.of<Network>(context, listen: false).authToken}');
     }
   }
 

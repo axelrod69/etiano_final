@@ -114,11 +114,14 @@ class PaymentScreenState extends State<PaymentScreen> {
               //   ),
               // ),
               Center(
-            child: Text(
-              'Payment',
-              textScaleFactor: textScale,
-              style: const TextStyle(
-                color: Colors.white,
+            child: Padding(
+              padding: EdgeInsets.only(right: width * 0.1),
+              child: Text(
+                'Payment',
+                textScaleFactor: textScale,
+                style: const TextStyle(
+                  color: Colors.white,
+                ),
               ),
             ),
           )),

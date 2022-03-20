@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../model/membership/membership.dart';
 
 class MembershipScreen extends StatefulWidget {
   MembershipScreenState createState() => MembershipScreenState();
@@ -6,10 +8,19 @@ class MembershipScreen extends StatefulWidget {
 
 class MembershipScreenState extends State<MembershipScreen> {
   @override
+  void initState() {
+    // TODO: implement initState
+    Provider.of<MembershipProvider>(context, listen: false)
+        .getMembershipDetails();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     final textScale = MediaQuery.of(context).textScaleFactor * 1.2;
+    final provider = Provider.of<MembershipProvider>(context).membership;
 
     // TODO: implement build
     return Scaffold(
@@ -104,12 +115,26 @@ class MembershipScreenState extends State<MembershipScreen> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text('3',
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.only(top: height * 0.01),
+                                    child: Text(
+                                      // 'SILVER',
+                                      provider['data'][2]
+                                          ['membership_type_name'],
                                       textScaleFactor: textScale,
                                       style: const TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 30)),
+                                          fontSize: 20),
+                                    ),
+                                  ),
+                                  Text(provider['data'][2]['time_period'],
+                                      textScaleFactor: textScale,
+                                      style: const TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18)),
                                   Text('Months',
                                       textScaleFactor: textScale,
                                       style: const TextStyle(
@@ -133,13 +158,15 @@ class MembershipScreenState extends State<MembershipScreen> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text('₹ 199',
+                                  Text(
+                                      '₹ ${provider['data'][2]['membership_price']}',
                                       textScaleFactor: textScale,
                                       style: const TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
                                           fontSize: 30)),
-                                  Text('67/Month',
+                                  Text(
+                                      '${int.parse(provider['data'][2]['membership_price']) / 12}/Month',
                                       textScaleFactor: textScale,
                                       style: const TextStyle(
                                           color: Colors.white,
@@ -184,12 +211,25 @@ class MembershipScreenState extends State<MembershipScreen> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text('6',
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.only(top: height * 0.01),
+                                    child: Text(
+                                      provider['data'][1]
+                                          ['membership_type_name'],
                                       textScaleFactor: textScale,
                                       style: const TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 30)),
+                                          fontSize: 20),
+                                    ),
+                                  ),
+                                  Text(provider['data'][1]['time_period'],
+                                      textScaleFactor: textScale,
+                                      style: const TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18)),
                                   Text('Months',
                                       textScaleFactor: textScale,
                                       style: const TextStyle(
@@ -213,13 +253,15 @@ class MembershipScreenState extends State<MembershipScreen> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text('₹ 599',
+                                  Text(
+                                      '₹ ${provider['data'][1]['membership_price']}',
                                       textScaleFactor: textScale,
                                       style: const TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
                                           fontSize: 30)),
-                                  Text('67/Month',
+                                  Text(
+                                      '${(int.parse(provider['data'][1]['membership_price'])) / 12}/Month',
                                       textScaleFactor: textScale,
                                       style: const TextStyle(
                                           color: Colors.white,
@@ -264,12 +306,25 @@ class MembershipScreenState extends State<MembershipScreen> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text('12',
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.only(top: height * 0.01),
+                                    child: Text(
+                                      provider['data'][0]
+                                          ['membership_type_name'],
                                       textScaleFactor: textScale,
                                       style: const TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 30)),
+                                          fontSize: 18),
+                                    ),
+                                  ),
+                                  Text(provider['data'][0]['time_period'],
+                                      textScaleFactor: textScale,
+                                      style: const TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18)),
                                   Text('Months',
                                       textScaleFactor: textScale,
                                       style: const TextStyle(
@@ -293,13 +348,15 @@ class MembershipScreenState extends State<MembershipScreen> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text('₹ 599',
+                                  Text(
+                                      '₹ ${provider['data'][0]['membership_price']}',
                                       textScaleFactor: textScale,
                                       style: const TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
                                           fontSize: 30)),
-                                  Text('67/Month',
+                                  Text(
+                                      '${int.parse(provider['data'][0]['membership_price']) / 12}/Month',
                                       textScaleFactor: textScale,
                                       style: const TextStyle(
                                           color: Colors.white,
@@ -317,7 +374,7 @@ class MembershipScreenState extends State<MembershipScreen> {
               ),
               Positioned(
                 left: width * 0.4,
-                top: height * 0.008,
+                // top: height * 0.008,
                 child: Container(
                   width: width * 0.2,
                   height: height * 0.035,
@@ -326,7 +383,50 @@ class MembershipScreenState extends State<MembershipScreen> {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Center(
-                    child: Text('25% OFF',
+                    child: Text(
+                        '${provider['data'][1]['discount_percent']}% OFF',
+                        textScaleFactor: textScale,
+                        style: const TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12)),
+                  ),
+                ),
+              ),
+              Positioned(
+                left: width * 0.075,
+                // top: height * 0.0001,
+                child: Container(
+                  width: width * 0.2,
+                  height: height * 0.035,
+                  decoration: BoxDecoration(
+                    color: const Color.fromRGBO(200, 225, 55, 1),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Center(
+                    child: Text(
+                        '${provider['data'][2]['discount_percent']}% OFF',
+                        textScaleFactor: textScale,
+                        style: const TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12)),
+                  ),
+                ),
+              ),
+              Positioned(
+                right: width * 0.075,
+                // top: height * 0.008,
+                child: Container(
+                  width: width * 0.2,
+                  height: height * 0.035,
+                  decoration: BoxDecoration(
+                    color: const Color.fromRGBO(200, 225, 55, 1),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Center(
+                    child: Text(
+                        '${provider['data'][0]['discount_percent']}% OFF',
                         textScaleFactor: textScale,
                         style: const TextStyle(
                             color: Colors.black,

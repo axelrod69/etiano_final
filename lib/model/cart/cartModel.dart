@@ -15,8 +15,8 @@ class Cart {
     required this.data,
   });
 
-  String status;
-  List<Datum> data;
+  final String status;
+  final List<Datum> data;
 
   factory Cart.fromJson(Map<String, dynamic> json) => Cart(
         status: json["status"],
@@ -41,26 +41,20 @@ class Datum {
     required this.productSellingPrice,
     required this.productStatus,
     required this.productQuantity,
-    required this.productRating,
-    required this.productRatingCount,
-    required this.productSellCount,
     required this.quantity,
   });
 
-  int cartId;
-  String restaurantId;
-  String productId;
-  String restaurantName;
-  String productName;
-  String productDescription;
-  String productImage;
-  String productSellingPrice;
-  String productStatus;
-  String productQuantity;
-  dynamic productRating;
-  dynamic productRatingCount;
-  dynamic productSellCount;
-  String quantity;
+  final int cartId;
+  final String restaurantId;
+  final String productId;
+  final String restaurantName;
+  final String productName;
+  final String productDescription;
+  final String productImage;
+  final String productSellingPrice;
+  final String productStatus;
+  final String productQuantity;
+  final String quantity;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         cartId: json["cart_id"],
@@ -73,9 +67,6 @@ class Datum {
         productSellingPrice: json["product_selling_price"],
         productStatus: json["product_status"],
         productQuantity: json["product_quantity"],
-        productRating: json["product_rating"],
-        productRatingCount: json["product_rating_count"],
-        productSellCount: json["product_sell_count"],
         quantity: json["quantity"],
       );
 
@@ -90,9 +81,6 @@ class Datum {
         "product_selling_price": productSellingPrice,
         "product_status": productStatus,
         "product_quantity": productQuantity,
-        "product_rating": productRating,
-        "product_rating_count": productRatingCount,
-        "product_sell_count": productSellCount,
         "quantity": quantity,
       };
 }
