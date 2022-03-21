@@ -153,7 +153,7 @@ class SignInFormState extends State<SignInForm> {
                   SizedBox(height: height * 0.01),
                   InkWell(
                     onTap: () {
-                      Navigator.of(context).pushReplacementNamed('/otp-screen');
+                      Navigator.of(context).pushNamed('/forgot-password');
                     },
                     child: Text('Forgot your Password?',
                         textScaleFactor:
@@ -240,6 +240,7 @@ class SignInFormState extends State<SignInForm> {
 
   void _login() async {
     final data = {'email': inputEmail, 'password': inputPassword};
+    print('Email ${data['email']} Password ${data['password']}');
     var res = await Provider.of<Network>(context, listen: false)
         .authData(data, 'api/auth/login');
     final provider =

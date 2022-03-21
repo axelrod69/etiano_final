@@ -14,6 +14,10 @@ class OTPState extends State<OTP> {
     var responsive = height - statusBarPadding;
 
     var textScale = MediaQuery.of(context).textScaleFactor * 1;
+    final arguments =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+
+    final email = arguments['email'];
 
     // TODO: implement build
     return Scaffold(
@@ -64,7 +68,7 @@ class OTPState extends State<OTP> {
               height: (height - MediaQuery.of(context).padding.top) * 0.7,
               width: double.infinity,
               // color: Colors.red,
-              child: InputOTP(),
+              child: InputOTP(email),
             ),
           ],
         ),

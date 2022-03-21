@@ -38,6 +38,7 @@ import './model/blogs/blogs_provider.dart';
 import './model/popularRestaurants/popularRestaurantProvider.dart';
 import './screens/searchScreen.dart';
 import './model/membership/membership.dart';
+import './screens/forgotPassword.dart';
 
 void main() {
   runApp(MyApp());
@@ -103,6 +104,8 @@ class MyAppState extends State<MyApp> {
           routes: {
             '/sign-in': (context) => SignIn(),
             '/sign-up': (context) => SignUp(),
+            '/forgot-password': (context) => ForgotPassword(),
+            // '/change-password': (context) => ChangePassword(),
             '/otp-screen': (context) => OTP(),
             '/bottom-bar': (context) => BottomNavigation(),
             '/home-screen': (context) => HomeScreen(),

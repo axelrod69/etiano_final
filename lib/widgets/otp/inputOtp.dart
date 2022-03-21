@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../logInSignIn/button.dart';
+import 'package:provider/provider.dart';
+import '../../model/network_utils/authentication.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
 class InputOTP extends StatefulWidget {
   InputOTPState createState() => InputOTPState();
+  final String email;
+
+  InputOTP(this.email);
 }
 
 class InputOTPState extends State<InputOTP> {
@@ -11,6 +18,10 @@ class InputOTPState extends State<InputOTP> {
   final _focusThird = FocusNode();
   final _focusFourth = FocusNode();
   final _key = GlobalKey<FormState>();
+  var _firstPin = '';
+  var _secondPin = '';
+  var _thirdPin = '';
+  var _fourthPin = '';
 
   @override
   void dispose() {
@@ -57,6 +68,10 @@ class InputOTPState extends State<InputOTP> {
                         border: InputBorder.none),
                     onFieldSubmitted: (_) =>
                         FocusScope.of(context).requestFocus(_focusSecond),
+                    validator: (first) {
+                      _firstPin = first.toString();
+                      return null;
+                    },
                   ),
                 ),
               ),
@@ -68,21 +83,24 @@ class InputOTPState extends State<InputOTP> {
                       borderRadius: BorderRadius.circular(10),
                       color: Colors.white),
                   child: TextFormField(
-                    showCursor: true,
-                    cursorHeight: 45,
-                    inputFormatters: [LengthLimitingTextInputFormatter(1)],
-                    keyboardType: TextInputType.number,
-                    focusNode: _focusSecond,
-                    style: const TextStyle(fontSize: 45),
-                    textAlign: TextAlign.center,
-                    obscureText: true,
-                    obscuringCharacter: '*',
-                    decoration: const InputDecoration(
-                        focusedBorder: InputBorder.none,
-                        border: InputBorder.none),
-                    onFieldSubmitted: (_) =>
-                        FocusScope.of(context).requestFocus(_focusThird),
-                  ),
+                      showCursor: true,
+                      cursorHeight: 45,
+                      inputFormatters: [LengthLimitingTextInputFormatter(1)],
+                      keyboardType: TextInputType.number,
+                      focusNode: _focusSecond,
+                      style: const TextStyle(fontSize: 45),
+                      textAlign: TextAlign.center,
+                      obscureText: true,
+                      obscuringCharacter: '*',
+                      decoration: const InputDecoration(
+                          focusedBorder: InputBorder.none,
+                          border: InputBorder.none),
+                      onFieldSubmitted: (_) =>
+                          FocusScope.of(context).requestFocus(_focusThird),
+                      validator: (second) {
+                        _secondPin = second.toString();
+                        return null;
+                      }),
                 ),
               ),
               Center(
@@ -106,7 +124,11 @@ class InputOTPState extends State<InputOTP> {
                           focusedBorder: InputBorder.none,
                           border: InputBorder.none),
                       onFieldSubmitted: (_) =>
-                          FocusScope.of(context).requestFocus(_focusFourth)),
+                          FocusScope.of(context).requestFocus(_focusFourth),
+                      validator: (third) {
+                        _thirdPin = third.toString();
+                        return null;
+                      }),
                 ),
               ),
               Center(
@@ -117,26 +139,35 @@ class InputOTPState extends State<InputOTP> {
                       borderRadius: BorderRadius.circular(10),
                       color: Colors.white),
                   child: TextFormField(
-                    showCursor: true,
-                    cursorHeight: 45,
-                    inputFormatters: [LengthLimitingTextInputFormatter(1)],
-                    focusNode: _focusFourth,
-                    keyboardType: TextInputType.number,
-                    style: const TextStyle(fontSize: 45),
-                    textAlign: TextAlign.center,
-                    obscureText: true,
-                    obscuringCharacter: '*',
-                    decoration: const InputDecoration(
-                        focusedBorder: InputBorder.none,
-                        border: InputBorder.none),
-                  ),
+                      showCursor: true,
+                      cursorHeight: 45,
+                      inputFormatters: [LengthLimitingTextInputFormatter(1)],
+                      focusNode: _focusFourth,
+                      keyboardType: TextInputType.number,
+                      style: const TextStyle(fontSize: 45),
+                      textAlign: TextAlign.center,
+                      obscureText: true,
+                      obscuringCharacter: '*',
+                      decoration: const InputDecoration(
+                          focusedBorder: InputBorder.none,
+                          border: InputBorder.none),
+                      validator: (fourth) {
+                        _fourthPin = fourth.toString();
+                        return null;
+                      }),
                 ),
               ),
             ],
           ),
         ),
         SizedBox(height: height * 0.045),
-        SizedBox(height: height * 0.075, child: Button('Next')),
+        InkWell(
+            onTap: () {
+              if (_key.currentState!.validate()) {
+                checkOtp();
+              }
+            },
+            child: SizedBox(height: height * 0.075, child: Button('Next'))),
         SizedBox(height: height * 0.035),
         Expanded(
           child: Container(
@@ -156,7 +187,7 @@ class InputOTPState extends State<InputOTP> {
                             color: Colors.grey, fontWeight: FontWeight.bold)),
                     const SizedBox(width: 2),
                     InkWell(
-                        onTap: () {},
+                        onTap: sendAgain(),
                         child: Text('Send Again',
                             textScaleFactor: textScale,
                             style: const TextStyle(
@@ -176,14 +207,47 @@ class InputOTPState extends State<InputOTP> {
             ),
           ),
         ),
-        // const SizedBox(height: 305),
-        // Text(
-        //   'Lorem ipsum dolor sit amet, consectetur',
-        //   textScaleFactor: textScale,
-        //   style: const TextStyle(
-        //       color: Colors.white, fontSize: 8, fontWeight: FontWeight.bold),
-        // ),
       ],
     );
+  }
+
+  void checkOtp() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    String otp = _firstPin + _secondPin + _thirdPin + _fourthPin;
+    // print(otp);
+    var data = {'email': widget.email, 'otp': otp};
+    final response = await Provider.of<Network>(context, listen: false)
+        .authData(data, 'api/auth/check_otp');
+    var body = json.decode(response.body);
+    if (body['status'] == 'success') {
+      localStorage.setString(
+          'forgotPasswordToken', body['forget_password_token']);
+      print(
+          'Forgot Password Token ${localStorage.getString('forgotPasswordToken')}');
+    }
+  }
+
+  sendAgain() async {
+    var data = {'email': widget.email};
+    // print('Email ${data['email']}');
+    // var provider = await Provider.of<Network>(context, listen: false)
+    //     .authData(data, 'api/auth/forget_password');
+    var provider = await Provider.of<Network>(context, listen: false)
+        .authData(data, 'api/auth/forget_password');
+
+    // print(json.decode(provider.body));
+    var body = json.decode(provider.body);
+
+    if (body['staus'] == 'success') {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(body['data'].toString(),
+              style: const TextStyle(
+                  color: Colors.black, fontWeight: FontWeight.bold)),
+          action: SnackBarAction(
+              label: 'Close',
+              onPressed: () => Scaffold.of(context).hideCurrentSnackBar())));
+      // Navigator.of(context).pushReplacementNamed('/otp-screen',
+      //     arguments: {'email': recoveryEmail});
+    }
   }
 }

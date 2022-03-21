@@ -246,7 +246,7 @@ class SignUpFormState extends State<SignUpForm> {
         .authData(data, 'api/auth/signup');
     var body = json.decode(res.body);
     SharedPreferences localStorage = await SharedPreferences.getInstance();
-    localStorage.setString('token', json.encode(body['access_token']));
+    localStorage.setString('token', body['access_token']);
     Navigator.of(context).pushNamed('/bottom-bar');
   }
 }
