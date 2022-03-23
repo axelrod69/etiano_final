@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import './popular_dishes_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
 class PopularDishesProvider with ChangeNotifier {
   Map<String, dynamic> _popularDishes = {};
@@ -43,7 +44,7 @@ class PopularDishesProvider with ChangeNotifier {
     _favouriteDishes = favouriteDishes.toJson();
   }
 
-  Future<void> postFavouriteData(String productId, String restaurantId) async {
+  dynamic postFavouriteData(String productId, String restaurantId) async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     final url = Uri.parse(baseUrl + 'api/auth/wishlist');
     final response = await http.post(url, body: {
@@ -53,6 +54,8 @@ class PopularDishesProvider with ChangeNotifier {
       'Authorization': 'Bearer ${localStorage.getString('token')}',
       'Accept': 'application/json'
     });
+    print(response.body);
+    return response;
   }
 
   Future<void> deleteFavouriteData(String productId) async {
@@ -62,6 +65,9 @@ class PopularDishesProvider with ChangeNotifier {
       'Authorization': 'Bearer ${localStorage.getString('token')}',
       'Accept': 'application/json'
     });
+    // var body = json.decode(response.body);
+    // return response;
+    notifyListeners();
   }
   // void markAsFavourite(String productId) {
   //   _popularDishes

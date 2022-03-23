@@ -1,8 +1,7 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import '../../model/popular_dishes/popular_dishes_provider.dart';
+import 'dart:convert';
 
 class MoreItems extends StatefulWidget {
   MoreItemsState createState() => MoreItemsState();
@@ -101,7 +100,10 @@ class MoreItemsState extends State<MoreItems> {
                             //   }
                             // },
                             // onTap: () => Provider.of<PopularDishesProvider>(context).markAsFavourite(provider["data"][index]["product_id"].toString()),
-                            onTap: () {},
+                            onTap: () => favouriteWishlist(
+                              provider["data"][index]["product_id"].toString(),
+                              provider["data"][index]["restaurant_id"],
+                            ),
                             child: !clicked
                                 ? const Icon(Icons.favorite_border_outlined,
                                     color: Colors.white, size: 16)
@@ -145,5 +147,24 @@ class MoreItemsState extends State<MoreItems> {
       //   color: Colors.amber,
       // ),
     );
+  }
+
+  void favouriteWishlist(String productId, String restaurantId) async {
+    final response =
+        await Provider.of<PopularDishesProvider>(context, listen: false)
+            .postFavouriteData(productId, restaurantId);
+    final res = json.decode(response.body);
+    if (res['status'] == 'success') {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: const Text('Product added to wishlist',
+            style: TextStyle(
+              color: Colors.white,
+            )),
+        action: SnackBarAction(
+          label: 'Close',
+          onPressed: () => Scaffold.of(context).hideCurrentSnackBar(),
+        ),
+      ));
+    }
   }
 }

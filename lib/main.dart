@@ -39,6 +39,10 @@ import './model/popularRestaurants/popularRestaurantProvider.dart';
 import './screens/searchScreen.dart';
 import './model/membership/membership.dart';
 import './screens/forgotPassword.dart';
+import './screens/changePassword.dart';
+import './screens/wishlist.dart';
+import './screens/couponScreen.dart';
+import './model/coupon/couponProvider.dart';
 
 void main() {
   runApp(MyApp());
@@ -79,8 +83,9 @@ class MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (context) => Network()),
         ChangeNotifierProvider(create: (context) => PopularDishesProvider()),
         ChangeNotifierProvider(create: (context) => CartItemProvider()),
-        ChangeNotifierProvider(create: ((context) => LocationProvider())),
-        ChangeNotifierProvider(create: ((context) => MembershipProvider()))
+        ChangeNotifierProvider(create: (context) => LocationProvider()),
+        ChangeNotifierProvider(create: (context) => MembershipProvider()),
+        ChangeNotifierProvider(create: (context) => CouponProvider())
       ],
       builder: (context, child) {
         final provider = Provider.of<LocationProvider>(context).loading;
@@ -105,7 +110,7 @@ class MyAppState extends State<MyApp> {
             '/sign-in': (context) => SignIn(),
             '/sign-up': (context) => SignUp(),
             '/forgot-password': (context) => ForgotPassword(),
-            // '/change-password': (context) => ChangePassword(),
+            '/change-password': (context) => ChangePassword(),
             '/otp-screen': (context) => OTP(),
             '/bottom-bar': (context) => BottomNavigation(),
             '/home-screen': (context) => HomeScreen(),
@@ -131,6 +136,8 @@ class MyAppState extends State<MyApp> {
             '/change-location': (context) => ChangeLocation(),
             '/device-location': (context) => DeviceLocationPage(),
             '/search-screen': (context) => SearchScreen(),
+            '/wishlist-screen': (context) => Wishlist(),
+            '/coupon-screen': (context) => CouponScreen()
           },
         );
       },

@@ -2,7 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../model/cart/cart_provider.dart';
-import 'package:expandable/expandable.dart';
+import '../model/coupon/couponProvider.dart';
 
 class CartDetailScreen extends StatefulWidget {
   CartDetailScreenState createState() => CartDetailScreenState();
@@ -12,7 +12,7 @@ class CartDetailScreenState extends State<CartDetailScreen> {
   bool isClicked = false;
   bool isClickedCoupon = false;
   final _key = GlobalKey<FormState>();
-  final _key2 = GlobalKey<FormState>();
+  String text = 'Add';
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +25,7 @@ class CartDetailScreenState extends State<CartDetailScreen> {
     // final provider = Provider.of<CartItemProvider>(context).getProductById(id);
     // final totalAmount = Provider.of<CartItemProvider>(context).itemTotal;
     final cartItems = Provider.of<CartItemProvider>(context).cartItems;
+    final couponProvider = Provider.of<CouponProvider>(context).discount;
 
     // TODO: implement build
     return Scaffold(
@@ -32,7 +33,7 @@ class CartDetailScreenState extends State<CartDetailScreen> {
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           elevation: 0,
           leading: InkWell(
-              onTap: () => Navigator.of(context).pop(),
+              onTap: () => Navigator.of(context).pushNamed('/cart-screen'),
               child: const Icon(Icons.arrow_back_ios, color: Colors.red)),
           title: Padding(
             padding: EdgeInsets.only(left: width * 0.18),
@@ -316,9 +317,30 @@ class CartDetailScreenState extends State<CartDetailScreen> {
                               fontSize: 12),
                         ),
                         InkWell(
-                          onTap: () => setState(() {
-                            isClickedCoupon = !isClickedCoupon;
-                          }),
+                          onTap: () {
+                            setState(() {
+                              isClickedCoupon = !isClickedCoupon;
+                            });
+                            if (!isClickedCoupon) {
+                              text = 'Add';
+                            } else {
+                              text = 'Remove';
+                              Provider.of<CouponProvider>(context,
+                                      listen: false)
+                                  .deleteCoupon(couponProvider['code'],
+                                      couponProvider['discountAmount']);
+                            }
+                            text != 'Add'
+                                ? Navigator.of(context)
+                                    .pushNamed('/coupon-screen', arguments: {
+                                    'price': Provider.of<CartItemProvider>(
+                                            context,
+                                            listen: false)
+                                        .itemAmount
+                                        .toString()
+                                  })
+                                : null;
+                          },
                           child: Text(
                             !isClickedCoupon ? 'Add' : 'Remove',
                             textScaleFactor: textScale,
@@ -332,33 +354,24 @@ class CartDetailScreenState extends State<CartDetailScreen> {
                     ),
                     !isClickedCoupon
                         ? SizedBox()
-                        : Form(
-                            key: _key2,
-                            child: Container(
-                                height: height * 0.05,
-                                width: double.infinity,
-                                padding: EdgeInsets.only(left: width * 0.02),
-                                margin: EdgeInsets.only(top: height * 0.01),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(
-                                        color: Colors.white, width: 2)),
-                                child: TextFormField(
-                                  // keyboardType: TextInputType.multiline,
-                                  maxLines: 1,
-                                  style: const TextStyle(
-                                      color: Colors.white, fontSize: 25),
-                                  decoration: const InputDecoration(
-                                      // label: Text(
-                                      //   'Add Instructions',
-                                      //   textScaleFactor: textScale,
-                                      //   style: const TextStyle(
-                                      //       color: Colors.white,
-                                      //       fontWeight: FontWeight.bold),
-                                      // ),
-                                      border: InputBorder.none),
-                                )),
-                          ),
+                        : Container(
+                            height: height * 0.05,
+                            width: double.infinity,
+                            padding: EdgeInsets.only(
+                                left: width * 0.02, top: height * 0.01),
+                            margin: EdgeInsets.only(top: height * 0.01),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border:
+                                    Border.all(color: Colors.white, width: 2)),
+                            child: Text(
+                              couponProvider['code'] ?? '',
+                              textScaleFactor: textScale,
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          )
                   ],
                 ),
               ),
@@ -471,7 +484,8 @@ class CartDetailScreenState extends State<CartDetailScreen> {
             Padding(
               padding: EdgeInsets.only(left: width * 0.08, right: width * 0.08),
               child: InkWell(
-                onTap: () => Navigator.of(context).pushNamed('/payment-screen'),
+                onTap: () => Navigator.of(context).pushNamed('/payment-screen',
+                    arguments: {'discount': couponProvider['discountAmount']}),
                 child: Container(
                   width: double.infinity,
                   height: height * 0.06,

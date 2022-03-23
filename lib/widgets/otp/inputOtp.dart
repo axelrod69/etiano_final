@@ -187,7 +187,7 @@ class InputOTPState extends State<InputOTP> {
                             color: Colors.grey, fontWeight: FontWeight.bold)),
                     const SizedBox(width: 2),
                     InkWell(
-                        onTap: sendAgain(),
+                        onTap: sendAgain,
                         child: Text('Send Again',
                             textScaleFactor: textScale,
                             style: const TextStyle(
@@ -224,10 +224,11 @@ class InputOTPState extends State<InputOTP> {
           'forgotPasswordToken', body['forget_password_token']);
       print(
           'Forgot Password Token ${localStorage.getString('forgotPasswordToken')}');
+      Navigator.of(context).pushNamed('/change-password');
     }
   }
 
-  sendAgain() async {
+  void sendAgain() async {
     var data = {'email': widget.email};
     // print('Email ${data['email']}');
     // var provider = await Provider.of<Network>(context, listen: false)

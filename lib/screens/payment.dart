@@ -89,10 +89,16 @@ class PaymentScreenState extends State<PaymentScreen> {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     final textScale = MediaQuery.of(context).textScaleFactor * 1.2;
+    final route =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final discount = route['discount'];
     final withDeliveryCost =
+        // (Provider.of<CartItemProvider>(context).itemAmount +
+        //         Provider.of<CartItemProvider>(context).deliveryCost) -
+        //     Provider.of<CartItemProvider>(context).discountCost;
         (Provider.of<CartItemProvider>(context).itemAmount +
                 Provider.of<CartItemProvider>(context).deliveryCost) -
-            Provider.of<CartItemProvider>(context).discountCost;
+            discount;
 
     // TODO: implement build
     return Scaffold(
@@ -286,10 +292,7 @@ class PaymentScreenState extends State<PaymentScreen> {
                               fontWeight: FontWeight.bold,
                               fontSize: 12)),
                       SizedBox(width: width * 0.02),
-                      Text(
-                          Provider.of<CartItemProvider>(context)
-                              .discountCost
-                              .toString(),
+                      Text(discount.toString(),
                           textScaleFactor: textScale,
                           style: const TextStyle(
                             color: Colors.red,

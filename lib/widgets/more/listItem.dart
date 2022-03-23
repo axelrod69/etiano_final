@@ -15,7 +15,7 @@ class ListItem extends StatelessWidget {
 
     // TODO: implement build
     return InkWell(
-      onTap: () => Navigator.of(context).pushReplacementNamed(route),
+      onTap: () => Navigator.of(context).pushNamed(route),
       child: Stack(
         children: [
           Container(
@@ -33,8 +33,8 @@ class ListItem extends StatelessWidget {
                     boxShadow: const [
                       BoxShadow(
                           color: Colors.black,
-                          offset: Offset(0, 1),
-                          spreadRadius: 5,
+                          offset: Offset(0, 2),
+                          // spreadRadius: 5,
                           blurRadius: 5)
                     ]),
                 child: Row(children: [

@@ -13,6 +13,8 @@ class MoreScreen extends StatelessWidget {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
+        automaticallyImplyLeading: false,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
         title: Text('More',
@@ -27,6 +29,9 @@ class MoreScreen extends StatelessWidget {
       ),
       body: Center(
           child: ListView(children: [
+        ListItem(
+            'assets/images/Path 10146.png', 'Wishlist', '/wishlist-screen'),
+        SizedBox(height: height * 0.02),
         ListItem('assets/images/Path 10146.png', 'Payment Details', ''),
         SizedBox(height: height * 0.02),
         ListItem(
@@ -47,7 +52,8 @@ class MoreScreen extends StatelessWidget {
         ListItem('assets/images/restaurant-membership-card-tool copy.png',
             'Membership', '/membership-screen'),
         SizedBox(height: height * 0.02),
-        ListItem('assets/images/Path 14675.png', 'About Us', '/about-us')
+        ListItem('assets/images/Path 14675.png', 'About Us', '/about-us'),
+        SizedBox(height: height * 0.05),
       ])),
     );
   }
