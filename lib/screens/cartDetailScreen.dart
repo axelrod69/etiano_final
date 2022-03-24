@@ -321,25 +321,32 @@ class CartDetailScreenState extends State<CartDetailScreen> {
                             setState(() {
                               isClickedCoupon = !isClickedCoupon;
                             });
-                            if (!isClickedCoupon) {
+                            if (isClickedCoupon) {
                               text = 'Add';
+                              Navigator.of(context)
+                                  .pushNamed('/coupon-screen', arguments: {
+                                'price': Provider.of<CartItemProvider>(context,
+                                        listen: false)
+                                    .itemAmount
+                                    .toString()
+                              });
                             } else {
                               text = 'Remove';
                               Provider.of<CouponProvider>(context,
                                       listen: false)
                                   .deleteCoupon(couponProvider['code'],
-                                      couponProvider['discountAmount']);
+                                      couponProvider['amount']);
                             }
-                            text != 'Add'
-                                ? Navigator.of(context)
-                                    .pushNamed('/coupon-screen', arguments: {
-                                    'price': Provider.of<CartItemProvider>(
-                                            context,
-                                            listen: false)
-                                        .itemAmount
-                                        .toString()
-                                  })
-                                : null;
+                            // text != 'Add'
+                            //     ? Navigator.of(context)
+                            //         .pushNamed('/coupon-screen', arguments: {
+                            //         'price': Provider.of<CartItemProvider>(
+                            //                 context,
+                            //                 listen: false)
+                            //             .itemAmount
+                            //             .toString()
+                            //       })
+                            //     : null;
                           },
                           child: Text(
                             !isClickedCoupon ? 'Add' : 'Remove',
@@ -484,8 +491,11 @@ class CartDetailScreenState extends State<CartDetailScreen> {
             Padding(
               padding: EdgeInsets.only(left: width * 0.08, right: width * 0.08),
               child: InkWell(
-                onTap: () => Navigator.of(context).pushNamed('/payment-screen',
-                    arguments: {'discount': couponProvider['discountAmount']}),
+                onTap: () {
+                  Navigator.of(context).pushNamed('/payment-screen',
+                      arguments: {'discount': couponProvider['amount']});
+                  print('Discount Amount ${couponProvider['amount']}');
+                },
                 child: Container(
                   width: double.infinity,
                   height: height * 0.06,

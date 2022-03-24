@@ -35,6 +35,8 @@ class CouponProvider with ChangeNotifier {
       'code': localStorage.getString('couponCode'),
       'amount': localStorage.getDouble('discountAmount')
     };
+    print(_discount);
+    print(localStorage.getDouble('discountAmount'));
     notifyListeners();
   }
 
