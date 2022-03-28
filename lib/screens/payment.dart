@@ -55,7 +55,7 @@ class PaymentScreenState extends State<PaymentScreen> {
     }
   }
 
-  @override
+  @override 
   void dispose() {
     // TODO: implement dispose
     super.dispose();
@@ -66,6 +66,9 @@ class PaymentScreenState extends State<PaymentScreen> {
     Fluttertoast.showToast(
         msg: "SUCCESS: " + paymentSuccessResponse.paymentId!,
         toastLength: Toast.LENGTH_SHORT);
+    print('Payment Success Order ID ${paymentSuccessResponse.orderId}');
+    print('Payment Success Payment ID ${paymentSuccessResponse.paymentId}');
+    print('Payment Success Signature ${paymentSuccessResponse.signature}');
     Navigator.of(context).pushNamed('/my-order-screen');
   }
 
