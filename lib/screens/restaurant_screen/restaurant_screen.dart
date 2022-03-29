@@ -40,10 +40,13 @@ class RestaurantScreen extends StatelessWidget {
                     // color: Colors.yellow,
                     child: Container(
                       // height: height * 0.25,
-                      child: Image.asset(
-                        'assets/images/peter-cat-restaurant-park-street-kolkata-restaurants-2dxpzo0.png',
-                        fit: BoxFit.cover,
-                      ),
+                      // child: Image.asset(
+                      //   'assets/images/peter-cat-restaurant-park-street-kolkata-restaurants-2dxpzo0.png',
+                      //   fit: BoxFit.cover,
+                      // ),
+                      child: Image.network(
+                          'https://achievexsolutions.in/current_work/eatiano/$image',
+                          fit: BoxFit.cover),
                     ),
                   ),
                   Positioned(
@@ -68,8 +71,7 @@ class RestaurantScreen extends StatelessWidget {
                     top: height * 0.04,
                     left: width * 0.03,
                     child: InkWell(
-                      onTap: () => Navigator.of(context)
-                          .pushReplacementNamed('/bottom-bar'),
+                      onTap: () => Navigator.of(context).pop(),
                       child: Container(
                         decoration: const BoxDecoration(boxShadow: [
                           BoxShadow(

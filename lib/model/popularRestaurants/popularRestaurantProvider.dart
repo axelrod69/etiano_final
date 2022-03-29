@@ -30,6 +30,7 @@ class PopularRestaurantProvider with ChangeNotifier {
     PopularRestaurants popularRestaurants =
         popularRestaurantsFromJson(response.body);
     _restaurants = popularRestaurants.toJson();
+    print(_restaurants);
   }
 
   // Future<void> searchRestaurants(String query) async {

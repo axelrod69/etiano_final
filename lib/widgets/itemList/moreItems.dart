@@ -102,7 +102,8 @@ class MoreItemsState extends State<MoreItems> {
                             // onTap: () => Provider.of<PopularDishesProvider>(context).markAsFavourite(provider["data"][index]["product_id"].toString()),
                             onTap: () => favouriteWishlist(
                               provider["data"][index]["product_id"].toString(),
-                              provider["data"][index]["restaurant_id"],
+                              provider["data"][index]["restaurant_id"]
+                                  .toString(),
                             ),
                             child: !clicked
                                 ? const Icon(Icons.favorite_border_outlined,

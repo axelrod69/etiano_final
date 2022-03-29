@@ -9,15 +9,27 @@ class PopularDishes extends StatefulWidget {
 
 class PopularDishesState extends State<PopularDishes> {
   bool _isLoading = true;
+
+  // @override
+  // void initState() {
+  //   // TODO: implement didChangeDependencies
+  //   super.initState();
+  //   Provider.of<PopularDishesProvider>(context).fetchData().then((_) {
+  //     setState(() {
+  //       _isLoading = false;
+  //     });
+  //   });
+  // }
+
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
     Provider.of<PopularDishesProvider>(context).fetchData().then((_) {
       setState(() {
         _isLoading = false;
       });
     });
+    super.didChangeDependencies();
   }
 
   @override

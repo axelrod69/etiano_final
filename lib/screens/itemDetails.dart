@@ -199,7 +199,7 @@ class ItemDetailsState extends State<ItemDetails> {
                 onTap: () {
                   Provider.of<CartItemProvider>(context, listen: false)
                       .addItems(id, name, restaurantName, price, quantity,
-                          image, rating, totalRatings, restaurantId);
+                          image, rating, totalRatings, restaurantId.toString());
                 },
                 child: Container(
                   width: width * 0.5,

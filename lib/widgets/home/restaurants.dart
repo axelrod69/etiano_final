@@ -10,17 +10,16 @@ class RestaurantsState extends State<Restaurants> {
   bool _isLoading = true;
 
   @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
-    Provider.of<PopularRestaurantProvider>(context)
+  void initState() {
+    // TODO: implement initState
+    Provider.of<PopularRestaurantProvider>(context, listen: false)
         .fetchRestaurants()
         .then((_) {
       setState(() {
         _isLoading = false;
       });
-      // _isLoading = false;
     });
+    super.initState();
   }
 
   @override
@@ -72,17 +71,26 @@ class RestaurantsState extends State<Restaurants> {
             height: height * 0.5,
             // color: Colors.red,
             padding: EdgeInsets.only(top: height * 0.01, left: 0.05),
+            margin: EdgeInsets.only(bottom: height * 0.05),
             child: ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) => InkWell(
                 onTap: () => Navigator.of(context)
                     .pushNamed('/restaurants-screen', arguments: {
-                  'id': _restaurants["data"][index]["id"],
-                  'name': _restaurants["data"][index]["name"],
+                  // 'id': _restaurants["data"][index]["id"],
+                  'id': provider['data']['data'][index]['restaurant_id'],
+                  // 'name': _restaurants["data"][index]["name"],
+                  'name': provider['data']['data'][index]['restaurant_name'],
                   'type': _restaurants["data"][index]["type"],
-                  'rating': _restaurants["data"][index]["rating"],
-                  'image': _restaurants["data"][index]["image"],
-                  'numberOfRatings': _restaurants["data"][index]
-                      ["numberOfRatings"]
+                  // 'rating': _restaurants["data"][index]["rating"],
+                  'rating': provider['data']['data'][index]
+                      ['restaurant_rating'],
+                  // 'image': _restaurants["data"][index]["image"],
+                  'image': provider["data"]['data'][index]["restaurant_image"],
+                  // 'numberOfRatings': _restaurants["data"][index]
+                  //     ["numberOfRatings"]
+                  'numberOfRatings': provider['data']['data'][index]
+                      ['restaurant_rating_count']
                 }),
                 child: Container(
                   width: double.infinity,
@@ -140,7 +148,10 @@ class RestaurantsState extends State<Restaurants> {
                                 Image.asset('assets/images/Path 8561.png'),
                                 SizedBox(width: width * 0.02),
                                 Text(
-                                  _restaurants["data"][index]["rating"],
+                                  provider['data']['data'][index]
+                                          ['restaurant_rating'] ??
+                                      '',
+                                  // _restaurants["data"][index]["rating"],
                                   textScaleFactor: textScale,
                                   style: const TextStyle(
                                       color: Colors.red,
@@ -148,7 +159,7 @@ class RestaurantsState extends State<Restaurants> {
                                 ),
                                 SizedBox(width: width * 0.02),
                                 Text(
-                                  '(${_restaurants["data"][index]["numberOfRatings"]})',
+                                  '(${provider["data"]['data'][index]["restaurant_rating_count"]} ratings)',
                                   textScaleFactor: textScale,
                                   style: const TextStyle(color: Colors.white),
                                 )
