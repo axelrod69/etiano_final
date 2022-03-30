@@ -126,18 +126,22 @@ class HomeContentState extends State<HomeContent> {
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                       fontSize: 20)),
-              Container(
-                child: Row(
-                  children: [
-                    Text('View All',
-                        textScaleFactor: textScale,
-                        style: const TextStyle(
-                            color: Colors.yellow,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 8)),
-                    const Icon(Icons.keyboard_arrow_right_outlined,
-                        color: Colors.yellow)
-                  ],
+              InkWell(
+                onTap: () =>
+                    Navigator.of(context).pushNamed('/restaurant-list'),
+                child: Container(
+                  child: Row(
+                    children: [
+                      Text('View All',
+                          textScaleFactor: textScale,
+                          style: const TextStyle(
+                              color: Colors.yellow,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 8)),
+                      const Icon(Icons.keyboard_arrow_right_outlined,
+                          color: Colors.yellow)
+                    ],
+                  ),
                 ),
               ),
             ],

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../../widgets/restaurant/cart.dart';
 import '../../widgets/restaurant/notifyBell.dart';
 import './pageViewScreen.dart';
+import '../../model/restaurantProducts/restaurantProductProvider.dart';
+import 'package:provider/provider.dart';
 
 class RestaurantScreen extends StatelessWidget {
   @override
@@ -326,16 +328,25 @@ class RestaurantScreen extends StatelessWidget {
                         Flexible(
                           flex: 1,
                           child: InkWell(
-                            onTap: () => Navigator.of(context)
-                                .pushReplacementNamed('/page-view-screen',
-                                    arguments: {
-                                  'id': id,
-                                  'name': name,
-                                  'type': type,
-                                  'rating': rating,
-                                  'image': image,
-                                  'numberOfRatings': numberOfRatings
-                                }),
+                            onTap: () {
+                              Navigator.of(context).push(
+                                  MaterialPageRoute<void>(
+                                      builder: (BuildContext context) =>
+                                          PageViewScreen(id, name, type, rating,
+                                              image, numberOfRatings)));
+                              // Navigator.of(context)
+                              //     .pushNamed('/page-view-screen', arguments: {
+                              //   'id': id,
+                              //   'name': name,
+                              //   'type': type,
+                              //   'rating': rating,
+                              //   'image': image,
+                              //   'numberOfRatings': numberOfRatings
+                              // });
+                              // Provider.of<RestaurantProductProvider>(context,
+                              //         listen: false)
+                              //     .fetchCategory(id.toString());
+                            },
                             child: Container(
                               height: height * 0.05,
                               // color: Colors.green,

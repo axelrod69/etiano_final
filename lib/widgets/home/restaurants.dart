@@ -28,6 +28,8 @@ class RestaurantsState extends State<Restaurants> {
     var width = MediaQuery.of(context).size.width;
     var textScale = MediaQuery.of(context).textScaleFactor;
     final provider =
+        Provider.of<PopularRestaurantProvider>(context).restaurantList;
+    final response =
         Provider.of<PopularRestaurantProvider>(context).restaurants;
 
     final Map<String, dynamic> _restaurants = {
@@ -37,7 +39,7 @@ class RestaurantsState extends State<Restaurants> {
           "name": "Peter Cat",
           "type": "Continental",
           "rating": "4.9",
-          "numberOfRatings": "124 Ratings",
+          "numberOfRatings": "124",
           "image": "assets/images/davide-cantelli-jpkfc5_d-DI-unsplash.png"
         },
         {
@@ -45,7 +47,7 @@ class RestaurantsState extends State<Restaurants> {
           "name": "Barista",
           "type": "Coffee",
           "rating": "4.9",
-          "numberOfRatings": "124 Ratings",
+          "numberOfRatings": "124",
           "image": "assets/images/allison-griffith-VCXk_bO97VQ-unsplash.png"
         },
         {
@@ -53,7 +55,7 @@ class RestaurantsState extends State<Restaurants> {
           "name": "Pizza Rush Hour",
           "type": "Italian",
           "rating": "4.9",
-          "numberOfRatings": "124 Ratings",
+          "numberOfRatings": "124",
           "image": "assets/images/davide-cantelli-jpkfc5_d-DI-unsplash.png"
         }
       ]
@@ -78,19 +80,18 @@ class RestaurantsState extends State<Restaurants> {
                 onTap: () => Navigator.of(context)
                     .pushNamed('/restaurants-screen', arguments: {
                   // 'id': _restaurants["data"][index]["id"],
-                  'id': provider['data']['data'][index]['restaurant_id'],
+                  'id': provider[index]['restaurant_id'],
                   // 'name': _restaurants["data"][index]["name"],
-                  'name': provider['data']['data'][index]['restaurant_name'],
+                  'name': provider[index]['restaurant_name'],
                   'type': _restaurants["data"][index]["type"],
                   // 'rating': _restaurants["data"][index]["rating"],
-                  'rating': provider['data']['data'][index]
-                      ['restaurant_rating'],
+                  'rating': _restaurants['data'][index]['rating'],
                   // 'image': _restaurants["data"][index]["image"],
-                  'image': provider["data"]['data'][index]["restaurant_image"],
+                  'image': provider[index]["restaurant_image"],
                   // 'numberOfRatings': _restaurants["data"][index]
                   //     ["numberOfRatings"]
-                  'numberOfRatings': provider['data']['data'][index]
-                      ['restaurant_rating_count']
+                  'numberOfRatings': _restaurants['data'][index]
+                      ['numberOfRatings']
                 }),
                 child: Container(
                   width: double.infinity,
@@ -101,7 +102,7 @@ class RestaurantsState extends State<Restaurants> {
                     children: [
                       // Image.asset(_restaurants["data"][index]["image"]),
                       Image.network(
-                          'https://achievexsolutions.in/current_work/eatiano/${provider['data']['data'][index]['restaurant_image']}'),
+                          'https://achievexsolutions.in/current_work/eatiano/${provider[index]['restaurant_image']}'),
                       SizedBox(width: width * 0.03),
                       Container(
                         width: width * 0.5,
@@ -114,8 +115,7 @@ class RestaurantsState extends State<Restaurants> {
                           children: [
                             Text(
                               // _restaurants["data"][index]["name"],
-                              provider['data']['data'][index]
-                                  ['restaurant_name'],
+                              provider[index]['restaurant_name'],
                               textScaleFactor: textScale,
                               style: const TextStyle(
                                   color: Colors.white,
@@ -148,9 +148,7 @@ class RestaurantsState extends State<Restaurants> {
                                 Image.asset('assets/images/Path 8561.png'),
                                 SizedBox(width: width * 0.02),
                                 Text(
-                                  provider['data']['data'][index]
-                                          ['restaurant_rating'] ??
-                                      '',
+                                  _restaurants['data'][index]['rating'],
                                   // _restaurants["data"][index]["rating"],
                                   textScaleFactor: textScale,
                                   style: const TextStyle(
@@ -159,7 +157,7 @@ class RestaurantsState extends State<Restaurants> {
                                 ),
                                 SizedBox(width: width * 0.02),
                                 Text(
-                                  '(${provider["data"]['data'][index]["restaurant_rating_count"]} ratings)',
+                                  '(${_restaurants['data'][index]["numberOfRatings"]} ratings)',
                                   textScaleFactor: textScale,
                                   style: const TextStyle(color: Colors.white),
                                 )

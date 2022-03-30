@@ -1,17 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../model/cart/cart_provider.dart';
+import '../../../model/restaurantProducts/restaurantProductProvider.dart';
 
-class SideDish extends StatelessWidget {
-  int id;
+class SideDish extends StatefulWidget {
+  SideDishState createState() => SideDishState();
+  String id;
   String restaurantName;
   String type;
   String rating;
   String image;
   String numberOfRatings;
+  String category;
 
   SideDish(this.id, this.restaurantName, this.type, this.rating, this.image,
-      this.numberOfRatings);
+      this.numberOfRatings, this.category);
+}
+
+class SideDishState extends State<SideDish> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    Provider.of<RestaurantProductProvider>(context, listen: false)
+        .productFilter(widget.category);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +32,9 @@ class SideDish extends StatelessWidget {
     final height = MediaQuery.of(context).size.height;
     final textScale = MediaQuery.of(context).textScaleFactor * 1.2;
     int counter = 0;
+    final provider = Provider.of<RestaurantProductProvider>(context).category;
+
+    // print('Category ${widget.category}');
 
     final Map<String, dynamic> _sideDish = {
       "data": [
@@ -86,11 +102,11 @@ class SideDish extends StatelessWidget {
               Navigator.pushNamed(context, '/item-details', arguments: {
             'id': _sideDish["data"][index]["id"],
             'name': _sideDish["data"][index]["name"],
-            'image': image,
+            'image': widget.image,
             'price': _sideDish["data"][index]["price"],
-            'restaurantName': restaurantName,
-            'rating': rating,
-            'totalRatings': numberOfRatings
+            'restaurantName': widget.restaurantName,
+            'rating': widget.rating,
+            'totalRatings': widget.numberOfRatings
           }),
           child: Container(
             margin: EdgeInsets.only(top: height * 0.02),
@@ -131,60 +147,12 @@ class SideDish extends StatelessWidget {
                               children: [
                                 Text(
                                   _sideDish["data"][index]["name"],
+                                  // provider[index]['product_name'],
                                   textScaleFactor: textScale,
                                   style: const TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                // Container(
-                                //   height: height * 0.03,
-                                //   width: width * 0.2,
-                                //   padding: EdgeInsets.only(left: width * 0.02),
-                                //   // color: Colors.red,
-                                //   child: Row(
-                                //     children: [
-                                //       CircleAvatar(
-                                //         radius: 10,
-                                //         backgroundColor:
-                                //             const Color.fromRGBO(86, 87, 84, 1),
-                                //         child: Center(
-                                //           child: Text(
-                                //             '+',
-                                //             textScaleFactor: textScale,
-                                //             style: const TextStyle(
-                                //                 color: Colors.white, fontSize: 15
-                                //                 // fontWeight: FontWeight.bold
-                                //                 ),
-                                //           ),
-                                //         ),
-                                //       ),
-                                //       SizedBox(width: width * 0.02),
-                                //       Text(
-                                //         counter.toString(),
-                                //         textScaleFactor: textScale,
-                                //         style: const TextStyle(
-                                //             color: Colors.white,
-                                //             fontWeight: FontWeight.bold),
-                                //       ),
-                                //       SizedBox(width: width * 0.02),
-                                //       CircleAvatar(
-                                //         radius: 10,
-                                //         backgroundColor:
-                                //             const Color.fromRGBO(86, 87, 84, 1),
-                                //         child: Center(
-                                //           child: Text(
-                                //             '--',
-                                //             textScaleFactor: textScale,
-                                //             style: const TextStyle(
-                                //                 color: Colors.white, fontSize: 15
-                                //                 // fontWeight: FontWeight.bold
-                                //                 ),
-                                //           ),
-                                //         ),
-                                //       ),
-                                //     ],
-                                //   ),
-                                // )
                               ],
                             ),
                             SizedBox(height: height * 0.001),

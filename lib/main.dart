@@ -36,6 +36,7 @@ import './model/network_utils/authentication.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import './model/blogs/blogs_provider.dart';
 import './model/popularRestaurants/popularRestaurantProvider.dart';
+import './model/restaurantProducts/restaurantProductProvider.dart';
 import './screens/searchScreen.dart';
 import './model/membership/membership.dart';
 import './screens/forgotPassword.dart';
@@ -43,6 +44,7 @@ import './screens/changePassword.dart';
 import './screens/wishlist.dart';
 import './screens/couponScreen.dart';
 import './model/coupon/couponProvider.dart';
+import './widgets/home/restaurantViewAll.dart';
 
 void main() {
   runApp(MyApp());
@@ -85,7 +87,8 @@ class MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (context) => CartItemProvider()),
         ChangeNotifierProvider(create: (context) => LocationProvider()),
         ChangeNotifierProvider(create: (context) => MembershipProvider()),
-        ChangeNotifierProvider(create: (context) => CouponProvider())
+        ChangeNotifierProvider(create: (context) => CouponProvider()),
+        ChangeNotifierProvider(create: (context) => RestaurantProductProvider())
       ],
       builder: (context, child) {
         final provider = Provider.of<LocationProvider>(context).loading;
@@ -118,7 +121,8 @@ class MyAppState extends State<MyApp> {
             '/profile-screen': (context) => Profile(),
             '/moms-genie-screen': (context) => MomsGenie(),
             '/restaurants-screen': (context) => RestaurantScreen(),
-            '/page-view-screen': (context) => PageViewScreen(),
+            '/restaurant-list': (context) => RestaurantList(),
+            // '/page-view-screen': (context) => PageViewScreen(),
             '/review-screen': (context) => ReviewScreen(),
             '/post-review': (context) => PostReview(),
             '/inbox-screen': (context) => InboxScreen(),
