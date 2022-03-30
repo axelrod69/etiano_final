@@ -7,6 +7,9 @@ import 'dart:convert';
 class PopularDishesProvider with ChangeNotifier {
   Map<String, dynamic> _popularDishes = {};
   Map<String, dynamic> _favouriteDishes = {};
+  Map<String, dynamic> _fetchDishes = {};
+  List<dynamic> _searchDish = [];
+
   String baseUrl = 'https://achievexsolutions.in/current_work/eatiano/';
   final bool _favourite = false;
 
@@ -22,6 +25,10 @@ class PopularDishesProvider with ChangeNotifier {
     return {..._favouriteDishes};
   }
 
+  List<dynamic> get searchDish {
+    return [..._searchDish];
+  }
+
   Future<void> fetchData() async {
     final url = Uri.parse(baseUrl + 'api/all_products');
     final response = await http.get(url);
@@ -29,6 +36,14 @@ class PopularDishesProvider with ChangeNotifier {
     PopularDishes popularDishes = popularDishesFromJson(response.body);
     _popularDishes = popularDishes.toJson();
     // print(_popularDishes);
+  }
+
+  Future<void> searchFoodData() async {
+    final url = Uri.parse(baseUrl + 'api/all_products');
+    final response = await http.get(url);
+    PopularDishes popularDishes = popularDishesFromJson(response.body);
+    _fetchDishes = popularDishes.toJson();
+    _fetchDishes['data'].forEach((value) => _searchDish.add(value));
   }
 
   Future<void> fetchFavouriteData() async {

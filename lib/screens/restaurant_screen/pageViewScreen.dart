@@ -32,17 +32,15 @@ class PageViewScreenState extends State<PageViewScreen> {
   @override
   void initState() {
     // TODO: implement initState
-    Future.delayed(Duration(seconds: 5), () async {
-      Provider.of<RestaurantProductProvider>(context, listen: false)
-          .fetchCategory(widget.id.toString())
-          .then((_) {
-        setState(() {
-          menuTitle =
-              Provider.of<RestaurantProductProvider>(context, listen: false)
-                  .category;
-          isLoading = false;
-          print('Menus $menuTitle');
-        });
+    Provider.of<RestaurantProductProvider>(context, listen: false)
+        .fetchCategory(widget.id.toString())
+        .then((_) {
+      setState(() {
+        menuTitle =
+            Provider.of<RestaurantProductProvider>(context, listen: false)
+                .category;
+        isLoading = false;
+        print('Menus $menuTitle');
       });
     });
 

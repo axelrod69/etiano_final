@@ -31,63 +31,65 @@ class SideDishState extends State<SideDish> {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     final textScale = MediaQuery.of(context).textScaleFactor * 1.2;
-    int counter = 0;
-    final provider = Provider.of<RestaurantProductProvider>(context).category;
+    // int counter = 0;
+    final provider =
+        Provider.of<RestaurantProductProvider>(context).productList;
+    print('Provider $provider');
 
     // print('Category ${widget.category}');
 
-    final Map<String, dynamic> _sideDish = {
-      "data": [
-        {
-          "id": "1",
-          "name": "Chelo Kebab",
-          "description":
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit,\nsed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-          "price": "455",
-          "image": 'assets/images/pngwing.com(4).png'
-        },
-        {
-          "id": "2",
-          "name": "Reshmi Kebab",
-          "description":
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit,\nsed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-          "price": "455",
-          "image": 'assets/images/pngwing.com(4).png'
-        },
-        {
-          "id": "3",
-          "name": "Chicken Tandoori",
-          "description":
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit,\nsed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-          "price": "455",
-          "image": 'assets/images/pngwing.com(4).png'
-        },
-        {
-          "id": "4",
-          "name": "Butter Chicken",
-          "description":
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit,\nsed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-          "price": "455",
-          "image": 'assets/images/pngwing.com(4).png'
-        },
-        {
-          "id": "5",
-          "name": "Palak Paneer",
-          "description":
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit,\nsed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-          "price": "455",
-          "image": 'assets/images/pngwing.com(4).png'
-        },
-        {
-          "id": "6",
-          "name": "Chicken Bharta",
-          "description":
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit,\nsed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-          "price": "455",
-          "image": 'assets/images/pngwing.com(4).png'
-        },
-      ]
-    };
+    // final Map<String, dynamic> _sideDish = {
+    //   "data": [
+    //     {
+    //       "id": "1",
+    //       "name": "Chelo Kebab",
+    //       "description":
+    //           'Lorem ipsum dolor sit amet, consectetur adipiscing elit,\nsed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    //       "price": "455",
+    //       "image": 'assets/images/pngwing.com(4).png'
+    //     },
+    //     {
+    //       "id": "2",
+    //       "name": "Reshmi Kebab",
+    //       "description":
+    //           'Lorem ipsum dolor sit amet, consectetur adipiscing elit,\nsed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    //       "price": "455",
+    //       "image": 'assets/images/pngwing.com(4).png'
+    //     },
+    //     {
+    //       "id": "3",
+    //       "name": "Chicken Tandoori",
+    //       "description":
+    //           'Lorem ipsum dolor sit amet, consectetur adipiscing elit,\nsed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    //       "price": "455",
+    //       "image": 'assets/images/pngwing.com(4).png'
+    //     },
+    //     {
+    //       "id": "4",
+    //       "name": "Butter Chicken",
+    //       "description":
+    //           'Lorem ipsum dolor sit amet, consectetur adipiscing elit,\nsed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    //       "price": "455",
+    //       "image": 'assets/images/pngwing.com(4).png'
+    //     },
+    //     {
+    //       "id": "5",
+    //       "name": "Palak Paneer",
+    //       "description":
+    //           'Lorem ipsum dolor sit amet, consectetur adipiscing elit,\nsed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    //       "price": "455",
+    //       "image": 'assets/images/pngwing.com(4).png'
+    //     },
+    //     {
+    //       "id": "6",
+    //       "name": "Chicken Bharta",
+    //       "description":
+    //           'Lorem ipsum dolor sit amet, consectetur adipiscing elit,\nsed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    //       "price": "455",
+    //       "image": 'assets/images/pngwing.com(4).png'
+    //     },
+    //   ]
+    // };
 
     // TODO: implement build
     return Scaffold(
@@ -100,13 +102,15 @@ class SideDishState extends State<SideDish> {
         itemBuilder: (context, index) => InkWell(
           onTap: () =>
               Navigator.pushNamed(context, '/item-details', arguments: {
-            'id': _sideDish["data"][index]["id"],
-            'name': _sideDish["data"][index]["name"],
-            'image': widget.image,
-            'price': _sideDish["data"][index]["price"],
-            'restaurantName': widget.restaurantName,
-            'rating': widget.rating,
-            'totalRatings': widget.numberOfRatings
+            'id': provider[index]["product_id"],
+            'name': provider[index]["product_name"],
+            'image': provider[index]['product_image'],
+            'price': provider[index]["product_selling_price"],
+            'restaurantName': provider[index]['restaurant_name'],
+            // 'rating': widget.rating,
+            'rating': provider[index]['product_rating'] ?? '4.8',
+            // 'totalRatings': widget.numberOfRatings
+            'totalRatings': provider[index]['product_rating_count'] ?? "124"
           }),
           child: Container(
             margin: EdgeInsets.only(top: height * 0.02),
@@ -129,8 +133,9 @@ class SideDishState extends State<SideDish> {
                             borderRadius:
                                 BorderRadius.all(Radius.circular(25))),
                         child: Center(
-                          child: Image.asset(_sideDish["data"][index]["image"]),
-                        ),
+                            // child: Image.asset(provider[index]["image"]),
+                            child: Image.network(
+                                'https://achievexsolutions.in/current_work/eatiano/${provider[index]['product_image']}')),
                       ),
                     ),
                     SizedBox(width: width * 0.02),
@@ -141,13 +146,14 @@ class SideDishState extends State<SideDish> {
                         height: height * 0.2,
                         // color: Colors.green,
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  _sideDish["data"][index]["name"],
-                                  // provider[index]['product_name'],
+                                  // provider[index]["name"],
+                                  provider[index]['product_name'],
                                   textScaleFactor: textScale,
                                   style: const TextStyle(
                                       color: Colors.white,
@@ -156,13 +162,15 @@ class SideDishState extends State<SideDish> {
                               ],
                             ),
                             SizedBox(height: height * 0.001),
-                            Text(
-                              _sideDish["data"][index]["description"],
-                              textScaleFactor: textScale,
-                              style: const TextStyle(
-                                  color: Colors.grey,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 9),
+                            Expanded(
+                              child: Text(
+                                provider[index]['product_description'],
+                                textScaleFactor: textScale,
+                                style: const TextStyle(
+                                    color: Colors.grey,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 9),
+                              ),
                             )
                           ],
                         ),
@@ -195,7 +203,8 @@ class SideDishState extends State<SideDish> {
                         ),
                         SizedBox(width: width * 0.02),
                         Text(
-                          _sideDish["data"][index]["price"],
+                          // provider[index]["price"],
+                          provider[index]['product_selling_price'],
                           textScaleFactor: textScale,
                           style: const TextStyle(
                               color: Colors.white,
@@ -210,7 +219,7 @@ class SideDishState extends State<SideDish> {
             ),
           ),
         ),
-        itemCount: 5,
+        itemCount: provider.length,
       ),
     ));
   }
