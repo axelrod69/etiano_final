@@ -270,8 +270,11 @@ class SignInFormState extends State<SignInForm> {
   }
 
   void facebookSignIn() async {
-    final LoginResult loginResult = await FacebookAuth.i.login();
-
-    if (loginResult == LoginStatus.success) {}
+    final result =
+        await FacebookAuth.i.login(permissions: ['public_profile', 'email']);
+    if (result.status == LoginStatus.success) {
+      final userData = await FacebookAuth.i.getUserData();
+      print(userData);
+    }
   }
 }

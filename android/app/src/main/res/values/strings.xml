@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>  
-    <string name="facebook_app_id">1168438547318447</string>
-    <string name="fb_login_protocol_scheme">fb1234</string>
-    <string name="facebook_client_token">058b9eefcfaa2c9fdd13e9b6720544c0</string>
-    <string name="app_name">Eatiano App</string>
+<resources>
+    <string name="facebook_app_id">771285950515029</string>
+    <string name="facebook_client_token">4114d42545d48663ce94d73bb629ad87</string>
 </resources>
