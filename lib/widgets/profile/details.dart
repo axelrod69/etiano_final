@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../model/profile/profileProvider.dart';
 
 class Details extends StatelessWidget {
   @override
@@ -6,6 +8,7 @@ class Details extends StatelessWidget {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     final textScale = MediaQuery.of(context).textScaleFactor * 1.2;
+    final provider = Provider.of<ProfileProvider>(context).profile;
 
     // TODO: implement build
     return Padding(
@@ -24,7 +27,8 @@ class Details extends StatelessWidget {
           ),
           SizedBox(height: height * 0.01),
           Text(
-            'Viv May',
+            provider['name'],
+            // 'Viv May',
             textScaleFactor: textScale,
             style: const TextStyle(color: Colors.white30, fontSize: 12),
           ),
@@ -39,7 +43,7 @@ class Details extends StatelessWidget {
           ),
           SizedBox(height: height * 0.01),
           Text(
-            'siddc.8@gmail.com',
+            provider['email'],
             textScaleFactor: textScale,
             style: const TextStyle(color: Colors.white30, fontSize: 12),
           ),
@@ -54,7 +58,7 @@ class Details extends StatelessWidget {
           ),
           SizedBox(height: height * 0.01),
           Text(
-            '9874137450',
+            provider['phone'],
             textScaleFactor: textScale,
             style: const TextStyle(color: Colors.white30, fontSize: 12),
           ),
@@ -89,35 +93,35 @@ class Details extends StatelessWidget {
             style: const TextStyle(color: Colors.white30, fontSize: 12),
           ),
           SizedBox(height: height * 0.02),
-          Text(
-            'Password',
-            textScaleFactor: textScale,
-            style: const TextStyle(
-                // color: Color.fromRGBO(131, 131, 131, 1),
-                color: Colors.white70,
-                fontSize: 17),
-          ),
-          SizedBox(height: height * 0.01),
-          Text(
-            '****************',
-            textScaleFactor: textScale,
-            style: const TextStyle(color: Colors.white30, fontSize: 12),
-          ),
-          SizedBox(height: height * 0.02),
-          Text(
-            'Confirm Password',
-            textScaleFactor: textScale,
-            style: const TextStyle(
-                // color: Color.fromRGBO(131, 131, 131, 1),
-                color: Colors.white70,
-                fontSize: 17),
-          ),
-          SizedBox(height: height * 0.01),
-          Text(
-            '****************',
-            textScaleFactor: textScale,
-            style: const TextStyle(color: Colors.white30, fontSize: 12),
-          ),
+          // Text(
+          //   'Password',
+          //   textScaleFactor: textScale,
+          //   style: const TextStyle(
+          //       // color: Color.fromRGBO(131, 131, 131, 1),
+          //       color: Colors.white70,
+          //       fontSize: 17),
+          // ),
+          // SizedBox(height: height * 0.01),
+          // Text(
+          //   '****************',
+          //   textScaleFactor: textScale,
+          //   style: const TextStyle(color: Colors.white30, fontSize: 12),
+          // ),
+          // SizedBox(height: height * 0.02),
+          // Text(
+          //   'Confirm Password',
+          //   textScaleFactor: textScale,
+          //   style: const TextStyle(
+          //       // color: Color.fromRGBO(131, 131, 131, 1),
+          //       color: Colors.white70,
+          //       fontSize: 17),
+          // ),
+          // SizedBox(height: height * 0.01),
+          // Text(
+          //   '****************',
+          //   textScaleFactor: textScale,
+          //   style: const TextStyle(color: Colors.white30, fontSize: 12),
+          // ),
           SizedBox(height: height * 0.02),
           Padding(
             padding: EdgeInsets.only(right: width * 0.1, bottom: height * 0.05),

@@ -32,6 +32,8 @@ class RestaurantsState extends State<Restaurants> {
     final response =
         Provider.of<PopularRestaurantProvider>(context).restaurants;
 
+    print('Response from widget $response');
+
     final Map<String, dynamic> _restaurants = {
       "data": [
         {
@@ -80,14 +82,15 @@ class RestaurantsState extends State<Restaurants> {
                 onTap: () => Navigator.of(context)
                     .pushNamed('/restaurants-screen', arguments: {
                   // 'id': _restaurants["data"][index]["id"],
-                  'id': provider[index]['restaurant_id'],
+                  // 'id': provider[index]['restaurant_id'],
+                  'id': response['data']['data'][index]['restaurant_id'],
                   // 'name': _restaurants["data"][index]["name"],
-                  'name': provider[index]['restaurant_name'],
+                  'name': response['data']['data'][index]['restaurant_name'],
                   'type': _restaurants["data"][index]["type"],
                   // 'rating': _restaurants["data"][index]["rating"],
                   'rating': _restaurants['data'][index]['rating'],
                   // 'image': _restaurants["data"][index]["image"],
-                  'image': provider[index]["restaurant_image"],
+                  'image': response['data']['data'][index]["restaurant_image"],
                   // 'numberOfRatings': _restaurants["data"][index]
                   //     ["numberOfRatings"]
                   'numberOfRatings': _restaurants['data'][index]
@@ -102,7 +105,7 @@ class RestaurantsState extends State<Restaurants> {
                     children: [
                       // Image.asset(_restaurants["data"][index]["image"]),
                       Image.network(
-                          'https://achievexsolutions.in/current_work/eatiano/${provider[index]['restaurant_image']}'),
+                          'https://achievexsolutions.in/current_work/eatiano/${response['data']['data'][index]['restaurant_image']}'),
                       SizedBox(width: width * 0.03),
                       Container(
                         width: width * 0.5,
@@ -115,7 +118,8 @@ class RestaurantsState extends State<Restaurants> {
                           children: [
                             Text(
                               // _restaurants["data"][index]["name"],
-                              provider[index]['restaurant_name'],
+                              response['data']['data'][index]
+                                  ['restaurant_name'],
                               textScaleFactor: textScale,
                               style: const TextStyle(
                                   color: Colors.white,

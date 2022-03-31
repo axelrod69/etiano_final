@@ -240,7 +240,9 @@ class SignUpFormState extends State<SignUpForm> {
       'name': name,
       'password': password,
       'phone': phoneNumber,
+      'country': 'India'
     };
+    print(data);
 
     var res = await Provider.of<Network>(context, listen: false)
         .authData(data, 'api/auth/signup');

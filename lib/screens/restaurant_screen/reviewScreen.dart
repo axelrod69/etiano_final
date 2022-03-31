@@ -128,8 +128,7 @@ class ReviewScreen extends StatelessWidget {
                     top: height * 0.04,
                     left: width * 0.03,
                     child: InkWell(
-                      onTap: () => Navigator.of(context)
-                          .pushReplacementNamed('/bottom-bar'),
+                      onTap: () => Navigator.of(context).pop(),
                       child: Container(
                         decoration: const BoxDecoration(boxShadow: [
                           BoxShadow(
@@ -264,7 +263,7 @@ class ReviewScreen extends StatelessWidget {
               children: [
                 TextButton(
                     onPressed: () => Navigator.of(context)
-                            .pushReplacementNamed('/post-review', arguments: {
+                            .pushNamed('/post-review', arguments: {
                           'id': id,
                           'name': name,
                           'type': type,

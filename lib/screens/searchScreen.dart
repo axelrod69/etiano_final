@@ -345,10 +345,18 @@ class SearchScreenState extends State<SearchScreen> {
                     : Expanded(
                         child: Container(
                           width: double.infinity,
-                          color: Colors.red,
+                          // color: Colors.red,
                           child: ListView.builder(
-                            itemBuilder: (context, index) => ListTile(
-                                title: Text(query[index]['product_name'])),
+                            itemBuilder: (context, index) => Container(
+                              margin: EdgeInsets.only(bottom: height * 0.01),
+                              child: ListTile(
+                                  leading: Image.network(
+                                      'https://achievexsolutions.in/current_work/eatiano/${query[index]['product_image']}'),
+                                  title: Text(
+                                    query[index]['product_name'],
+                                    style: TextStyle(color: Colors.white),
+                                  )),
+                            ),
                             // dishProvider['data'][index]['product_name']),
                             // provider[index]['product_name'])),
                             // itemCount: dishProvider["data"].length,
@@ -361,11 +369,18 @@ class SearchScreenState extends State<SearchScreen> {
                     : Expanded(
                         child: Container(
                           width: double.infinity,
-                          color: Colors.blue,
+                          // color: Colors.blue,
                           child: ListView.builder(
-                            itemBuilder: (context, index) => ListTile(
-                              title: Text(
-                                  queryRestaurant[index]['restaurant_name']),
+                            itemBuilder: (context, index) => Container(
+                              margin: EdgeInsets.only(bottom: height * 0.01),
+                              child: ListTile(
+                                leading: Image.network(
+                                    'https://achievexsolutions.in/current_work/eatiano/${queryRestaurant[index]['restaurant_image']}'),
+                                title: Text(
+                                  queryRestaurant[index]['restaurant_name'],
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
                             ),
                             itemCount: queryRestaurant.length,
                           ),

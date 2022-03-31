@@ -374,14 +374,12 @@ class RestaurantScreen extends StatelessWidget {
                           flex: 1,
                           child: InkWell(
                             onTap: () => Navigator.of(context)
-                                .pushReplacementNamed(
-                                    '/review-screen',
-                                    arguments: {
-                                  'id': id,
-                                  'name': name,
-                                  'type': type,
-                                  'rating': rating
-                                }),
+                                .pushNamed('/review-screen', arguments: {
+                              'id': id,
+                              'name': name,
+                              'type': type,
+                              'rating': rating
+                            }),
                             child: Container(
                               height: height * 0.05,
                               // color: Colors.blue,

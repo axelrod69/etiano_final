@@ -79,8 +79,7 @@ class PostReviewState extends State<PostReview> {
                       top: height * 0.04,
                       left: width * 0.03,
                       child: InkWell(
-                        onTap: () => Navigator.of(context)
-                            .pushReplacementNamed('/restaurants-screen'),
+                        onTap: () => Navigator.of(context).pop(),
                         child: Container(
                           decoration: const BoxDecoration(boxShadow: [
                             BoxShadow(

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../model/profile/profileProvider.dart';
+import 'package:provider/provider.dart';
 
 class EditProfile extends StatefulWidget {
   EditProfileState createState() => EditProfileState();
@@ -31,6 +33,7 @@ class EditProfileState extends State<EditProfile> {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     final textScale = MediaQuery.of(context).textScaleFactor * 1.2;
+    final provider = Provider.of<ProfileProvider>(context).profile;
 
     // TODO: implement build
     return Padding(
@@ -53,7 +56,7 @@ class EditProfileState extends State<EditProfile> {
                     keyboardType: TextInputType.name,
                     decoration: InputDecoration(
                         border: InputBorder.none,
-                        hintText: 'Siddhartha Chatterjee',
+                        hintText: provider['name'].toString(),
                         label: Text(
                           'Name',
                           textScaleFactor: textScale,
