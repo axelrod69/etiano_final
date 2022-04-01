@@ -38,6 +38,12 @@ class Network with ChangeNotifier {
         body: jsonEncode(data), headers: setHeaders());
   }
 
+  signUp(data, apiUrl) async {
+    var fullUrl = url + apiUrl;
+    return await http.post(Uri.parse(fullUrl),
+        body: data, headers: {'Accept': 'application/json'});
+  }
+
   forgotPassword(data, apiUrl) async {
     var fullUrl = url + apiUrl;
     return await http.post(Uri.parse(fullUrl),

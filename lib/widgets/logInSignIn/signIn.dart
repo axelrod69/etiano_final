@@ -10,6 +10,7 @@ import '../../../model/network_utils/authentication.dart';
 import '../../model/location/location.dart';
 import '../../model/network_utils/facebookModel.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class SignInForm extends StatefulWidget {
   @override
@@ -200,33 +201,36 @@ class SignInFormState extends State<SignInForm> {
                       ),
                     ),
                   ),
-                  Container(
-                    height: height * 0.06,
-                    width: double.infinity,
-                    // margin: EdgeInsets.only(bottom: height * 0.025),
-                    decoration: BoxDecoration(
-                        color: Color.fromRGBO(219, 74, 57, 0.8),
-                        borderRadius: BorderRadius.circular(28),
-                        boxShadow: const [
-                          BoxShadow(
-                              color: Colors.black,
-                              blurRadius: 20,
-                              spreadRadius: 10,
-                              offset: Offset(2, 1))
-                        ]),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset('assets/images/google-plus-logo.png',
-                            width: width * 0.06, height: height * 0.06),
-                        SizedBox(width: width * 0.02),
-                        Text('Login with Google',
-                            textScaleFactor:
-                                MediaQuery.of(context).textScaleFactor * 1.1,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold))
-                      ],
+                  InkWell(
+                    onTap: googleSignIn,
+                    child: Container(
+                      height: height * 0.06,
+                      width: double.infinity,
+                      // margin: EdgeInsets.only(bottom: height * 0.025),
+                      decoration: BoxDecoration(
+                          color: Color.fromRGBO(219, 74, 57, 0.8),
+                          borderRadius: BorderRadius.circular(28),
+                          boxShadow: const [
+                            BoxShadow(
+                                color: Colors.black,
+                                blurRadius: 20,
+                                spreadRadius: 10,
+                                offset: Offset(2, 1))
+                          ]),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset('assets/images/google-plus-logo.png',
+                              width: width * 0.06, height: height * 0.06),
+                          SizedBox(width: width * 0.02),
+                          Text('Login with Google',
+                              textScaleFactor:
+                                  MediaQuery.of(context).textScaleFactor * 1.1,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold))
+                        ],
+                      ),
                     ),
                   ),
                 ],
@@ -276,5 +280,11 @@ class SignInFormState extends State<SignInForm> {
       final userData = await FacebookAuth.i.getUserData();
       print(userData);
     }
+  }
+
+  void googleSignIn() async {
+    final _googleSignIn = GoogleSignIn();
+    var result = await _googleSignIn.signIn();
+    print("Result $result");
   }
 }

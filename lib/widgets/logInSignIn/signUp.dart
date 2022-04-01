@@ -245,10 +245,13 @@ class SignUpFormState extends State<SignUpForm> {
     print(data);
 
     var res = await Provider.of<Network>(context, listen: false)
-        .authData(data, 'api/auth/signup');
+        .signUp(data, 'api/auth/signup');
     var body = json.decode(res.body);
+    print('Response $body');
+    print('Access Token ${body['access_token']}');
     SharedPreferences localStorage = await SharedPreferences.getInstance();
-    localStorage.setString('token', body['access_token']);
+    await localStorage.setString('token', body['access_token']);
+    print('localStorage $localStorage');
     Navigator.of(context).pushNamed('/bottom-bar');
   }
 }
