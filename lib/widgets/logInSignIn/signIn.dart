@@ -11,6 +11,7 @@ import '../../model/location/location.dart';
 import '../../model/network_utils/facebookModel.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:random_password_generator/random_password_generator.dart';
 
 class SignInForm extends StatefulWidget {
   @override
@@ -20,8 +21,14 @@ class SignInForm extends StatefulWidget {
 class SignInFormState extends State<SignInForm> {
   final _passwordFocus = FocusNode();
   final _key = GlobalKey<FormState>();
+  final _fbKey = GlobalKey<FormState>();
+  final _googleKey = GlobalKey<FormState>();
+  bool isValidated = false;
   late var inputEmail;
   late var inputPassword;
+  late var phoneNumber;
+  final generatedPassword = RandomPasswordGenerator();
+  String randomPassword = '';
 
   @override
   void dispose() {
@@ -274,17 +281,159 @@ class SignInFormState extends State<SignInForm> {
   }
 
   void facebookSignIn() async {
-    final result =
-        await FacebookAuth.i.login(permissions: ['public_profile', 'email']);
-    if (result.status == LoginStatus.success) {
-      final userData = await FacebookAuth.i.getUserData();
-      print(userData);
-    }
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: Text(
+                'Please Enter Phone Number to Sign Up',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              content: Form(
+                key: _fbKey,
+                child: TextFormField(
+                  decoration: InputDecoration(
+                      label: Text('Phone Number'),
+                      focusedBorder: InputBorder.none),
+                  keyboardType: TextInputType.number,
+                  validator: (phone) {
+                    if (phone == null || phone.isEmpty) {
+                      setState(() {
+                        isValidated = true;
+                      });
+                      return 'Phone Number Required';
+                    } else {
+                      phoneNumber = phone;
+                      return null;
+                    }
+                  },
+                ),
+              ),
+              actions: [
+                TextButton(
+                    onPressed: () async {
+                      // !isValidated ? null : Navigator.of(context).pop();
+                      if (_fbKey.currentState != null &&
+                          _fbKey.currentState!.validate()) {
+                        Navigator.of(context).pop();
+                        randomPassword = generatedPassword.randomPassword(
+                            letters: false,
+                            uppercase: false,
+                            numbers: true,
+                            specialChar: false,
+                            passwordLength: 7);
+                        final result = await FacebookAuth.i
+                            .login(permissions: ['public_profile', 'email']);
+                        if (result.status == LoginStatus.success) {
+                          final userData = await FacebookAuth.i.getUserData();
+                          print(userData);
+                          print(phoneNumber);
+                          print(randomPassword);
+                          var data = {
+                            'email': userData['email'],
+                            'name': userData['name'],
+                            'password': randomPassword,
+                            'phone': phoneNumber,
+                            'fb_id': userData['id'],
+                            'country': 'India'
+                          };
+                          var res = Provider.of<Network>(context, listen: false)
+                              .facebookSignUp(data, 'api/auth/signup');
+                          var body = json.decode(res.body);
+                          SharedPreferences localStorage =
+                              await SharedPreferences.getInstance();
+                          await localStorage.setString(
+                              'token', body['access_token']);
+                          print('Response $body');
+                          Navigator.of(context).pushNamed('/bottom-bar');
+                        }
+                      } else {
+                        print('error-response');
+                      }
+                    },
+                    child: Text(
+                      'Continue',
+                      style: TextStyle(
+                          color: Colors.red, fontWeight: FontWeight.bold),
+                    ))
+              ],
+            ));
   }
 
   void googleSignIn() async {
-    final _googleSignIn = GoogleSignIn();
-    var result = await _googleSignIn.signIn();
-    print("Result $result");
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: Text(
+                'Please Enter Phone Number to Sign Up',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              content: Form(
+                key: _googleKey,
+                child: TextFormField(
+                  decoration: InputDecoration(
+                      label: Text('Phone Number'),
+                      focusedBorder: InputBorder.none),
+                  keyboardType: TextInputType.number,
+                  validator: (phone) {
+                    if (phone == null || phone.isEmpty) {
+                      setState(() {
+                        isValidated = true;
+                      });
+                      return 'Phone Number Required';
+                    } else {
+                      phoneNumber = phone;
+                      return null;
+                    }
+                  },
+                ),
+              ),
+              actions: [
+                TextButton(
+                    onPressed: () async {
+                      // !isValidated ? null : Navigator.of(context).pop();
+                      if (_googleKey.currentState != null &&
+                          _googleKey.currentState!.validate()) {
+                        Navigator.of(context).pop();
+                        randomPassword = generatedPassword.randomPassword(
+                            letters: false,
+                            uppercase: false,
+                            numbers: true,
+                            specialChar: false,
+                            passwordLength: 7);
+                        final _googleSignIn = GoogleSignIn();
+                        var result = await _googleSignIn.signIn();
+                        var data = {
+                          'email': result!.email,
+                          'name': result.displayName,
+                          'password': randomPassword,
+                          'phone': phoneNumber,
+                          'o_auth': result.id,
+                          'country': 'India'
+                        };
+                        print("Result $result");
+                        print(phoneNumber);
+                        print(randomPassword);
+                        var res =
+                            await Provider.of<Network>(context, listen: false)
+                                .googleSignUp(data, 'api/auth/signup');
+                        var body = json.decode(res.body);
+                        print('Response $body');
+                        SharedPreferences localStorage =
+                            await SharedPreferences.getInstance();
+                        await localStorage.setString(
+                            'token', body['access_token']);
+                        print('Response $body');
+                        Navigator.of(context).pushNamed('/bottom-bar');
+                      } else {
+                        print('error-response');
+                      }
+                    },
+                    child: Text(
+                      'Continue',
+                      style: TextStyle(
+                          color: Colors.red, fontWeight: FontWeight.bold),
+                    ))
+              ],
+            ));
   }
 }

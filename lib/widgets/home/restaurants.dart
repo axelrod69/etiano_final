@@ -27,8 +27,8 @@ class RestaurantsState extends State<Restaurants> {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     var textScale = MediaQuery.of(context).textScaleFactor;
-    final provider =
-        Provider.of<PopularRestaurantProvider>(context).restaurantList;
+    // final provider =
+    //     Provider.of<PopularRestaurantProvider>(context).restaurantList;
     final response =
         Provider.of<PopularRestaurantProvider>(context).restaurants;
 
@@ -83,18 +83,20 @@ class RestaurantsState extends State<Restaurants> {
                     .pushNamed('/restaurants-screen', arguments: {
                   // 'id': _restaurants["data"][index]["id"],
                   // 'id': provider[index]['restaurant_id'],
-                  'id': response['data']['data'][index]['restaurant_id'],
+                  'id': response['data']['data'][index]['restaurant_id']
+                      .toString(),
                   // 'name': _restaurants["data"][index]["name"],
                   'name': response['data']['data'][index]['restaurant_name'],
                   'type': _restaurants["data"][index]["type"],
                   // 'rating': _restaurants["data"][index]["rating"],
-                  'rating': _restaurants['data'][index]['rating'],
+                  'rating': response['data']['data'][index]['rating'],
                   // 'image': _restaurants["data"][index]["image"],
                   'image': response['data']['data'][index]["restaurant_image"],
                   // 'numberOfRatings': _restaurants["data"][index]
                   //     ["numberOfRatings"]
-                  'numberOfRatings': _restaurants['data'][index]
-                      ['numberOfRatings']
+                  'numberOfRatings': response['data']['data'][index]
+                          ['numberOfRatings'] ??
+                      '124'
                 }),
                 child: Container(
                   width: double.infinity,
@@ -152,7 +154,8 @@ class RestaurantsState extends State<Restaurants> {
                                 Image.asset('assets/images/Path 8561.png'),
                                 SizedBox(width: width * 0.02),
                                 Text(
-                                  _restaurants['data'][index]['rating'],
+                                  response['data']['data'][index]['rating'] ??
+                                      '4.8',
                                   // _restaurants["data"][index]["rating"],
                                   textScaleFactor: textScale,
                                   style: const TextStyle(
@@ -161,7 +164,7 @@ class RestaurantsState extends State<Restaurants> {
                                 ),
                                 SizedBox(width: width * 0.02),
                                 Text(
-                                  '(${_restaurants['data'][index]["numberOfRatings"]} ratings)',
+                                  '(${response['data']['data'][index]["numberOfRatings"] ?? '124'} ratings)',
                                   textScaleFactor: textScale,
                                   style: const TextStyle(color: Colors.white),
                                 )

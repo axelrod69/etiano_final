@@ -44,6 +44,18 @@ class Network with ChangeNotifier {
         body: data, headers: {'Accept': 'application/json'});
   }
 
+  facebookSignUp(data, apiUrl) async {
+    var fullUrl = url + apiUrl;
+    return await http.post(Uri.parse(fullUrl),
+        body: data, headers: {'Accept': 'application/json'});
+  }
+
+  googleSignUp(data, apiUrl) async {
+    var fullUrl = url + apiUrl;
+    return await http.post(Uri.parse(fullUrl),
+        body: data, headers: {'Accept': 'application/json'});
+  }
+
   forgotPassword(data, apiUrl) async {
     var fullUrl = url + apiUrl;
     return await http.post(Uri.parse(fullUrl),
