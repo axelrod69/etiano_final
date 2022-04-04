@@ -30,7 +30,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 // }
 
 class CartItemProvider with ChangeNotifier {
-  Map<String, dynamic> _cartItems = {};
+  List<dynamic> _cartItems = [];
   // Map<String, dynamic> _individualItems = {};
   final List<dynamic> _cartItemList = [];
   List<dynamic> _individualItems = [];
@@ -51,8 +51,8 @@ class CartItemProvider with ChangeNotifier {
     return [..._cartItemList];
   }
 
-  Map<String, dynamic> get cartItems {
-    return {..._cartItems};
+  List<dynamic> get cartItems {
+    return [..._cartItems];
   }
 
   Future<void> fetchCartItems() async {
@@ -67,12 +67,14 @@ class CartItemProvider with ChangeNotifier {
       'Authorization': 'Bearer ${localStorage.getString('token')}',
       'Accept': 'application/json'
     });
-    Cart cartJson = cartFromJson(response.body);
-
-    _cartItems = cartJson.toJson();
+    // List<Cart> cartJson = cartFromJson(response.body);
+    // _cartItems = cartJson;
+    // _cartItems = cartJson.toJson() as List;
     // _cartItems.forEach((key, values) => _cartItemList.add(values['data']));
 
-    // print('Cart Item $_cartItems');
+    _cartItems = json.decode(response.body);
+
+    print('Cart Item $_cartItems');
   }
 
   Future<void> deleteCartItems(String id) async {
@@ -86,7 +88,7 @@ class CartItemProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> addItems(
+  Future<Map<String, dynamic>> addItems(
       int id,
       String name,
       String restaurantName,
@@ -120,7 +122,9 @@ class CartItemProvider with ChangeNotifier {
           'Authorization': 'Bearer ${localStorage.getString('token')}',
           'Accept': 'application/json'
         });
-    // print(response.body);
+    Map<String, dynamic> message = json.decode(response.body);
+    print(message);
+    return message;
     // print('Token ${network.getToken()}');
   }
 
@@ -162,7 +166,14 @@ class CartItemProvider with ChangeNotifier {
     //     double.parse(value['product_selling_price']) *
     //         double.parse(value['quantity']));
     // return total;
-    total = _cartItems['data'].fold(
+    // total =
+    // _cartItems['data'].fold(
+    //     0,
+    //     (price, value) =>
+    //         price +
+    //         (double.parse(value['product_selling_price']) *
+    //             double.parse(value['quantity'])));
+    total = _cartItems.fold(
         0,
         (price, value) =>
             price +
@@ -188,29 +199,29 @@ class CartItemProvider with ChangeNotifier {
 }
 
 // print(network.getToken());
-    // print(restaurantName);
-    // if (!_cartItems.any((element) => element.id == id)) {
-    // if (_cartItems.contains(restaurantName) == restaurantName) {
-    // if (_cartItems.contains(restaurantName)) {
-    // _cartItems.add(CartItem(
-    //     id: id,
-    //     name: name,
-    //     restaurantName: restaurantName,
-    //     price: double.parse(price),
-    //     quantity: quantity.toDouble(),
-    //     image: image,
-    //     rating: rating,
-    //     totalRatings: totalRatings));
-    // } else {
-    //   _cartItems.clear();
-    //   _cartItems.add(CartItem(
-    //       id: id,
-    //       name: name,
-    //       restaurantName: restaurantName,
-    //       price: double.parse(price),
-    //       quantity: quantity.toDouble(),
-    //       image: image,
-    //       rating: rating,
-    //       totalRatings: totalRatings));
-    // notifyListeners();
-    // }
+// print(restaurantName);
+// if (!_cartItems.any((element) => element.id == id)) {
+// if (_cartItems.contains(restaurantName) == restaurantName) {
+// if (_cartItems.contains(restaurantName)) {
+// _cartItems.add(CartItem(
+//     id: id,
+//     name: name,
+//     restaurantName: restaurantName,
+//     price: double.parse(price),
+//     quantity: quantity.toDouble(),
+//     image: image,
+//     rating: rating,
+//     totalRatings: totalRatings));
+// } else {
+//   _cartItems.clear();
+//   _cartItems.add(CartItem(
+//       id: id,
+//       name: name,
+//       restaurantName: restaurantName,
+//       price: double.parse(price),
+//       quantity: quantity.toDouble(),
+//       image: image,
+//       rating: rating,
+//       totalRatings: totalRatings));
+// notifyListeners();
+// }

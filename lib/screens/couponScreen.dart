@@ -67,13 +67,24 @@ class CouponScreenState extends State<CouponScreen> {
                     // double.parse(price) >=
                     price >= double.parse(provider['data'][index]['condition'])
                         ? InkWell(
-                            onTap: () {
+                            onTap: () async {
                               Provider.of<CouponProvider>(context,
                                       listen: false)
                                   .selectedCoupon(
                                       provider['data'][index]['coupon_code'],
                                       double.parse(
                                           provider['data'][index]['discount']));
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                      backgroundColor: Colors.white,
+                                      content: Text(
+                                        'Coupon ${provider['data'][index]['coupon_code']} Applied',
+                                        textScaleFactor: textScale,
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold),
+                                      )));
+                              Navigator.of(context).pop();
                               // Navigator.of(context)
                               //     .pushNamed('/cart-screen-detail');
                             },

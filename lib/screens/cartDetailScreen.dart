@@ -72,7 +72,7 @@ class CartDetailScreenState extends State<CartDetailScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            cartItems['data'][0]['restaurant_name'],
+                            cartItems[0]['restaurant_name'],
                             textScaleFactor: textScale,
                             style: const TextStyle(
                                 color: Colors.white,
@@ -165,13 +165,13 @@ class CartDetailScreenState extends State<CartDetailScreen> {
                         Text(
                           // '${provider[index].name} x ${provider[index].quantity}',
                           // '${cartItems[index].name} x ${cartItems[index].quantity}',
-                          '${cartItems['data'][index]['product_name']} x ${cartItems['data'][index]['quantity']}',
+                          '${cartItems[index]['product_name']} x ${cartItems[index]['quantity']}',
                           textScaleFactor: textScale,
                           style: const TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 12),
                         ),
                         Text(
-                          '₹ ${(double.parse(cartItems['data'][index]['product_selling_price'])) * double.parse(cartItems['data'][index]['quantity'])}',
+                          '₹ ${(double.parse(cartItems[index]['product_selling_price'])) * double.parse(cartItems[index]['quantity'])}',
                           textScaleFactor: textScale,
                           style: const TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 12),
@@ -189,7 +189,7 @@ class CartDetailScreenState extends State<CartDetailScreen> {
                   )
                 ],
               ),
-              itemCount: cartItems['data'].length,
+              itemCount: cartItems.length,
             ),
             SizedBox(height: height * 0.02),
             Container(
@@ -493,7 +493,7 @@ class CartDetailScreenState extends State<CartDetailScreen> {
               child: InkWell(
                 onTap: () {
                   Navigator.of(context).pushNamed('/payment-screen',
-                      arguments: {'discount': couponProvider['amount']});
+                      arguments: {'discount': couponProvider['amount'] ?? 0.0});
                   print('Discount Amount ${couponProvider['amount']}');
                 },
                 child: Container(

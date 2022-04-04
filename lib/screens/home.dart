@@ -33,6 +33,9 @@ class HomeScreenState extends State<HomeScreen> {
     final width = MediaQuery.of(context).size.width;
     final provider = Provider.of<CartItemProvider>(context).cartItems;
 
+    print('height $height');
+    print('width $width');
+
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(

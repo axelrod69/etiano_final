@@ -15,9 +15,14 @@ class LocationProvider with ChangeNotifier {
   }
 
   String _address = '';
+  String _deliveryAddress = '';
 
   String get address {
     return _address;
+  }
+
+  String get deliveryAddress {
+    return _deliveryAddress;
   }
 
   Future<Position> _getGeoLocationPosition() async {
@@ -51,6 +56,8 @@ class LocationProvider with ChangeNotifier {
     print(placemarks);
     Placemark place = placemarks[0];
     _address =
+        '${place.street}, ${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';
+    _deliveryAddress =
         '${place.street}, ${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';
     // setState(() {});
     notifyListeners();

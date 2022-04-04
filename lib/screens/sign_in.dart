@@ -12,6 +12,8 @@ class SignInState extends State<SignIn> {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     var statusBarPadding = MediaQuery.of(context).padding.top;
+    bool checkHeight = height > 800;
+    bool checkHeightTwo = height < 600;
 
     // TODO: implement build
     return Scaffold(
@@ -25,7 +27,9 @@ class SignInState extends State<SignIn> {
           // crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              height: (height - statusBarPadding) * 0.80,
+              height: checkHeight
+                  ? (height - statusBarPadding) * 0.80
+                  : (height - statusBarPadding) * 0.85,
               // padding: const EdgeInsets.fromLTRB(10, 60, 10, 10),
               padding: EdgeInsets.only(
                   left: width * 0.04,
@@ -44,7 +48,9 @@ class SignInState extends State<SignIn> {
               ),
             ),
             Container(
-              height: (height - MediaQuery.of(context).padding.top) * 0.20,
+              height: checkHeight
+                  ? (height - MediaQuery.of(context).padding.top) * 0.20
+                  : (height - MediaQuery.of(context).padding.top) * 0.15,
               width: double.infinity,
               padding: EdgeInsets.only(
                   top: (height - statusBarPadding) * 0.01,
@@ -60,10 +66,14 @@ class SignInState extends State<SignIn> {
                         'Don\'t have an Account?',
                         textScaleFactor:
                             MediaQuery.of(context).textScaleFactor * 1.2,
-                        style: const TextStyle(
+                        style: TextStyle(
                             color: Colors.grey,
                             fontWeight: FontWeight.bold,
-                            fontSize: 15),
+                            fontSize: checkHeightTwo
+                                ? 12
+                                : checkHeight
+                                    ? 15
+                                    : 18),
                       ),
                       const SizedBox(width: 2),
                       InkWell(
@@ -75,8 +85,14 @@ class SignInState extends State<SignIn> {
                           'Sign Up',
                           textScaleFactor:
                               MediaQuery.of(context).textScaleFactor * 1.2,
-                          style: const TextStyle(
-                              color: Colors.red, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              color: Colors.red,
+                              fontWeight: FontWeight.bold,
+                              fontSize: checkHeightTwo
+                                  ? 12
+                                  : checkHeight
+                                      ? 18
+                                      : 15),
                         ),
                       )
                     ],
@@ -85,9 +101,13 @@ class SignInState extends State<SignIn> {
                     'Lorem ipsum dolor sit amet, consectetur',
                     textScaleFactor:
                         MediaQuery.of(context).textScaleFactor * 1.2,
-                    style: const TextStyle(
+                    style: TextStyle(
                         color: Colors.white,
-                        fontSize: 8,
+                        fontSize: checkHeightTwo
+                            ? 6
+                            : checkHeight
+                                ? 10
+                                : 8,
                         fontWeight: FontWeight.bold),
                   ),
                 ],

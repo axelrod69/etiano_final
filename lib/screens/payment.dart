@@ -55,7 +55,7 @@ class PaymentScreenState extends State<PaymentScreen> {
     }
   }
 
-  @override 
+  @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
@@ -134,7 +134,7 @@ class PaymentScreenState extends State<PaymentScreen> {
               ),
             ),
           )),
-      body: Column(
+      body: ListView(
         children: [
           Padding(
             padding: EdgeInsets.only(left: width * 0.06, right: width * 0.06),
@@ -167,7 +167,8 @@ class PaymentScreenState extends State<PaymentScreen> {
                       Flexible(
                         flex: 1,
                         child: InkWell(
-                          onTap: () {},
+                          onTap: () => Navigator.of(context)
+                              .pushNamed('/change-location'),
                           child: Text('Change',
                               textScaleFactor: textScale,
                               style: const TextStyle(

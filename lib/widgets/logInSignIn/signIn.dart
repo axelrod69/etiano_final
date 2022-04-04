@@ -40,10 +40,16 @@ class SignInFormState extends State<SignInForm> {
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
+    bool checkHeight = height > 800;
+    bool checkHeightTwo = height < 600;
+
+    print('Height $height');
+    print('Width $width');
+    print('Check Height $checkHeight');
 
     // TODO: implement build
     return Container(
-      padding: EdgeInsets.only(top: height * 0.05),
+      padding: EdgeInsets.only(top: height * 0.04),
       decoration: BoxDecoration(
           border: Border.all(color: const Color.fromRGBO(198, 241, 74, 1))),
       child: Column(
@@ -53,7 +59,11 @@ class SignInFormState extends State<SignInForm> {
               textScaleFactor: MediaQuery.of(context).textScaleFactor * 1.2,
               style: TextStyle(
                   color: Colors.white,
-                  fontSize: 13,
+                  fontSize: checkHeightTwo
+                      ? 9
+                      : checkHeight
+                          ? 13
+                          : 10,
                   fontWeight: FontWeight.bold)),
           Padding(
             // padding: const EdgeInsets.fromLTRB(50, 40, 50, 0),
@@ -64,7 +74,7 @@ class SignInFormState extends State<SignInForm> {
               child: Column(
                 children: [
                   Container(
-                    height: height * 0.06,
+                    height: checkHeight ? height * 0.06 : height * 0.066,
                     padding: EdgeInsets.only(left: width * 0.045),
                     decoration: BoxDecoration(
                         color: Colors.white,
@@ -76,32 +86,63 @@ class SignInFormState extends State<SignInForm> {
                               spreadRadius: 10,
                               offset: Offset(2, 1))
                         ]),
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        label: Text(
-                          'Your Email',
-                          textScaleFactor:
-                              MediaQuery.of(context).textScaleFactor * 1,
-                        ),
-                        focusedBorder: InputBorder.none,
-                      ),
-                      keyboardType: TextInputType.emailAddress,
-                      textInputAction: TextInputAction.next,
-                      onFieldSubmitted: (_) =>
-                          FocusScope.of(context).requestFocus(_passwordFocus),
-                      validator: (email) {
-                        if (email!.isEmpty) {
-                          return 'Please Enter Email';
-                        } else {
-                          inputEmail = email;
-                          return null;
-                        }
-                      },
-                    ),
+                    child: checkHeightTwo
+                        ? TextFormField(
+                            decoration: InputDecoration(
+                                // label: Text(
+                                //   'Your Email',
+                                //   textScaleFactor:
+                                //       MediaQuery.of(context).textScaleFactor * 1,
+                                // ),
+                                errorStyle: TextStyle(
+                                    fontSize: checkHeightTwo
+                                        ? 8
+                                        : checkHeight
+                                            ? 6
+                                            : 7),
+                                hintText: 'Your Email',
+                                focusedBorder: InputBorder.none,
+                                border: InputBorder.none),
+                            keyboardType: TextInputType.emailAddress,
+                            textInputAction: TextInputAction.next,
+                            onFieldSubmitted: (_) => FocusScope.of(context)
+                                .requestFocus(_passwordFocus),
+                            validator: (email) {
+                              if (email!.isEmpty) {
+                                return '\u26A0 Please Enter Email';
+                              } else {
+                                inputEmail = email;
+                                return null;
+                              }
+                            },
+                          )
+                        : TextFormField(
+                            decoration: InputDecoration(
+                                label: Text(
+                                  'Your Email',
+                                  textScaleFactor:
+                                      MediaQuery.of(context).textScaleFactor *
+                                          1,
+                                ),
+                                focusedBorder: InputBorder.none,
+                                border: InputBorder.none),
+                            keyboardType: TextInputType.emailAddress,
+                            textInputAction: TextInputAction.next,
+                            onFieldSubmitted: (_) => FocusScope.of(context)
+                                .requestFocus(_passwordFocus),
+                            validator: (email) {
+                              if (email!.isEmpty) {
+                                return 'Please Enter Email';
+                              } else {
+                                inputEmail = email;
+                                return null;
+                              }
+                            },
+                          ),
                   ),
                   SizedBox(height: height * 0.03),
                   Container(
-                    height: height * 0.06,
+                    height: checkHeight ? height * 0.06 : height * 0.066,
                     padding: EdgeInsets.only(left: width * 0.045),
                     decoration: BoxDecoration(
                         color: Colors.white,
@@ -164,21 +205,23 @@ class SignInFormState extends State<SignInForm> {
                       Navigator.of(context).pushNamed('/forgot-password');
                     },
                     child: Text('Forgot your Password?',
-                        textScaleFactor:
-                            MediaQuery.of(context).textScaleFactor * 0.95,
+                        textScaleFactor: checkHeight
+                            ? MediaQuery.of(context).textScaleFactor * 0.95
+                            : MediaQuery.of(context).textScaleFactor * 1.1,
                         style: TextStyle(
                             color: Colors.white, fontWeight: FontWeight.bold)),
                   ),
                   SizedBox(height: height * 0.06),
                   Text('or Login With',
-                      textScaleFactor:
-                          MediaQuery.of(context).textScaleFactor * 1.1,
+                      textScaleFactor: checkHeight
+                          ? MediaQuery.of(context).textScaleFactor * 1.1
+                          : MediaQuery.of(context).textScaleFactor * 1.2,
                       style: TextStyle(
                           color: Colors.white, fontWeight: FontWeight.bold)),
                   InkWell(
                     onTap: facebookSignIn,
                     child: Container(
-                      height: height * 0.06,
+                      height: checkHeight ? height * 0.06 : height * 0.07,
                       width: double.infinity,
                       margin: EdgeInsets.only(
                           top: height * 0.015, bottom: height * 0.025),
@@ -188,9 +231,9 @@ class SignInFormState extends State<SignInForm> {
                           boxShadow: const [
                             BoxShadow(
                                 color: Colors.black,
-                                blurRadius: 20,
-                                spreadRadius: 10,
-                                offset: Offset(2, 1))
+                                blurRadius: 8,
+                                // spreadRadius: 10,
+                                offset: Offset(2, 2))
                           ]),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -199,8 +242,10 @@ class SignInFormState extends State<SignInForm> {
                               width: width * 0.03, height: height * 0.03),
                           SizedBox(width: width * 0.05),
                           Text('Login with Facebook',
-                              textScaleFactor:
-                                  MediaQuery.of(context).textScaleFactor * 1,
+                              textScaleFactor: checkHeight
+                                  ? MediaQuery.of(context).textScaleFactor * 1
+                                  : MediaQuery.of(context).textScaleFactor *
+                                      1.1,
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold))
@@ -211,7 +256,7 @@ class SignInFormState extends State<SignInForm> {
                   InkWell(
                     onTap: googleSignIn,
                     child: Container(
-                      height: height * 0.06,
+                      height: checkHeight ? height * 0.06 : height * 0.07,
                       width: double.infinity,
                       // margin: EdgeInsets.only(bottom: height * 0.025),
                       decoration: BoxDecoration(
@@ -220,9 +265,9 @@ class SignInFormState extends State<SignInForm> {
                           boxShadow: const [
                             BoxShadow(
                                 color: Colors.black,
-                                blurRadius: 20,
-                                spreadRadius: 10,
-                                offset: Offset(2, 1))
+                                blurRadius: 8,
+                                // spreadRadius: 10,
+                                offset: Offset(2, 2))
                           ]),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -231,8 +276,10 @@ class SignInFormState extends State<SignInForm> {
                               width: width * 0.06, height: height * 0.06),
                           SizedBox(width: width * 0.02),
                           Text('Login with Google',
-                              textScaleFactor:
-                                  MediaQuery.of(context).textScaleFactor * 1.1,
+                              textScaleFactor: checkHeight
+                                  ? MediaQuery.of(context).textScaleFactor * 1
+                                  : MediaQuery.of(context).textScaleFactor *
+                                      1.1,
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold))

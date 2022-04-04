@@ -37,9 +37,9 @@ class MomsGenieWidget extends StatelessWidget {
                   boxShadow: [
                     BoxShadow(
                         color: Colors.black,
-                        spreadRadius: 10,
-                        blurRadius: 15,
-                        offset: Offset(5, 2))
+                        // spreadRadius: 10,
+                        blurRadius: 5,
+                        offset: Offset(8, 3))
                   ]),
               child: Column(
                 children: [

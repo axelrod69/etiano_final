@@ -57,7 +57,7 @@ class CartScreenState extends State<CartScreen> {
                 color: Colors.red,
               ),
             )
-          : cartProvider['data'].length > 0
+          : cartProvider.length > 0
               ? Column(
                   children: [
                     Container(
@@ -98,7 +98,7 @@ class CartScreenState extends State<CartScreen> {
                                             //   height: height * 0.1,
                                             // ),
                                             child: Image.network(
-                                              'https://achievexsolutions.in/current_work/eatiano/${cartProvider['data'][index]['product_image']}',
+                                              'https://achievexsolutions.in/current_work/eatiano/${cartProvider[index]['product_image']}',
                                               width: width * 0.22,
                                               height: height * 0.1,
                                             ),
@@ -120,7 +120,7 @@ class CartScreenState extends State<CartScreen> {
                                                 children: [
                                                   Text(
                                                     // cartProvider[index].restaurantName,
-                                                    cartProvider['data'][index]
+                                                    cartProvider[index]
                                                         ['product_name'],
                                                     textScaleFactor: textScale,
                                                     style: const TextStyle(
@@ -156,15 +156,14 @@ class CartScreenState extends State<CartScreen> {
                                                           //             .quantity)
                                                           //     .toString(),
                                                           (double.parse(cartProvider[
-                                                                              'data']
-                                                                          [index][
-                                                                      'product_selling_price']) *
-                                                                  double.parse(cartProvider[
-                                                                              'data']
-                                                                          [
                                                                           index]
                                                                       [
-                                                                      'quantity']))
+                                                                      'product_selling_price']) *
+                                                                  double.parse(
+                                                                      cartProvider[
+                                                                              index]
+                                                                          [
+                                                                          'quantity']))
                                                               .toString(),
                                                           // totalAmount.toString(),
                                                           // Provider.of<CartItemProvider>(
@@ -248,8 +247,7 @@ class CartScreenState extends State<CartScreen> {
                                                               context,
                                                               listen: false)
                                                           .deleteCartItems(
-                                                              cartProvider['data']
-                                                                          [
+                                                              cartProvider[
                                                                           index]
                                                                       [
                                                                       'cart_id']
@@ -347,14 +345,14 @@ class CartScreenState extends State<CartScreen> {
                             ],
                           ),
                         ),
-                        itemCount: cartProvider['data'].length,
+                        itemCount: cartProvider.length,
                         // itemCount: cartProvider['data'].length,
                       ),
                     ),
                     Padding(
                       padding: EdgeInsets.only(
                           left: width * 0.08, right: width * 0.08),
-                      child: InkWell(
+                      child: GestureDetector(
                         onTap: () => Navigator.of(context)
                             .pushNamed('/cart-screen-detail'),
                         child: Container(

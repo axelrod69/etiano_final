@@ -61,7 +61,7 @@ class PopularDishesState extends State<PopularDishes> {
           )
         : Container(
             width: double.infinity,
-            height: height * 0.28,
+            height: height * 0.32,
             // color: Colors.red,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
@@ -92,7 +92,8 @@ class PopularDishesState extends State<PopularDishes> {
                     // right: width * 0.02
                   ),
                   height: double.infinity,
-                  width: width * 0.4,
+                  width: width * 0.42,
+                  // color: Colors.red,
                   // color: Colors.yellow,
                   child: Column(
                     children: [
@@ -107,12 +108,25 @@ class PopularDishesState extends State<PopularDishes> {
                           // padding: EdgeInsets.only(top: height * 0.001),
                           // color: Colors.green,
                           child: Container(
-                            margin: EdgeInsets.only(left: width * 0.02),
-                            child: Image.network(
-                              'https://achievexsolutions.in/current_work/eatiano/${provider["data"][index]["product_image"]}',
-                              fit: BoxFit.cover,
+                            margin: EdgeInsets.only(
+                                left: width * 0.02, right: width * 0.02),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: const [
+                                  BoxShadow(
+                                      color: Colors.black,
+                                      blurRadius: 5,
+                                      offset: Offset(5, 2))
+                                ]),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Image.network(
+                                'https://achievexsolutions.in/current_work/eatiano/${provider["data"][index]["product_image"]}',
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           )),
+                      SizedBox(height: height * 0.012),
                       Expanded(
                         child: Container(
                           width: double.infinity,
@@ -123,24 +137,30 @@ class PopularDishesState extends State<PopularDishes> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                provider["data"][index]["product_name"],
-                                textScaleFactor: textScale,
-                                style: const TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 10),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      provider["data"][index]["product_name"],
+                                      textScaleFactor: textScale,
+                                      style: const TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14),
+                                    ),
+                                  ),
+                                ],
                               ),
-                              SizedBox(height: height * 0.01),
+                              SizedBox(height: height * 0.005),
                               Text(
                                 provider["data"][index]["restaurant_name"],
                                 textScaleFactor: subTitleScale,
                                 style: const TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 8),
+                                    fontSize: 11),
                               ),
-                              SizedBox(height: height * 0.005),
+                              SizedBox(height: height * 0.01),
                               Row(
                                 children: [
                                   PriceWidget(provider["data"][index]
