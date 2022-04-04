@@ -56,6 +56,17 @@ class LocationProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> setNewAddress(double latitude, double longitude) async {
+    List<Placemark> placemarks =
+        await placemarkFromCoordinates(latitude, longitude);
+    print(placemarks);
+    Placemark place = placemarks[0];
+    _address =
+        '${place.street}, ${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';
+    // setState(() {});
+    notifyListeners();
+  }
+
   // @override
   // void initState() {
   //   // TODO: implement initState

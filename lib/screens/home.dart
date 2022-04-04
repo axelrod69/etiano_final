@@ -178,7 +178,7 @@ class HomeScreenState extends State<HomeScreen> {
                           children: [
                             InkWell(
                               onTap: () => Navigator.of(context)
-                                  .pushReplacementNamed('/cart-screen'),
+                                  .pushNamed('/cart-screen'),
                               child: const Icon(
                                 Icons.shopping_cart_outlined,
                                 color: Colors.grey,

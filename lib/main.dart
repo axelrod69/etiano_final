@@ -46,6 +46,7 @@ import './screens/couponScreen.dart';
 import './model/coupon/couponProvider.dart';
 import './widgets/home/restaurantViewAll.dart';
 import './model/profile/profileProvider.dart';
+import './model/changeLocation/changeLocation.dart';
 
 void main() {
   runApp(MyApp());
@@ -91,7 +92,8 @@ class MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (context) => CouponProvider()),
         ChangeNotifierProvider(
             create: (context) => RestaurantProductProvider()),
-        ChangeNotifierProvider(create: (context) => ProfileProvider())
+        ChangeNotifierProvider(create: (context) => ProfileProvider()),
+        ChangeNotifierProvider(create: (context) => ChangeLocationProvider())
       ],
       builder: (context, child) {
         final provider = Provider.of<LocationProvider>(context).loading;
