@@ -40,16 +40,21 @@ class SignInFormState extends State<SignInForm> {
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
-    bool checkHeight = height > 800;
-    bool checkHeightTwo = height < 600;
+    bool tabLayout = width > 600;
+    bool largeLayout = width > 350 && width < 600;
 
-    print('Height $height');
-    print('Width $width');
-    print('Check Height $checkHeight');
+    // print('Height $height');
+    // print('Width $width');
+    // print('Check Height $tabLayout')
 
     // TODO: implement build
     return Container(
-      padding: EdgeInsets.only(top: height * 0.04),
+      padding: EdgeInsets.only(
+          top: tabLayout
+              ? height * 0.08
+              : largeLayout
+                  ? height * 0.04
+                  : height * 0.02),
       decoration: BoxDecoration(
           border: Border.all(color: const Color.fromRGBO(198, 241, 74, 1))),
       child: Column(
@@ -59,10 +64,10 @@ class SignInFormState extends State<SignInForm> {
               textScaleFactor: MediaQuery.of(context).textScaleFactor * 1.2,
               style: TextStyle(
                   color: Colors.white,
-                  fontSize: checkHeightTwo
-                      ? 9
-                      : checkHeight
-                          ? 13
+                  fontSize: tabLayout
+                      ? 18
+                      : largeLayout
+                          ? 14
                           : 10,
                   fontWeight: FontWeight.bold)),
           Padding(
@@ -73,106 +78,154 @@ class SignInFormState extends State<SignInForm> {
               key: _key,
               child: Column(
                 children: [
-                  Container(
-                    height: checkHeight ? height * 0.06 : height * 0.066,
-                    padding: EdgeInsets.only(left: width * 0.045),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(30),
-                        boxShadow: const [
-                          BoxShadow(
-                              color: Colors.black,
-                              blurRadius: 20,
-                              spreadRadius: 10,
-                              offset: Offset(2, 1))
-                        ]),
-                    child: checkHeightTwo
-                        ? TextFormField(
-                            decoration: InputDecoration(
-                                // label: Text(
-                                //   'Your Email',
-                                //   textScaleFactor:
-                                //       MediaQuery.of(context).textScaleFactor * 1,
-                                // ),
-                                errorStyle: TextStyle(
-                                    fontSize: checkHeightTwo
-                                        ? 8
-                                        : checkHeight
-                                            ? 6
-                                            : 7),
-                                hintText: 'Your Email',
-                                focusedBorder: InputBorder.none,
-                                border: InputBorder.none),
-                            keyboardType: TextInputType.emailAddress,
-                            textInputAction: TextInputAction.next,
-                            onFieldSubmitted: (_) => FocusScope.of(context)
-                                .requestFocus(_passwordFocus),
-                            validator: (email) {
-                              if (email!.isEmpty) {
-                                return '\u26A0 Please Enter Email';
-                              } else {
-                                inputEmail = email;
-                                return null;
-                              }
-                            },
-                          )
-                        : TextFormField(
-                            decoration: InputDecoration(
-                                label: Text(
-                                  'Your Email',
-                                  textScaleFactor:
-                                      MediaQuery.of(context).textScaleFactor *
-                                          1,
-                                ),
-                                focusedBorder: InputBorder.none,
-                                border: InputBorder.none),
-                            keyboardType: TextInputType.emailAddress,
-                            textInputAction: TextInputAction.next,
-                            onFieldSubmitted: (_) => FocusScope.of(context)
-                                .requestFocus(_passwordFocus),
-                            validator: (email) {
-                              if (email!.isEmpty) {
-                                return 'Please Enter Email';
-                              } else {
-                                inputEmail = email;
-                                return null;
-                              }
-                            },
-                          ),
-                  ),
-                  SizedBox(height: height * 0.03),
-                  Container(
-                    height: checkHeight ? height * 0.06 : height * 0.066,
-                    padding: EdgeInsets.only(left: width * 0.045),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(30),
-                        boxShadow: const [
-                          BoxShadow(
-                              color: Colors.black,
-                              blurRadius: 20,
-                              spreadRadius: 10,
-                              offset: Offset(2, 1))
-                        ]),
+                  SizedBox(
+                    height: height * 0.07,
                     child: TextFormField(
-                      obscureText: true,
+                      // controller: textController,
                       decoration: InputDecoration(
-                        label: Text('Password',
-                            textScaleFactor:
-                                MediaQuery.of(context).textScaleFactor * 1),
-                        focusedBorder: InputBorder.none,
-                      ),
-                      keyboardType: TextInputType.text,
-                      focusNode: _passwordFocus,
-                      onFieldSubmitted: (_) =>
-                          FocusScope.of(context).requestFocus(_passwordFocus),
-                      validator: (password) {
-                        if (password!.isEmpty) {
-                          return 'Please Enter Email';
-                        } else {
-                          inputPassword = password;
-                          return null;
+                          errorStyle: TextStyle(
+                              fontSize: tabLayout
+                                  ? 16
+                                  : largeLayout
+                                      ? 14.0
+                                      : 10),
+                          // labelText: 'Hint text',
+                          hintText: 'Enter Email',
+                          hintStyle: TextStyle(),
+                          filled: true,
+                          fillColor: Colors.white,
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                            borderSide: BorderSide(
+                              color: Colors.grey,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30.0),
+                              borderSide: BorderSide(
+                                color: Colors.blue,
+                              )),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30.0),
+                              borderSide:
+                                  BorderSide(color: Colors.black, width: 1.0))),
+                      style: TextStyle(color: Colors.black),
+                      validator: (email) {
+                        if (email!.isEmpty) {
+                          return '\u26A0 Please Enter Email';
                         }
+                        return null;
+                      },
+                    ),
+                  ),
+                  // Container(
+                  //     height: tabLayout
+                  //         ? height * 0.07
+                  //         : largeLayout
+                  //             ? height * 0.06
+                  //             : height * 0.066,
+                  //     // padding: EdgeInsets.only(left: width * 0.045),
+                  //     decoration: BoxDecoration(
+                  //         color: Colors.white,
+                  //         borderRadius: BorderRadius.circular(30),
+                  //         boxShadow: const [
+                  //           BoxShadow(
+                  //               color: Colors.black,
+                  //               blurRadius: 20,
+                  //               spreadRadius: 10,
+                  //               offset: Offset(2, 1))
+                  //         ]),
+                  //     // child: TextFormField(
+                  //     //   decoration: InputDecoration(
+                  //     //       errorStyle: TextStyle(
+                  //     //           fontSize: largeLayout
+                  //     //               ? 8
+                  //     //               : tabLayout
+                  //     //                   ? 6
+                  //     //                   : 7),
+                  //     //       hintText: 'Your Email',
+                  //     //       focusedBorder: InputBorder.none,
+                  //     //       border: InputBorder.none),
+                  //     //   keyboardType: TextInputType.emailAddress,
+                  //     //   textInputAction: TextInputAction.next,
+                  //     //   onFieldSubmitted: (_) =>
+                  //     //       FocusScope.of(context).requestFocus(_passwordFocus),
+                  //     //   validator: (email) {
+                  //     //     if (email!.isEmpty) {
+                  //     //       return '\u26A0 Please Enter Email';
+                  //     //     } else {
+                  //     //       inputEmail = email;
+                  //     //       return null;
+                  //     //     }
+                  //     //   },
+                  //     // )
+                  //     child: TextFormField(
+                  //         // controller: textController,
+                  //         decoration: InputDecoration(
+                  //             errorStyle: TextStyle(fontSize: 5.0),
+                  //             // labelText: 'Hint text',
+                  //             filled: true,
+                  //             fillColor: Colors.white,
+                  //             enabledBorder: OutlineInputBorder(
+                  //               borderRadius: BorderRadius.circular(25.0),
+                  //               borderSide: BorderSide(
+                  //                 color: Colors.grey,
+                  //               ),
+                  //             ),
+                  //             focusedBorder: OutlineInputBorder(
+                  //                 borderRadius: BorderRadius.circular(25.0),
+                  //                 borderSide: BorderSide(
+                  //                   color: Colors.blue,
+                  //                 )),
+                  //             border: OutlineInputBorder(
+                  //                 borderRadius: BorderRadius.circular(25.0),
+                  //                 borderSide: BorderSide(
+                  //                     color: Colors.black, width: 1.0))),
+                  //         style: TextStyle(color: Colors.black),
+                  //         validator: (email) {
+                  //           if (email!.isEmpty) {
+                  //             return '\u26A0 Field is empty.';
+                  //           }
+                  //           return null;
+                  //         })),
+                  SizedBox(height: height * 0.03),
+                  SizedBox(
+                    height: height * 0.07,
+                    child: TextFormField(
+                      // controller: textController,
+                      decoration: InputDecoration(
+                          errorStyle: TextStyle(
+                              fontSize: tabLayout
+                                  ? 16
+                                  : largeLayout
+                                      ? 14.0
+                                      : 10),
+                          // labelText: 'Hint text',
+                          hintText: 'Enter Password',
+                          hintStyle: TextStyle(),
+                          filled: true,
+                          fillColor: Colors.white,
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                            borderSide: BorderSide(
+                              color: Colors.grey,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30.0),
+                              borderSide: BorderSide(
+                                color: Colors.blue,
+                              )),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30.0),
+                              borderSide:
+                                  BorderSide(color: Colors.black, width: 1.0))),
+                      style: TextStyle(color: Colors.black),
+                      validator: (email) {
+                        if (email!.isEmpty) {
+                          return '\u26A0 Please Enter Password.';
+                        }
+                        return null;
                       },
                     ),
                   ),
@@ -205,7 +258,7 @@ class SignInFormState extends State<SignInForm> {
                       Navigator.of(context).pushNamed('/forgot-password');
                     },
                     child: Text('Forgot your Password?',
-                        textScaleFactor: checkHeight
+                        textScaleFactor: tabLayout
                             ? MediaQuery.of(context).textScaleFactor * 0.95
                             : MediaQuery.of(context).textScaleFactor * 1.1,
                         style: TextStyle(
@@ -213,7 +266,7 @@ class SignInFormState extends State<SignInForm> {
                   ),
                   SizedBox(height: height * 0.06),
                   Text('or Login With',
-                      textScaleFactor: checkHeight
+                      textScaleFactor: tabLayout
                           ? MediaQuery.of(context).textScaleFactor * 1.1
                           : MediaQuery.of(context).textScaleFactor * 1.2,
                       style: TextStyle(
@@ -221,7 +274,7 @@ class SignInFormState extends State<SignInForm> {
                   InkWell(
                     onTap: facebookSignIn,
                     child: Container(
-                      height: checkHeight ? height * 0.06 : height * 0.07,
+                      height: tabLayout ? height * 0.06 : height * 0.07,
                       width: double.infinity,
                       margin: EdgeInsets.only(
                           top: height * 0.015, bottom: height * 0.025),
@@ -242,7 +295,7 @@ class SignInFormState extends State<SignInForm> {
                               width: width * 0.03, height: height * 0.03),
                           SizedBox(width: width * 0.05),
                           Text('Login with Facebook',
-                              textScaleFactor: checkHeight
+                              textScaleFactor: tabLayout
                                   ? MediaQuery.of(context).textScaleFactor * 1
                                   : MediaQuery.of(context).textScaleFactor *
                                       1.1,
@@ -256,7 +309,7 @@ class SignInFormState extends State<SignInForm> {
                   InkWell(
                     onTap: googleSignIn,
                     child: Container(
-                      height: checkHeight ? height * 0.06 : height * 0.07,
+                      height: tabLayout ? height * 0.06 : height * 0.07,
                       width: double.infinity,
                       // margin: EdgeInsets.only(bottom: height * 0.025),
                       decoration: BoxDecoration(
@@ -276,7 +329,7 @@ class SignInFormState extends State<SignInForm> {
                               width: width * 0.06, height: height * 0.06),
                           SizedBox(width: width * 0.02),
                           Text('Login with Google',
-                              textScaleFactor: checkHeight
+                              textScaleFactor: tabLayout
                                   ? MediaQuery.of(context).textScaleFactor * 1
                                   : MediaQuery.of(context).textScaleFactor *
                                       1.1,

@@ -12,8 +12,8 @@ class SignInState extends State<SignIn> {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     var statusBarPadding = MediaQuery.of(context).padding.top;
-    bool checkHeight = height > 800;
-    bool checkHeightTwo = height < 600;
+    bool tabLayout = width > 600;
+    bool largeLayout = width > 350 && width < 600;
 
     // TODO: implement build
     return Scaffold(
@@ -27,7 +27,7 @@ class SignInState extends State<SignIn> {
           // crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              height: checkHeight
+              height: tabLayout
                   ? (height - statusBarPadding) * 0.80
                   : (height - statusBarPadding) * 0.85,
               // padding: const EdgeInsets.fromLTRB(10, 60, 10, 10),
@@ -48,13 +48,13 @@ class SignInState extends State<SignIn> {
               ),
             ),
             Container(
-              height: checkHeight
+              height: tabLayout
                   ? (height - MediaQuery.of(context).padding.top) * 0.20
                   : (height - MediaQuery.of(context).padding.top) * 0.15,
               width: double.infinity,
               padding: EdgeInsets.only(
-                  top: (height - statusBarPadding) * 0.01,
-                  bottom: (height - statusBarPadding) * 0.01),
+                  top: (height - statusBarPadding) * 0.006,
+                  bottom: (height - statusBarPadding) * 0.015),
               // color: Colors.green,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -69,13 +69,13 @@ class SignInState extends State<SignIn> {
                         style: TextStyle(
                             color: Colors.grey,
                             fontWeight: FontWeight.bold,
-                            fontSize: checkHeightTwo
-                                ? 12
-                                : checkHeight
+                            fontSize: tabLayout
+                                ? 20
+                                : largeLayout
                                     ? 15
-                                    : 18),
+                                    : 12),
                       ),
-                      const SizedBox(width: 2),
+                      SizedBox(width: width * 0.01),
                       InkWell(
                         onTap: () {
                           Navigator.of(context)
@@ -88,11 +88,11 @@ class SignInState extends State<SignIn> {
                           style: TextStyle(
                               color: Colors.red,
                               fontWeight: FontWeight.bold,
-                              fontSize: checkHeightTwo
-                                  ? 12
-                                  : checkHeight
-                                      ? 18
-                                      : 15),
+                              fontSize: tabLayout
+                                  ? 20
+                                  : largeLayout
+                                      ? 15
+                                      : 12),
                         ),
                       )
                     ],
@@ -103,11 +103,11 @@ class SignInState extends State<SignIn> {
                         MediaQuery.of(context).textScaleFactor * 1.2,
                     style: TextStyle(
                         color: Colors.white,
-                        fontSize: checkHeightTwo
-                            ? 6
-                            : checkHeight
-                                ? 10
-                                : 8,
+                        fontSize: tabLayout
+                            ? 12
+                            : largeLayout
+                                ? 8
+                                : 6,
                         fontWeight: FontWeight.bold),
                   ),
                 ],
