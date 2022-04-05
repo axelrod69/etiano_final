@@ -337,16 +337,6 @@ class CartDetailScreenState extends State<CartDetailScreen> {
                                   .deleteCoupon(couponProvider['code'],
                                       couponProvider['amount']);
                             }
-                            // text != 'Add'
-                            //     ? Navigator.of(context)
-                            //         .pushNamed('/coupon-screen', arguments: {
-                            //         'price': Provider.of<CartItemProvider>(
-                            //                 context,
-                            //                 listen: false)
-                            //             .itemAmount
-                            //             .toString()
-                            //       })
-                            //     : null;
                           },
                           child: Text(
                             !isClickedCoupon ? 'Add' : 'Remove',
@@ -492,9 +482,13 @@ class CartDetailScreenState extends State<CartDetailScreen> {
               padding: EdgeInsets.only(left: width * 0.08, right: width * 0.08),
               child: InkWell(
                 onTap: () {
-                  Navigator.of(context).pushNamed('/payment-screen',
-                      arguments: {'discount': couponProvider['amount'] ?? 0.0});
-                  print('Discount Amount ${couponProvider['amount']}');
+                  Navigator.of(context)
+                      .pushNamed('/payment-screen', arguments: {
+                    'discount': couponProvider['amount'] ?? 0.0,
+                    'code': couponProvider['code'] ?? ''
+                  });
+                  print('Coupon Discount Amount ${couponProvider['amount']}');
+                  print('Coupon Discount Code ${couponProvider['code']}');
                 },
                 child: Container(
                   width: double.infinity,

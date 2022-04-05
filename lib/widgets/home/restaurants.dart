@@ -31,8 +31,10 @@ class RestaurantsState extends State<Restaurants> {
     //     Provider.of<PopularRestaurantProvider>(context).restaurantList;
     final response =
         Provider.of<PopularRestaurantProvider>(context).restaurants;
+    // final response =
+    //     Provider.of<PopularRestaurantProvider>(context).fetchAllRestaurants;
 
-    print('Response from widget $response');
+    // print('Response from widget $response');
 
     final Map<String, dynamic> _restaurants = {
       "data": [
@@ -83,20 +85,19 @@ class RestaurantsState extends State<Restaurants> {
                     .pushNamed('/restaurants-screen', arguments: {
                   // 'id': _restaurants["data"][index]["id"],
                   // 'id': provider[index]['restaurant_id'],
-                  'id': response['data']['data'][index]['restaurant_id']
-                      .toString(),
+                  'id': response['data'][index]['restaurant_id'],
                   // 'name': _restaurants["data"][index]["name"],
-                  'name': response['data']['data'][index]['restaurant_name'],
+                  'name': response['data'][index]['restaurant_name'],
                   'type': _restaurants["data"][index]["type"],
                   // 'rating': _restaurants["data"][index]["rating"],
-                  'rating': response['data']['data'][index]['rating'],
+                  'rating': response['data'][index]['restaurant_rating'],
                   // 'image': _restaurants["data"][index]["image"],
-                  'image': response['data']['data'][index]["restaurant_image"],
+                  'image': response['data'][index]["restaurant_image"],
                   // 'numberOfRatings': _restaurants["data"][index]
                   //     ["numberOfRatings"]
-                  'numberOfRatings': response['data']['data'][index]
-                          ['numberOfRatings'] ??
-                      '124'
+                  'numberOfRatings': response['data'][index]
+                      ['restaurant_rating_count'],
+                  'distance': response['data'][index]['distance']
                 }),
                 child: Container(
                   width: double.infinity,
@@ -106,13 +107,28 @@ class RestaurantsState extends State<Restaurants> {
                   child: Row(
                     children: [
                       // Image.asset(_restaurants["data"][index]["image"]),
-                      Image.network(
-                          'https://achievexsolutions.in/current_work/eatiano/${response['data']['data'][index]['restaurant_image']}'),
+                      Container(
+                        width: width * 0.3,
+                        height: height * 0.12,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: const [
+                              BoxShadow(
+                                  color: Colors.black,
+                                  blurRadius: 8,
+                                  offset: Offset(2, 1))
+                            ]),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: Image.network(
+                              'https://achievexsolutions.in/current_work/eatiano/${response['data'][index]['restaurant_image']}'),
+                        ),
+                      ),
                       SizedBox(width: width * 0.03),
                       Container(
                         width: width * 0.5,
                         height: double.infinity,
-                        padding: EdgeInsets.only(top: height * 0.01),
+                        padding: EdgeInsets.only(top: height * 0.022),
                         // color: Colors.green,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -120,8 +136,7 @@ class RestaurantsState extends State<Restaurants> {
                           children: [
                             Text(
                               // _restaurants["data"][index]["name"],
-                              response['data']['data'][index]
-                                  ['restaurant_name'],
+                              response['data'][index]['restaurant_name'],
                               textScaleFactor: textScale,
                               style: const TextStyle(
                                   color: Colors.white,
@@ -154,8 +169,7 @@ class RestaurantsState extends State<Restaurants> {
                                 Image.asset('assets/images/Path 8561.png'),
                                 SizedBox(width: width * 0.02),
                                 Text(
-                                  response['data']['data'][index]['rating'] ??
-                                      '4.8',
+                                  response['data'][index]['restaurant_rating'],
                                   // _restaurants["data"][index]["rating"],
                                   textScaleFactor: textScale,
                                   style: const TextStyle(
@@ -164,7 +178,7 @@ class RestaurantsState extends State<Restaurants> {
                                 ),
                                 SizedBox(width: width * 0.02),
                                 Text(
-                                  '(${response['data']['data'][index]["numberOfRatings"] ?? '124'} ratings)',
+                                  '(${response['data'][index]['restaurant_rating_count']} ratings)',
                                   textScaleFactor: textScale,
                                   style: const TextStyle(color: Colors.white),
                                 )

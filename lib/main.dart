@@ -2,6 +2,7 @@ import 'package:eatiano_app/screens/payment.dart';
 import 'package:eatiano_app/screens/log_in.dart';
 import 'package:eatiano_app/screens/restaurant_screen/reviewScreen.dart';
 import 'package:flutter/material.dart';
+import 'dart:io';
 import './screens/sign_in.dart';
 import './screens/sign_up.dart';
 import './screens/otp_screen.dart';
@@ -78,6 +79,7 @@ class MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    HttpOverrides.global = MyHttpOverrides();
     // TODO: implement build
     return MultiProvider(
       providers: [
@@ -151,5 +153,14 @@ class MyAppState extends State<MyApp> {
         );
       },
     );
+  }
+}
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
   }
 }

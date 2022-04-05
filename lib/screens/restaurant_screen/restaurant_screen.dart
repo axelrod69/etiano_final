@@ -17,6 +17,9 @@ class RestaurantScreen extends StatelessWidget {
     final rating = arguments["rating"];
     final image = arguments["image"];
     final numberOfRatings = arguments["numberOfRatings"];
+    final distance = arguments["distance"];
+
+    double time = distance / 40;
 
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
@@ -212,7 +215,7 @@ class RestaurantScreen extends StatelessWidget {
                               width: 40,
                             ),
                             Text(
-                              '15 min',
+                              '${time.toStringAsFixed(1)} hr',
                               textScaleFactor: textScale,
                               style: const TextStyle(
                                   color: Colors.white, fontSize: 11),
@@ -241,7 +244,7 @@ class RestaurantScreen extends StatelessWidget {
                               height: height * 0.002,
                             ),
                             Text(
-                              '2.5km',
+                              '${double.parse(distance.toStringAsFixed(1))} km',
                               textScaleFactor: textScale,
                               style: const TextStyle(
                                   color: Colors.white, fontSize: 11),

@@ -8,6 +8,7 @@ class PopularRestaurantProvider with ChangeNotifier {
   Map<String, dynamic> _restaurants = {};
   Map<String, dynamic> _temp = {};
   Map<String, dynamic> _searchRestaurants = {};
+  List<dynamic> _fetchRestaurants = [];
   List<dynamic> _restaurantsList = [];
   final queryParams = {'lat': '22.5735314', 'lng': '88.4331189'};
 
@@ -21,6 +22,10 @@ class PopularRestaurantProvider with ChangeNotifier {
 
   List<dynamic> get restaurantList {
     return [..._restaurantsList];
+  }
+
+  List<dynamic> get fetchAllRestaurants {
+    return [..._fetchRestaurants];
   }
 
   Future<void> fetchRestaurants() async {
@@ -40,8 +45,8 @@ class PopularRestaurantProvider with ChangeNotifier {
         popularRestaurantsFromJson(response.body);
     _restaurants = popularRestaurants.toJson();
     // _restaurantsList = _restaurants['data']['data'] as List;
-    // print(_restaurants);
-    // print(_restaurantsList);
+    // print('Restaurant List $_restaurants');
+    print('Fetch Restaurants $_restaurants');
   }
 
   Future<void> searchRestaurant() async {

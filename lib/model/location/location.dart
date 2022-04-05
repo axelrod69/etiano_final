@@ -16,6 +16,11 @@ class LocationProvider with ChangeNotifier {
 
   String _address = '';
   String _deliveryAddress = '';
+  String? _state = '';
+
+  String? get state {
+    return _state;
+  }
 
   String get address {
     return _address;
@@ -59,6 +64,7 @@ class LocationProvider with ChangeNotifier {
         '${place.street}, ${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';
     _deliveryAddress =
         '${place.street}, ${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';
+    _state = place.administrativeArea;
     // setState(() {});
     notifyListeners();
   }
@@ -71,6 +77,7 @@ class LocationProvider with ChangeNotifier {
     _address =
         '${place.street}, ${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';
     // setState(() {});
+    _state = place.administrativeArea;
     notifyListeners();
   }
 

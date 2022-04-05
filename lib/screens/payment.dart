@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import '../payment/razorPay.dart';
 import '../payment/payPalPayment.dart';
 import '../model/location/location.dart';
+import '../model/profile/profileProvider.dart';
 
 class PaymentScreen extends StatefulWidget {
   PaymentScreenState createState() => PaymentScreenState();
@@ -33,6 +34,9 @@ class PaymentScreenState extends State<PaymentScreen> {
   @override
   void initState() {
     // TODO: implement initState
+    Provider.of<ProfileProvider>(context, listen: false).fetchData();
+    print(
+        'State ${Provider.of<LocationProvider>(context, listen: false).state}');
     super.initState();
     razorpay = Razorpay();
     razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
@@ -40,13 +44,18 @@ class PaymentScreenState extends State<PaymentScreen> {
     razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
   }
 
-  void openCheckOut(amount) async {
+  Future<void> openCheckOut(amount) async {
     var options = {
       'key': 'rzp_test_Y6HLJNhTBmNio8',
       'amount': amount * 100,
       'name': 'Eatiano Order',
       // 'description': 'Fine T-Shirt',
-      'prefill': {'contact': '8888888888', 'email': 'test@razorpay.com'}
+      'prefill': {
+        'contact': Provider.of<ProfileProvider>(context, listen: false)
+            .profile['phone'],
+        'email': Provider.of<ProfileProvider>(context, listen: false)
+            .profile['email']
+      }
     };
     try {
       razorpay.open(options);
@@ -95,6 +104,7 @@ class PaymentScreenState extends State<PaymentScreen> {
     final route =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final discount = route['discount'];
+    final discountCode = route['code'];
     final withDeliveryCost =
         // (Provider.of<CartItemProvider>(context).itemAmount +
         //         Provider.of<CartItemProvider>(context).deliveryCost) -
@@ -102,6 +112,7 @@ class PaymentScreenState extends State<PaymentScreen> {
         (Provider.of<CartItemProvider>(context).itemAmount +
                 Provider.of<CartItemProvider>(context).deliveryCost) -
             discount;
+    // final provider = Provider.of<ProfileProvider>(context).profile;
 
     // TODO: implement build
     return Scaffold(
@@ -429,7 +440,7 @@ class PaymentScreenState extends State<PaymentScreen> {
                 ],
               )),
           Padding(
-            padding: EdgeInsets.only(left: width * 0.02, right: width * 0.02),
+            padding: EdgeInsets.only(left: width * 0.08, right: width * 0.08),
             child: InkWell(
               onTap: () => _selectedValue == 1
                   ? Navigator.of(context).push(
