@@ -168,7 +168,12 @@ class HomeScreenState extends State<HomeScreen> {
                                   .pushNamed('/search-screen'),
                               child: Container(
                                 margin: EdgeInsets.only(
-                                    bottom: tabLayout ? 2 : 6, right: 4),
+                                    bottom: tabLayout
+                                        ? 2
+                                        : largeLayout
+                                            ? 6
+                                            : 0,
+                                    right: 4),
                                 padding:
                                     EdgeInsets.only(left: tabLayout ? 15 : 6),
                                 // height: double.infinity,

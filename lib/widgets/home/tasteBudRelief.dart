@@ -21,7 +21,7 @@ class TasteBudRelief extends StatelessWidget {
     // TODO: implement build
     return Container(
       width: double.infinity,
-      height: height * 0.15,
+      height: height * 0.16,
       // color: Colors.red,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -37,6 +37,7 @@ class TasteBudRelief extends StatelessWidget {
                       : largeLayout
                           ? 20
                           : 15)),
+          SizedBox(height: height * 0.01),
           Container(
             width: double.infinity,
             height: height * 0.11,

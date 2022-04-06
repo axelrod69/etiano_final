@@ -24,7 +24,11 @@ class PriceWidget extends StatelessWidget {
             textScaleFactor: textScale,
             style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: !largeLayout ? 12 : null)),
+                fontSize: tabLayout
+                    ? 18
+                    : largeLayout
+                        ? 14
+                        : 12)),
       ),
     );
   }

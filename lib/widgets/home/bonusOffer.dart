@@ -28,9 +28,9 @@ class BonusOfferState extends State<BonusOffer> {
     // TODO: implement build
     return Container(
       width: width * 1,
-      height: tabLayout && largeLayout ? height * 0.35 : height * 0.4,
+      height: tabLayout || largeLayout ? height * 0.35 : height * 0.4,
       padding: EdgeInsets.only(
-          top: tabLayout && largeLayout ? height * 0.04 : height * 0.06),
+          top: tabLayout || largeLayout ? height * 0.04 : height * 0.06),
       // color: Colors.red,
       child: Column(
         children: [
@@ -50,7 +50,7 @@ class BonusOfferState extends State<BonusOffer> {
                   onPageChanged: (index, reason) =>
                       setState(() => activeIndex = index))),
           SizedBox(height: height * 0.02),
-          buildIndicator(_bonus)
+          buildIndicator(_bonus, context, tabLayout, largeLayout)
         ],
       ),
     );
@@ -59,9 +59,7 @@ class BonusOfferState extends State<BonusOffer> {
   Widget buildImage(urlImage, int index, BuildContext context, bool tabLayout,
           bool largeLayout) =>
       Container(
-        width: !tabLayout && !largeLayout
-            ? MediaQuery.of(context).size.width * 0.8
-            : null,
+        width: MediaQuery.of(context).size.width * 0.8,
         // height: !tabLayout && !largeLayout ? MediaQuery.of(context).size.height * 0.8 : null,
         margin:
             EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.06),
@@ -73,12 +71,14 @@ class BonusOfferState extends State<BonusOffer> {
             child: Image.asset(urlImage, fit: BoxFit.cover)),
       );
 
-  Widget buildIndicator(_bonus) => AnimatedSmoothIndicator(
+  Widget buildIndicator(
+          _bonus, BuildContext context, bool tabLayout, bool largeLayout) =>
+      AnimatedSmoothIndicator(
         activeIndex: activeIndex,
         count: _bonus.length,
-        effect: const ExpandingDotsEffect(
-            dotHeight: 10,
-            dotWidth: 10,
+        effect: ExpandingDotsEffect(
+            dotHeight: tabLayout ? 15 : 10,
+            dotWidth: tabLayout ? 15 : 10,
             activeDotColor: Colors.white,
             dotColor: Colors.red),
       );

@@ -32,28 +32,70 @@ class BottomNavigationState extends State<BottomNavigation> {
     bool largeLayout = width > 350 && width < 600;
 
     final items = [
-      Icon(Icons.window_outlined,
-          color: index == 0 ? Colors.white : Colors.grey,
-          size: index == 0 ? width * 0.098 : width * 0.09),
-      Image.asset('assets/images/man-user.png',
-          width: index == 1 ? width * 0.15 : width * 0.05,
-          height: index == 1 ? height * 0.04 : height * 0.05,
-          color: index == 1 ? Colors.white : Colors.grey),
-      Icon(Icons.home,
-          color: index == 2 ? Colors.white : Colors.grey,
-          size: index == 2 ? width * 0.098 : width * 0.09),
-      Image.asset(
-        'assets/images/Group 6814.png',
-        width: index == 3 ? width * 0.15 : width * 0.05,
-        height: index == 3 ? height * 0.04 : height * 0.05,
-        color: index == 3 ? Colors.white : Colors.grey,
-      ),
-      Image.asset(
-        'assets/images/002-shopping-bag.png',
-        width: index == 4 ? width * 0.15 : width * 0.05,
-        height: index == 4 ? height * 0.04 : height * 0.05,
-        color: index == 4 ? Colors.white : Colors.grey,
-      )
+      // Icon(Icons.window_outlined,
+      //     color: index == 0 ? Colors.white : Colors.grey,
+      //     size: index == 0
+      //         ? tabLayout
+      //             ? height * 0.07
+      //             : width * 0.098
+      //         : width * 0.09),
+      tabLayout
+          ? Image.asset(
+              'assets/images/Icon material-dashboard.png',
+              width: index == 0 ? width * 0.20 : width * 0.10,
+              height: index == 0 ? height * 0.08 : height * 0.10,
+              color: index == 0 ? Colors.white : Colors.grey,
+            )
+          : Image.asset(
+              'assets/images/Icon material-dashboard.png',
+              width: index == 0 ? width * 0.15 : width * 0.05,
+              height: index == 0 ? height * 0.04 : height * 0.05,
+              color: index == 0 ? Colors.white : Colors.grey,
+            ),
+      tabLayout
+          ? Image.asset('assets/images/man-user.png',
+              width: index == 1 ? width * 0.20 : width * 0.10,
+              height: index == 1 ? height * 0.08 : height * 0.10,
+              color: index == 1 ? Colors.white : Colors.grey)
+          : Image.asset('assets/images/man-user.png',
+              width: index == 1 ? width * 0.15 : width * 0.05,
+              height: index == 1 ? height * 0.04 : height * 0.05,
+              color: index == 1 ? Colors.white : Colors.grey),
+      tabLayout
+          ? Image.asset('assets/images/Icon ionic-ios-home.png',
+              width: index == 2 ? width * 0.20 : width * 0.10,
+              height: index == 2 ? height * 0.08 : height * 0.10,
+              color: index == 2 ? Colors.white : Colors.white)
+          : Image.asset('assets/images/Icon ionic-ios-home.png',
+              width: index == 2 ? width * 0.15 : width * 0.05,
+              height: index == 2 ? height * 0.04 : height * 0.05,
+              color: index == 2 ? Colors.white : Colors.white),
+      tabLayout
+          ? Image.asset(
+              'assets/images/Group 6814.png',
+              width: index == 3 ? width * 0.20 : width * 0.10,
+              height: index == 3 ? height * 0.08 : height * 0.10,
+              color: index == 3 ? Colors.white : Colors.grey,
+            )
+          : Image.asset(
+              'assets/images/Group 6814.png',
+              width: index == 3 ? width * 0.15 : width * 0.05,
+              height: index == 3 ? height * 0.04 : height * 0.05,
+              color: index == 3 ? Colors.white : Colors.grey,
+            ),
+      tabLayout
+          ? Image.asset(
+              'assets/images/002-shopping-bag.png',
+              width: index == 4 ? width * 0.20 : width * 0.10,
+              height: index == 4 ? height * 0.08 : height * 0.10,
+              color: index == 4 ? Colors.white : Colors.grey,
+            )
+          : Image.asset(
+              'assets/images/002-shopping-bag.png',
+              width: index == 4 ? width * 0.15 : width * 0.05,
+              height: index == 4 ? height * 0.04 : height * 0.05,
+              color: index == 4 ? Colors.white : Colors.grey,
+            )
     ];
 
     // TODO: implement build

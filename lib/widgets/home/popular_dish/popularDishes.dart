@@ -153,7 +153,7 @@ class PopularDishesState extends State<PopularDishes> {
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
                                           fontSize: tabLayout
-                                              ? 14
+                                              ? 16
                                               : largeLayout
                                                   ? 14
                                                   : 11),
@@ -185,18 +185,18 @@ class PopularDishesState extends State<PopularDishes> {
                                   Text('4.5',
                                       // provider["data"][index]["product_rating"],
                                       textScaleFactor: subTitleScale,
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 7)),
+                                          fontSize: tabLayout ? 12 : 7)),
                                   Text(
                                     // '(${provider["data"][index]["product_rating_count"]})',
                                     '(124)',
                                     textScaleFactor: subTitleScale,
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 7),
+                                        fontSize: tabLayout ? 12 : 7),
                                   )
                                 ],
                               )

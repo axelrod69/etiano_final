@@ -141,13 +141,13 @@ class HomeContentState extends State<HomeContent> {
           Container(
               // width: double.infinity,
               width: width * 1,
-              height: tabLayout && largeLayout ? height * 0.32 : height * 0.375,
+              height: tabLayout || largeLayout ? height * 0.32 : height * 0.375,
               padding: EdgeInsets.only(left: width * 0.02, right: width * 0.02),
               // color: Colors.yellow,
               child: Center(child: MomsGenieWidget())),
           SizedBox(height: height * 0.05),
           TasteBudRelief(),
-          SizedBox(height: height * 0.02),
+          SizedBox(height: height * 0.04),
           Text('Bonus For You',
               textScaleFactor: textScale,
               style: TextStyle(
@@ -160,7 +160,7 @@ class HomeContentState extends State<HomeContent> {
                           : 15)),
           BonusOffer(),
           SizedBox(height: height * 0.05),
-          Text('Bonus For You',
+          Text('Expert\'s Choice',
               textScaleFactor: textScale,
               style: TextStyle(
                   color: Colors.white,

@@ -23,7 +23,7 @@ class MomsGenieWidget extends StatelessWidget {
           Positioned(
             top: height * 0.035,
             child: Container(
-              height: tabLayout && largeLayout
+              height: tabLayout || largeLayout
                   ? MediaQuery.of(context).size.height * 0.25
                   : MediaQuery.of(context).size.height * 0.3,
               // width: double.infinity,
@@ -65,7 +65,7 @@ class MomsGenieWidget extends StatelessWidget {
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
-                              fontSize: tabLayout && largeLayout ? 20 : 15),
+                              fontSize: tabLayout || largeLayout ? 20 : 15),
                         ),
                       ),
                     ),
@@ -115,10 +115,10 @@ class MomsGenieWidget extends StatelessWidget {
               child: Center(
                 child: Text('Mom\'s Genie',
                     textScaleFactor: textScale,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    )),
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: tabLayout || largeLayout ? 20 : 15)),
               ),
               // color: Colors.white,
             ),
@@ -145,8 +145,10 @@ class MomsGenieWidget extends StatelessWidget {
               child: Center(
                 child: Text('Check The Genie',
                     textScaleFactor: textScale,
-                    style: const TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold)),
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: tabLayout || largeLayout ? 20 : 15)),
               ),
             ),
           )

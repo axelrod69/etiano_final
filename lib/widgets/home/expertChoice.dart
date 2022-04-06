@@ -65,7 +65,7 @@ class ExpertChoice extends StatelessWidget {
     // TODO: implement build
     return Container(
       width: double.infinity,
-      height: tabLayout && largeLayout ? height * 0.25 : height * 0.28,
+      height: tabLayout || largeLayout ? height * 0.25 : height * 0.32,
       color: const Color.fromRGBO(103, 103, 103, 1),
       padding: EdgeInsets.only(
           left: width * 0.05,
@@ -94,7 +94,8 @@ class ExpertChoice extends StatelessWidget {
                 child: Container(
                   width: double.infinity,
                   // color: Colors.yellow,
-                  child: Image.asset(_experts["data"][index]["image"]),
+                  child: Image.asset(_experts["data"][index]["image"],
+                      fit: BoxFit.contain),
                 ),
               ),
               Flexible(
@@ -110,13 +111,21 @@ class ExpertChoice extends StatelessWidget {
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
-                            fontSize: !tabLayout && !largeLayout ? 10 : null),
+                            fontSize: tabLayout
+                                ? 25
+                                : largeLayout
+                                    ? 15
+                                    : 12),
                       ),
                       Text('Choice Of Restaurant',
                           textScaleFactor: textScale,
                           style: TextStyle(
                               color: Colors.white,
-                              fontSize: tabLayout && largeLayout ? 8 : 7,
+                              fontSize: tabLayout
+                                  ? 14
+                                  : largeLayout
+                                      ? 9
+                                      : 7,
                               fontWeight: FontWeight.bold)),
                       Text(
                         _experts["data"][index]["restaurant"],
@@ -124,7 +133,11 @@ class ExpertChoice extends StatelessWidget {
                         style: TextStyle(
                             color: Colors.green,
                             fontWeight: FontWeight.bold,
-                            fontSize: tabLayout && largeLayout ? 12 : 10),
+                            fontSize: tabLayout
+                                ? 18
+                                : largeLayout
+                                    ? 14
+                                    : 12),
                       )
                     ],
                   ),

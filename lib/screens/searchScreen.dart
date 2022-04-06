@@ -74,6 +74,8 @@ class SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
+    bool tabLayout = width > 600;
+    bool largeLayout = width > 350 && width < 600;
     final textScale = MediaQuery.of(context).textScaleFactor * 1.2;
     final provider = Provider.of<CartItemProvider>(context).cartItems;
 
@@ -178,9 +180,18 @@ class SearchScreenState extends State<SearchScreen> {
                               child: Container(
                                 margin:
                                     const EdgeInsets.only(bottom: 6, right: 4),
-                                padding: const EdgeInsets.only(left: 6),
+                                padding: tabLayout
+                                    ? EdgeInsets.only(left: 6)
+                                    : largeLayout
+                                        ? EdgeInsets.only(left: 6)
+                                        : EdgeInsets.only(
+                                            left: 6, right: 4, bottom: 2),
                                 // height: double.infinity,
-                                height: 45,
+                                height: tabLayout
+                                    ? 45
+                                    : largeLayout
+                                        ? 45
+                                        : 39,
                                 width: width * 0.7,
                                 decoration: BoxDecoration(
                                     // color: Colors.transparent,
@@ -206,10 +217,15 @@ class SearchScreenState extends State<SearchScreen> {
                                                 fontSize: 18),
                                             decoration: const InputDecoration(
                                               border: InputBorder.none,
-                                              hintText:
-                                                  'Search By Restaurant or Food',
-                                              hintStyle:
-                                                  TextStyle(color: Colors.grey),
+                                              // hintText:
+                                              //     'Search By Restaurant or Food',
+                                              // hintStyle: TextStyle(
+                                              //     color: Colors.grey,
+                                              //     fontSize: tabLayout
+                                              //         ? 22
+                                              //         : largeLayout
+                                              //             ? 16
+                                              //             : 12),
                                               // suffixIcon: Icon(
                                               //   Icons.send,
                                               //   color: Colors.grey,

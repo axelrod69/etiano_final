@@ -117,16 +117,24 @@ class RestaurantsState extends State<Restaurants> {
                             boxShadow: [
                               BoxShadow(
                                   color: Colors.black,
-                                  blurRadius: tabLayout && largeLayout ? 8 : 10,
+                                  blurRadius: tabLayout
+                                      ? 10
+                                      : largeLayout
+                                          ? 5
+                                          : 8,
                                   offset: tabLayout && largeLayout
                                       ? Offset(2, 1)
-                                      : Offset(1, 1))
+                                      : Offset(4, 2))
                             ]),
                         child: ClipRRect(
-                          borderRadius: BorderRadius.circular(
-                              tabLayout && largeLayout ? 20 : 30),
+                          borderRadius: BorderRadius.circular(tabLayout
+                              ? 20
+                              : largeLayout
+                                  ? 20
+                                  : 30),
                           child: Image.network(
-                              'https://achievexsolutions.in/current_work/eatiano/${response['data'][index]['restaurant_image']}'),
+                            'https://achievexsolutions.in/current_work/eatiano/${response['data'][index]['restaurant_image']}',
+                          ),
                         ),
                       ),
                       SizedBox(width: width * 0.03),
@@ -134,7 +142,7 @@ class RestaurantsState extends State<Restaurants> {
                         width: width * 0.5,
                         height: double.infinity,
                         padding: EdgeInsets.only(
-                            top: tabLayout && largeLayout
+                            top: tabLayout || largeLayout
                                 ? height * 0.022
                                 : height * 0.012),
                         // color: Colors.green,
@@ -149,20 +157,26 @@ class RestaurantsState extends State<Restaurants> {
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: tabLayout && largeLayout ? 15 : 12),
+                                  fontSize: tabLayout
+                                      ? 30
+                                      : largeLayout
+                                          ? 18
+                                          : 10),
                             ),
-                            SizedBox(
-                                height: tabLayout && largeLayout
-                                    ? height * 0.01
-                                    : height * 0.005),
+                            // SizedBox(
+                            //   height: tabLayout ? height : largeLayout ? :
+                            //     height: tabLayout || largeLayout
+                            //         ? height * 0.01
+                            //         : height * 0.005),
                             Row(
                               children: [
                                 Text(
                                   'Cafe',
-                                  textScaleFactor: tabLayout && largeLayout
-                                      ? textScale
-                                      : MediaQuery.of(context).textScaleFactor *
-                                          0.8,
+                                  textScaleFactor: tabLayout
+                                      ? textScale * 1.4
+                                      : largeLayout
+                                          ? 1.1
+                                          : 0.8,
                                   style: const TextStyle(
                                       color: Colors.red,
                                       fontWeight: FontWeight.bold),
@@ -170,10 +184,11 @@ class RestaurantsState extends State<Restaurants> {
                                 SizedBox(width: width * 0.02),
                                 Text(
                                   '.${_restaurants["data"][index]["type"]}',
-                                  textScaleFactor: tabLayout && largeLayout
-                                      ? textScale
-                                      : MediaQuery.of(context).textScaleFactor *
-                                          0.8,
+                                  textScaleFactor: tabLayout
+                                      ? textScale * 1.4
+                                      : largeLayout
+                                          ? 1.1
+                                          : 0.8,
                                   style: const TextStyle(
                                       color: Colors.red,
                                       fontWeight: FontWeight.bold),
@@ -181,31 +196,39 @@ class RestaurantsState extends State<Restaurants> {
                               ],
                             ),
                             SizedBox(
-                                height: tabLayout && largeLayout
+                                height: tabLayout || largeLayout
                                     ? height * 0.02
                                     : height * 0.01),
                             Row(
                               children: [
                                 Image.asset('assets/images/Path 8561.png'),
                                 SizedBox(
-                                    width: tabLayout && largeLayout
+                                    width: tabLayout || largeLayout
                                         ? width * 0.02
                                         : width * 0.01),
                                 Text(
                                   response['data'][index]['restaurant_rating'],
                                   // _restaurants["data"][index]["rating"],
-                                  textScaleFactor: textScale,
+                                  textScaleFactor: tabLayout
+                                      ? textScale * 1.6
+                                      : largeLayout
+                                          ? 1.1
+                                          : 0.8,
                                   style: const TextStyle(
                                       color: Colors.red,
                                       fontWeight: FontWeight.bold),
                                 ),
                                 SizedBox(
-                                    width: tabLayout && largeLayout
+                                    width: tabLayout || largeLayout
                                         ? width * 0.02
                                         : width * 0.01),
                                 Text(
                                   '(${response['data'][index]['restaurant_rating_count']} ratings)',
-                                  textScaleFactor: textScale,
+                                  textScaleFactor: tabLayout
+                                      ? textScale * 1.6
+                                      : largeLayout
+                                          ? 1.1
+                                          : 0.8,
                                   style: const TextStyle(color: Colors.white),
                                 )
                               ],
