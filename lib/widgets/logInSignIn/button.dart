@@ -9,21 +9,27 @@ class Button extends StatelessWidget {
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
-    bool checkHeight = height > 800;
+    bool tabLayout = width > 600;
+    bool largeLayout = width > 350 && width < 600;
 
     // TODO: implement build
     return Container(
       width: MediaQuery.of(context).size.width * 0.75,
-      height: checkHeight ? height * 0.055 : height * 0.065,
+      height: height * 0.055,
       child: Center(
           child: Text(text,
-              textScaleFactor: checkHeight
-                  ? MediaQuery.of(context).textScaleFactor * 1.2
-                  : MediaQuery.of(context).textScaleFactor * 1.4,
+              textScaleFactor: MediaQuery.of(context).textScaleFactor * 1.2,
+              // textScaleFactor: checkHeight
+              //     ? MediaQuery.of(context).textScaleFactor * 1.2
+              //     : MediaQuery.of(context).textScaleFactor * 1.4,
               style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  fontSize: checkHeight ? 15 : 12))),
+                  fontSize: tabLayout
+                      ? 25
+                      : largeLayout
+                          ? 15
+                          : 12))),
       decoration: BoxDecoration(
         color: const Color.fromRGBO(255, 0, 0, 1),
         borderRadius: BorderRadius.circular(28),

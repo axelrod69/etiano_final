@@ -36,6 +36,8 @@ class PopularDishesState extends State<PopularDishes> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
+    bool tabLayout = width > 600;
+    bool largeLayout = width > 350 && width < 600;
     var textScale = MediaQuery.of(context).textScaleFactor * 1.1;
     var subTitleScale = MediaQuery.of(context).textScaleFactor * 1.4;
     final provider = Provider.of<PopularDishesProvider>(context).popularDishes;
@@ -61,7 +63,11 @@ class PopularDishesState extends State<PopularDishes> {
           )
         : Container(
             width: double.infinity,
-            height: height * 0.32,
+            height: tabLayout
+                ? height * 0.32
+                : tabLayout
+                    ? height * 0.32
+                    : height * 0.35,
             // color: Colors.red,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
@@ -143,10 +149,14 @@ class PopularDishesState extends State<PopularDishes> {
                                     child: Text(
                                       provider["data"][index]["product_name"],
                                       textScaleFactor: textScale,
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 14),
+                                          fontSize: tabLayout
+                                              ? 14
+                                              : largeLayout
+                                                  ? 14
+                                                  : 11),
                                     ),
                                   ),
                                 ],
@@ -155,10 +165,14 @@ class PopularDishesState extends State<PopularDishes> {
                               Text(
                                 provider["data"][index]["restaurant_name"],
                                 textScaleFactor: subTitleScale,
-                                style: const TextStyle(
+                                style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 11),
+                                    fontSize: tabLayout
+                                        ? 14
+                                        : largeLayout
+                                            ? 14
+                                            : 10),
                               ),
                               SizedBox(height: height * 0.01),
                               Row(
@@ -177,7 +191,7 @@ class PopularDishesState extends State<PopularDishes> {
                                           fontSize: 7)),
                                   Text(
                                     // '(${provider["data"][index]["product_rating_count"]})',
-                                    '124',
+                                    '(124)',
                                     textScaleFactor: subTitleScale,
                                     style: const TextStyle(
                                         color: Colors.white,

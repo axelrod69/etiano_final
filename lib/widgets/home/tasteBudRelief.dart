@@ -5,7 +5,10 @@ class TasteBudRelief extends StatelessWidget {
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
+    bool tabLayout = width > 600;
+    bool largeLayout = width > 350 && width < 600;
     var textScale = MediaQuery.of(context).textScaleFactor * 1.2;
+
     final List _tasteBud = [
       'assets/images/Path 4360.png',
       'assets/images/Path 4257.png',
@@ -24,12 +27,16 @@ class TasteBudRelief extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Taste Bud Reliefs',
-            textScaleFactor: textScale,
-            style: const TextStyle(
-                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
-          ),
+          Text('Taste Buds',
+              textScaleFactor: textScale,
+              style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: tabLayout
+                      ? 25
+                      : largeLayout
+                          ? 20
+                          : 15)),
           Container(
             width: double.infinity,
             height: height * 0.11,

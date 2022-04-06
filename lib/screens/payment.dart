@@ -7,6 +7,7 @@ import '../payment/razorPay.dart';
 import '../payment/payPalPayment.dart';
 import '../model/location/location.dart';
 import '../model/profile/profileProvider.dart';
+import '../model/payment/orderId/orderIdProvider.dart';
 
 class PaymentScreen extends StatefulWidget {
   PaymentScreenState createState() => PaymentScreenState();
@@ -58,7 +59,11 @@ class PaymentScreenState extends State<PaymentScreen> {
       }
     };
     try {
-      razorpay.open(options);
+      Provider.of<OrderIdProvider>(context, listen: false)
+          .getOrderId('West Bengal', 'KOL21')
+          .then((_) {
+        razorpay.open(options);
+      });
     } catch (e) {
       debugPrint('Error: e');
     }

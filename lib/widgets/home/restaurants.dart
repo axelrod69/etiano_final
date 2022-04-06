@@ -27,6 +27,8 @@ class RestaurantsState extends State<Restaurants> {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     var textScale = MediaQuery.of(context).textScaleFactor;
+    bool tabLayout = width > 600;
+    bool largeLayout = width > 350 && width < 600;
     // final provider =
     //     Provider.of<PopularRestaurantProvider>(context).restaurantList;
     final response =
@@ -112,14 +114,17 @@ class RestaurantsState extends State<Restaurants> {
                         height: height * 0.12,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            boxShadow: const [
+                            boxShadow: [
                               BoxShadow(
                                   color: Colors.black,
-                                  blurRadius: 8,
-                                  offset: Offset(2, 1))
+                                  blurRadius: tabLayout && largeLayout ? 8 : 10,
+                                  offset: tabLayout && largeLayout
+                                      ? Offset(2, 1)
+                                      : Offset(1, 1))
                             ]),
                         child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
+                          borderRadius: BorderRadius.circular(
+                              tabLayout && largeLayout ? 20 : 30),
                           child: Image.network(
                               'https://achievexsolutions.in/current_work/eatiano/${response['data'][index]['restaurant_image']}'),
                         ),
@@ -128,7 +133,10 @@ class RestaurantsState extends State<Restaurants> {
                       Container(
                         width: width * 0.5,
                         height: double.infinity,
-                        padding: EdgeInsets.only(top: height * 0.022),
+                        padding: EdgeInsets.only(
+                            top: tabLayout && largeLayout
+                                ? height * 0.022
+                                : height * 0.012),
                         // color: Colors.green,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -138,17 +146,23 @@ class RestaurantsState extends State<Restaurants> {
                               // _restaurants["data"][index]["name"],
                               response['data'][index]['restaurant_name'],
                               textScaleFactor: textScale,
-                              style: const TextStyle(
+                              style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 15),
+                                  fontSize: tabLayout && largeLayout ? 15 : 12),
                             ),
-                            SizedBox(height: height * 0.01),
+                            SizedBox(
+                                height: tabLayout && largeLayout
+                                    ? height * 0.01
+                                    : height * 0.005),
                             Row(
                               children: [
                                 Text(
                                   'Cafe',
-                                  textScaleFactor: textScale,
+                                  textScaleFactor: tabLayout && largeLayout
+                                      ? textScale
+                                      : MediaQuery.of(context).textScaleFactor *
+                                          0.8,
                                   style: const TextStyle(
                                       color: Colors.red,
                                       fontWeight: FontWeight.bold),
@@ -156,18 +170,27 @@ class RestaurantsState extends State<Restaurants> {
                                 SizedBox(width: width * 0.02),
                                 Text(
                                   '.${_restaurants["data"][index]["type"]}',
-                                  textScaleFactor: textScale,
+                                  textScaleFactor: tabLayout && largeLayout
+                                      ? textScale
+                                      : MediaQuery.of(context).textScaleFactor *
+                                          0.8,
                                   style: const TextStyle(
                                       color: Colors.red,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ],
                             ),
-                            SizedBox(height: height * 0.02),
+                            SizedBox(
+                                height: tabLayout && largeLayout
+                                    ? height * 0.02
+                                    : height * 0.01),
                             Row(
                               children: [
                                 Image.asset('assets/images/Path 8561.png'),
-                                SizedBox(width: width * 0.02),
+                                SizedBox(
+                                    width: tabLayout && largeLayout
+                                        ? width * 0.02
+                                        : width * 0.01),
                                 Text(
                                   response['data'][index]['restaurant_rating'],
                                   // _restaurants["data"][index]["rating"],
@@ -176,7 +199,10 @@ class RestaurantsState extends State<Restaurants> {
                                       color: Colors.red,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                SizedBox(width: width * 0.02),
+                                SizedBox(
+                                    width: tabLayout && largeLayout
+                                        ? width * 0.02
+                                        : width * 0.01),
                                 Text(
                                   '(${response['data'][index]['restaurant_rating_count']} ratings)',
                                   textScaleFactor: textScale,

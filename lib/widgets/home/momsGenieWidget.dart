@@ -6,6 +6,8 @@ class MomsGenieWidget extends StatelessWidget {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     var textScale = MediaQuery.of(context).textScaleFactor * 1.2;
+    bool tabLayout = width > 600;
+    bool largeLayout = width > 350 && width < 600;
 
     // TODO: implement build
     return InkWell(
@@ -21,7 +23,9 @@ class MomsGenieWidget extends StatelessWidget {
           Positioned(
             top: height * 0.035,
             child: Container(
-              height: MediaQuery.of(context).size.height * 0.25,
+              height: tabLayout && largeLayout
+                  ? MediaQuery.of(context).size.height * 0.25
+                  : MediaQuery.of(context).size.height * 0.3,
               // width: double.infinity,
               width: width * 0.914,
               decoration: const BoxDecoration(
@@ -58,10 +62,10 @@ class MomsGenieWidget extends StatelessWidget {
                           'Delivering Food \nThroughout The World',
                           textScaleFactor: textScale,
                           textAlign: TextAlign.center,
-                          style: const TextStyle(
+                          style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
-                              fontSize: 20),
+                              fontSize: tabLayout && largeLayout ? 20 : 15),
                         ),
                       ),
                     ),
@@ -112,7 +116,9 @@ class MomsGenieWidget extends StatelessWidget {
                 child: Text('Mom\'s Genie',
                     textScaleFactor: textScale,
                     style: const TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold)),
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    )),
               ),
               // color: Colors.white,
             ),

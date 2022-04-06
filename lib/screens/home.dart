@@ -31,6 +31,8 @@ class HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
+    bool tabLayout = width > 600;
+    bool largeLayout = width > 350 && width < 600;
     final provider = Provider.of<CartItemProvider>(context).cartItems;
 
     print('height $height');
@@ -44,26 +46,34 @@ class HomeScreenState extends State<HomeScreen> {
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           // backgroundColor: Colors.green,
           titleSpacing: 0,
-          toolbarHeight: 100,
+          toolbarHeight: tabLayout ? height * 0.15 : height * 0.13,
           title: Column(
             children: [
               Container(
                 width: double.infinity,
-                height: 40,
+                height: height * 0.048,
                 // color: Colors.amber,
                 child: Column(
                   children: [
                     Container(
                       padding: const EdgeInsets.only(left: 10),
-                      height: 14,
+                      height: tabLayout
+                          ? height * 0.016
+                          : largeLayout
+                              ? height * 0.014
+                              : height * 0.018,
                       width: double.infinity,
                       // color: Colors.red,
-                      child: const Text(
+                      child: Text(
                         'Delivering To',
                         style: TextStyle(
                             color: Colors.grey,
                             fontWeight: FontWeight.bold,
-                            fontSize: 13),
+                            fontSize: tabLayout
+                                ? 18
+                                : largeLayout
+                                    ? 13
+                                    : 10),
                       ),
                     ),
                     // isLoading
@@ -79,9 +89,9 @@ class HomeScreenState extends State<HomeScreen> {
                     //       )
                     //     :
                     Container(
-                      height: 26,
+                      height: tabLayout ? height * 0.032 : height * 0.03,
                       width: double.infinity,
-                      padding: const EdgeInsets.only(left: 10, right: 10),
+                      padding: const EdgeInsets.only(left: 10, right: 8),
                       // color: Colors.blue,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -91,16 +101,20 @@ class HomeScreenState extends State<HomeScreen> {
                               Provider.of<LocationProvider>(context).address,
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
-                              style: const TextStyle(
+                              style: TextStyle(
                                   color: Colors.grey,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 15),
+                                  fontSize: tabLayout
+                                      ? 20
+                                      : largeLayout
+                                          ? 12
+                                          : 10),
                             ),
                           ),
                           // const SizedBox(width: 20),
                           Container(
                               height: double.infinity,
-                              width: 20,
+                              width: tabLayout ? width * 0.06 : 20,
                               // color: Colors.yellow,
                               child: InkWell(
                                 onTap: () {
@@ -117,6 +131,7 @@ class HomeScreenState extends State<HomeScreen> {
                                       ? Icons.keyboard_arrow_down
                                       : Icons.keyboard_arrow_up,
                                   color: Colors.red,
+                                  size: tabLayout ? 30 : 20,
                                 ),
                               ))
                         ],
@@ -128,17 +143,21 @@ class HomeScreenState extends State<HomeScreen> {
               Stack(
                 children: [
                   Container(
-                    height: 60,
+                    height: height * 0.055,
                     width: double.infinity,
                     // color: Colors.red,
-                    padding: const EdgeInsets.only(top: 8, left: 2),
+                    padding: const EdgeInsets.only(left: 6),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       // crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Icon(
+                        Icon(
                           Icons.search,
-                          size: 30,
+                          size: tabLayout
+                              ? 45
+                              : largeLayout
+                                  ? 30
+                                  : 20,
                           color: Colors.grey,
                         ),
                         // if (_searchIcon)
@@ -148,12 +167,17 @@ class HomeScreenState extends State<HomeScreen> {
                               onTap: () => Navigator.of(context)
                                   .pushNamed('/search-screen'),
                               child: Container(
-                                margin:
-                                    const EdgeInsets.only(bottom: 6, right: 4),
-                                padding: const EdgeInsets.only(left: 6),
+                                margin: EdgeInsets.only(
+                                    bottom: tabLayout ? 2 : 6, right: 4),
+                                padding:
+                                    EdgeInsets.only(left: tabLayout ? 15 : 6),
                                 // height: double.infinity,
-                                height: 45,
-                                width: width * 0.7,
+                                height: tabLayout
+                                    ? height * 0.06
+                                    : largeLayout
+                                        ? 45
+                                        : 60,
+                                width: tabLayout ? width * 0.82 : width * 0.7,
                                 decoration: BoxDecoration(
                                     // color: Colors.transparent,
                                     // color: Colors.amber,
@@ -162,12 +186,16 @@ class HomeScreenState extends State<HomeScreen> {
                                     border: Border.all(
                                         color: Colors.grey, width: 2)),
                                 child: Row(
-                                  children: const [
+                                  children: [
                                     Text(
                                       'Search By Restaurant or Food',
                                       style: TextStyle(
                                         color: Colors.grey,
-                                        fontSize: 16,
+                                        fontSize: tabLayout
+                                            ? 22
+                                            : largeLayout
+                                                ? 16
+                                                : 12,
                                       ),
                                     )
                                   ],
@@ -182,18 +210,26 @@ class HomeScreenState extends State<HomeScreen> {
                             InkWell(
                               onTap: () => Navigator.of(context)
                                   .pushNamed('/cart-screen'),
-                              child: const Icon(
+                              child: Icon(
                                 Icons.shopping_cart_outlined,
                                 color: Colors.grey,
-                                size: 30,
+                                size: tabLayout
+                                    ? 38
+                                    : largeLayout
+                                        ? 30
+                                        : 20,
                               ),
                             ),
                             InkWell(
                               onTap: () {},
-                              child: const Icon(
+                              child: Icon(
                                 Icons.notifications_none_outlined,
                                 color: Colors.grey,
-                                size: 30,
+                                size: tabLayout
+                                    ? 38
+                                    : largeLayout
+                                        ? 30
+                                        : 20,
                               ),
                             )
                           ],
@@ -203,35 +239,59 @@ class HomeScreenState extends State<HomeScreen> {
                   ),
                   provider.length > 0
                       ? Positioned(
-                          right: width * 0.06,
-                          top: height * 0.02,
+                          right: tabLayout ? width * 0.035 : width * 0.06,
+                          top: tabLayout
+                              ? height * 0.01
+                              : largeLayout
+                                  ? height * 0.02
+                                  : height * 0.006,
                           child: CircleAvatar(
-                            radius: 8,
+                            radius: tabLayout
+                                ? 10
+                                : largeLayout
+                                    ? 8
+                                    : 6,
                             backgroundColor: Colors.red,
                             child: Text(
                               provider.length > 9
                                   ? '9+'
                                   : provider.length.toString(),
-                              style: const TextStyle(
+                              style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 10),
+                                  fontSize: tabLayout
+                                      ? 15
+                                      : largeLayout
+                                          ? 10
+                                          : 8),
                             ),
                           ),
                         )
                       : Container(color: Colors.transparent),
                   Positioned(
                     right: width * 0.001,
-                    top: height * 0.02,
-                    child: const CircleAvatar(
-                      radius: 8,
+                    top: tabLayout
+                        ? height * 0.01
+                        : largeLayout
+                            ? height * 0.02
+                            : height * 0.006,
+                    child: CircleAvatar(
+                      radius: tabLayout
+                          ? 10
+                          : largeLayout
+                              ? 8
+                              : 6,
                       backgroundColor: Colors.red,
                       child: Text(
                         '9+',
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
-                            fontSize: 10),
+                            fontSize: tabLayout
+                                ? 15
+                                : largeLayout
+                                    ? 10
+                                    : 8),
                       ),
                     ),
                   )

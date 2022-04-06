@@ -29,30 +29,42 @@ class CityListState extends State<CityList> {
     'Delhi',
     'Mumbai',
     'Bangalore',
-    'Kolkata',
-    'Delhi',
-    'Mumbai',
-    'Bangalore'
   ];
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    bool tabLayout = width > 600;
+    bool largeLayout = width > 350 && width < 600;
+
     // TODO: implement build
     return Container(
       width: double.infinity,
-      height: MediaQuery.of(context).size.height * 0.11,
+      height: tabLayout
+          ? MediaQuery.of(context).size.height * 0.15
+          : largeLayout
+              ? MediaQuery.of(context).size.height * 0.11
+              : MediaQuery.of(context).size.height * 0.14,
+      // height: tabLayout
+      //     ? MediaQuery.of(context).size.height * 0.15
+      //     : MediaQuery.of(context).size.height * 0.12,
       // color: Colors.red,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) => Container(
           height: double.infinity,
-          width: MediaQuery.of(context).size.width * 0.3,
+          width: MediaQuery.of(context).size.width * 0.23,
+          // color: Colors.blue,
           margin:
-              EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.015),
+              EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.012),
           child: Column(
             children: [
               Container(
-                height: MediaQuery.of(context).size.height * 0.08,
+                height: tabLayout
+                    ? MediaQuery.of(context).size.height * 0.12
+                    : largeLayout
+                        ? MediaQuery.of(context).size.height * 0.08
+                        : MediaQuery.of(context).size.height * 0.11,
                 width: double.infinity,
                 padding: EdgeInsets.only(
                     left: MediaQuery.of(context).size.width * 0.02,
@@ -62,17 +74,23 @@ class CityListState extends State<CityList> {
                 decoration: BoxDecoration(
                     // color: Colors.yellow,
                     borderRadius: BorderRadius.all(Radius.circular(10)),
-                    border: Border.all(color: Colors.white)),
+                    border: Border.all(color: Colors.white, width: 2)),
                 child: _images[index],
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.005),
               Text(_cityNames[index],
-                  style: const TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.bold))
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: tabLayout
+                          ? 18
+                          : largeLayout
+                              ? 15
+                              : 10))
             ],
           ),
         ),
-        itemCount: 8,
+        itemCount: 4,
       ),
     );
   }

@@ -6,6 +6,8 @@ class ExpertChoice extends StatelessWidget {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     var textScale = MediaQuery.of(context).textScaleFactor * 1.1;
+    bool tabLayout = width > 600;
+    bool largeLayout = width > 350 && width < 600;
 
     final Map<String, dynamic> _experts = {
       "data": [
@@ -63,7 +65,7 @@ class ExpertChoice extends StatelessWidget {
     // TODO: implement build
     return Container(
       width: double.infinity,
-      height: height * 0.25,
+      height: tabLayout && largeLayout ? height * 0.25 : height * 0.28,
       color: const Color.fromRGBO(103, 103, 103, 1),
       padding: EdgeInsets.only(
           left: width * 0.05,
@@ -81,6 +83,7 @@ class ExpertChoice extends StatelessWidget {
               right: width * 0.02,
               bottom: height * 0.001),
           decoration: BoxDecoration(
+              // color: Colors.amber,
               borderRadius: BorderRadius.all(Radius.circular(20)),
               border: Border.all(
                   color: Colors.red, width: 2, style: BorderStyle.solid)),
@@ -104,22 +107,24 @@ class ExpertChoice extends StatelessWidget {
                       Text(
                         _experts["data"][index]["name"],
                         textScaleFactor: textScale,
-                        style: const TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: !tabLayout && !largeLayout ? 10 : null),
                       ),
                       Text('Choice Of Restaurant',
                           textScaleFactor: textScale,
-                          style: const TextStyle(
+                          style: TextStyle(
                               color: Colors.white,
-                              fontSize: 8,
+                              fontSize: tabLayout && largeLayout ? 8 : 7,
                               fontWeight: FontWeight.bold)),
                       Text(
                         _experts["data"][index]["restaurant"],
                         textScaleFactor: textScale,
-                        style: const TextStyle(
+                        style: TextStyle(
                             color: Colors.green,
                             fontWeight: FontWeight.bold,
-                            fontSize: 12),
+                            fontSize: tabLayout && largeLayout ? 12 : 10),
                       )
                     ],
                   ),

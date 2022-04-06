@@ -34,6 +34,8 @@ class SignUpFormState extends State<SignUpForm> {
     var textScale = MediaQuery.of(context).textScaleFactor * 1.2;
     var responsive =
         MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
+    bool tabLayout = width > 600;
+    bool largeLayout = width > 350 && width < 600;
 
     // TODO: implement build
     return Container(
@@ -47,7 +49,11 @@ class SignUpFormState extends State<SignUpForm> {
               textScaleFactor: textScale,
               style: TextStyle(
                   color: Colors.white,
-                  fontSize: 13,
+                  fontSize: tabLayout
+                      ? 18
+                      : largeLayout
+                          ? 14
+                          : 10,
                   fontWeight: FontWeight.bold)),
           Padding(
             padding: EdgeInsets.only(
@@ -73,6 +79,7 @@ class SignUpFormState extends State<SignUpForm> {
                       decoration: InputDecoration(
                         label: Text('Name'),
                         focusedBorder: InputBorder.none,
+                        border: InputBorder.none,
                       ),
                       keyboardType: TextInputType.text,
                       textInputAction: TextInputAction.next,
@@ -103,39 +110,9 @@ class SignUpFormState extends State<SignUpForm> {
                               offset: Offset(2, 1))
                         ]),
                     child: TextFormField(
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          label: Text('Password'),
-                          focusedBorder: InputBorder.none,
-                        ),
-                        keyboardType: TextInputType.text,
-                        textInputAction: TextInputAction.next,
-                        validator: (passwordInput) {
-                          if (passwordInput!.isEmpty) {
-                            return 'Please Enter Name';
-                          } else {
-                            password = passwordInput;
-                            return null;
-                          }
-                        }),
-                  ),
-                  SizedBox(height: height * 0.03),
-                  Container(
-                    height: height * 0.06,
-                    padding: EdgeInsets.only(left: width * 0.045),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(30),
-                        boxShadow: const [
-                          BoxShadow(
-                              color: Colors.black,
-                              blurRadius: 20,
-                              spreadRadius: 10,
-                              offset: Offset(2, 1))
-                        ]),
-                    child: TextFormField(
                         // obscureText: true,
                         decoration: InputDecoration(
+                          border: InputBorder.none,
                           label: Text('Email'),
                           focusedBorder: InputBorder.none,
                         ),
@@ -165,8 +142,73 @@ class SignUpFormState extends State<SignUpForm> {
                               offset: Offset(2, 1))
                         ]),
                     child: TextFormField(
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          label: Text('Password'),
+                          focusedBorder: InputBorder.none,
+                        ),
+                        keyboardType: TextInputType.text,
+                        textInputAction: TextInputAction.next,
+                        validator: (passwordInput) {
+                          if (passwordInput!.isEmpty) {
+                            return 'Please Enter Password';
+                          } else {
+                            password = passwordInput;
+                            return null;
+                          }
+                        }),
+                  ),
+                  SizedBox(height: height * 0.03),
+                  Container(
+                    height: height * 0.06,
+                    padding: EdgeInsets.only(left: width * 0.045),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(30),
+                        boxShadow: const [
+                          BoxShadow(
+                              color: Colors.black,
+                              blurRadius: 20,
+                              spreadRadius: 10,
+                              offset: Offset(2, 1))
+                        ]),
+                    child: TextFormField(
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          label: Text('Confirm Password'),
+                          focusedBorder: InputBorder.none,
+                        ),
+                        keyboardType: TextInputType.text,
+                        textInputAction: TextInputAction.next,
+                        validator: (passwordInput) {
+                          if (passwordInput!.isEmpty) {
+                            return 'Passwords dont\'t match';
+                          } else {
+                            password = passwordInput;
+                            return null;
+                          }
+                        }),
+                  ),
+                  SizedBox(height: height * 0.03),
+                  Container(
+                    height: height * 0.06,
+                    padding: EdgeInsets.only(left: width * 0.045),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(30),
+                        boxShadow: const [
+                          BoxShadow(
+                              color: Colors.black,
+                              blurRadius: 20,
+                              spreadRadius: 10,
+                              offset: Offset(2, 1))
+                        ]),
+                    child: TextFormField(
                         // obscureText: true,
                         decoration: InputDecoration(
+                          border: InputBorder.none,
                           label: Text('Phone Number'),
                           focusedBorder: InputBorder.none,
                         ),

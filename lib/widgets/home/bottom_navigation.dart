@@ -25,6 +25,11 @@ class BottomNavigationState extends State<BottomNavigation> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
+    // var height = MediaQuery.of(context).size.height;
+    // var width = MediaQuery.of(context).size.width;
+    var textScale = MediaQuery.of(context).textScaleFactor;
+    bool tabLayout = width > 600;
+    bool largeLayout = width > 350 && width < 600;
 
     final items = [
       Icon(Icons.window_outlined,
@@ -67,7 +72,7 @@ class BottomNavigationState extends State<BottomNavigation> {
         child: CurvedNavigationBar(
           items: items,
           index: index,
-          height: 60,
+          height: tabLayout ? 75 : 60,
           color: const Color.fromRGBO(103, 103, 103, 1),
           backgroundColor: Colors.transparent,
           buttonBackgroundColor: const Color.fromRGBO(189, 186, 186, 1),

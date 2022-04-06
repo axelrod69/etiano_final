@@ -17,6 +17,8 @@ class ForgotPasswordState extends State<ForgotPassword> {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     var textScale = MediaQuery.of(context).textScaleFactor * 1.2;
+    bool tabLayout = width > 600;
+    bool largeLayout = width > 350 && width < 600;
 
     // TODO: implement build
     return Scaffold(
@@ -42,16 +44,21 @@ class ForgotPasswordState extends State<ForgotPassword> {
             children: [
               Text('Enter Email',
                   textScaleFactor: textScale,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  )),
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: tabLayout
+                          ? 20
+                          : largeLayout
+                              ? 16
+                              : 12)),
               SizedBox(height: height * 0.02),
               Padding(
-                padding:
-                    EdgeInsets.only(left: width * 0.04, right: width * 0.04),
+                padding: tabLayout
+                    ? EdgeInsets.only(left: width * 0.08, right: width * 0.08)
+                    : EdgeInsets.only(left: width * 0.04, right: width * 0.04),
                 child: Container(
-                  height: height * 0.06,
+                  height: tabLayout ? height * 0.08 : height * 0.06,
                   padding: EdgeInsets.only(left: width * 0.045),
                   decoration: BoxDecoration(
                       color: Colors.white,
@@ -69,6 +76,7 @@ class ForgotPasswordState extends State<ForgotPassword> {
                         'Your Email',
                         textScaleFactor:
                             MediaQuery.of(context).textScaleFactor * 1,
+                        style: TextStyle(fontSize: tabLayout ? 18 : 16),
                       ),
                       focusedBorder: InputBorder.none,
                     ),
@@ -111,10 +119,10 @@ class ForgotPasswordState extends State<ForgotPassword> {
               SizedBox(height: height * 0.02),
               Text('Please Check Your Email For The OTP',
                   textScaleFactor: textScale,
-                  style: const TextStyle(
+                  style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
-                      fontSize: 12))
+                      fontSize: tabLayout ? 14 : 12))
             ],
           ),
         ),

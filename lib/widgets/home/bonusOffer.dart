@@ -13,6 +13,8 @@ class BonusOfferState extends State<BonusOffer> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
+    bool tabLayout = width > 600;
+    bool largeLayout = width > 350 && width < 600;
     var textScale = MediaQuery.of(context).textScaleFactor;
 
     final List _bonus = [
@@ -26,8 +28,9 @@ class BonusOfferState extends State<BonusOffer> {
     // TODO: implement build
     return Container(
       width: width * 1,
-      height: height * 0.35,
-      padding: EdgeInsets.only(top: height * 0.04),
+      height: tabLayout && largeLayout ? height * 0.35 : height * 0.4,
+      padding: EdgeInsets.only(
+          top: tabLayout && largeLayout ? height * 0.04 : height * 0.06),
       // color: Colors.red,
       child: Column(
         children: [
@@ -35,7 +38,8 @@ class BonusOfferState extends State<BonusOffer> {
               itemCount: _bonus.length,
               itemBuilder: (context, index, realIndex) {
                 final urlImage = _bonus[index];
-                return buildImage(urlImage, index);
+                return buildImage(
+                    urlImage, index, context, tabLayout, largeLayout);
               },
               options: CarouselOptions(
                   height: MediaQuery.of(context).size.height * 0.25,
@@ -52,7 +56,13 @@ class BonusOfferState extends State<BonusOffer> {
     );
   }
 
-  Widget buildImage(urlImage, int index) => Container(
+  Widget buildImage(urlImage, int index, BuildContext context, bool tabLayout,
+          bool largeLayout) =>
+      Container(
+        width: !tabLayout && !largeLayout
+            ? MediaQuery.of(context).size.width * 0.8
+            : null,
+        // height: !tabLayout && !largeLayout ? MediaQuery.of(context).size.height * 0.8 : null,
         margin:
             EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.06),
         decoration: const BoxDecoration(

@@ -17,6 +17,8 @@ class HomeContentState extends State<HomeContent> {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     var textScale = MediaQuery.of(context).textScaleFactor * 1.2;
+    bool tabLayout = width > 600;
+    bool largeLayout = width > 350 && width < 600;
     // var responsive =
     //     MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
 
@@ -27,36 +29,61 @@ class HomeContentState extends State<HomeContent> {
       child: ListView(
         // ignore: prefer_const_literals_to_create_immutables
         children: [
-          Text('Lorem ipsum dolor sit amet, \nconsectetur',
-              textScaleFactor: textScale,
-              style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20)),
+          Row(
+            children: [
+              Expanded(
+                child: Text('Lorem ipsum dolor sit amet, consectetur',
+                    textScaleFactor: textScale,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: tabLayout
+                            ? 30
+                            : largeLayout
+                                ? 20
+                                : 18)),
+              ),
+            ],
+          ),
           SizedBox(height: height * 0.04),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('City With Foods',
                   textScaleFactor: textScale,
-                  style: const TextStyle(
+                  style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
-                      fontSize: 20)),
-              Container(
-                child: Row(
-                  children: [
-                    Text('View All',
-                        textScaleFactor: textScale,
-                        style: const TextStyle(
-                            color: Colors.yellow,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 8)),
-                    const Icon(Icons.keyboard_arrow_right_outlined,
-                        color: Colors.yellow)
-                  ],
-                ),
-              ),
+                      fontSize: tabLayout
+                          ? 25
+                          : largeLayout
+                              ? 20
+                              : 15)),
+              // Container(
+              //   child: Row(
+              //     children: [
+              //       Text('View All',
+              //           textScaleFactor: textScale,
+              //           style: TextStyle(
+              //               color: Colors.yellow,
+              //               fontWeight: FontWeight.bold,
+              //               fontSize: tabLayout
+              //                   ? 14
+              //                   : largeLayout
+              //                       ? 8
+              //                       : 6)),
+              //       Icon(
+              //         Icons.keyboard_arrow_right_outlined,
+              //         color: Colors.yellow,
+              //         size: tabLayout
+              //             ? 30
+              //             : largeLayout
+              //                 ? 20
+              //                 : 18,
+              //       )
+              //     ],
+              //   ),
+              // ),
             ],
           ),
           SizedBox(height: height * 0.04),
@@ -67,21 +94,42 @@ class HomeContentState extends State<HomeContent> {
             children: [
               Text('Popular Dishes',
                   textScaleFactor: textScale,
-                  style: const TextStyle(
+                  style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
-                      fontSize: 20)),
+                      fontSize: tabLayout
+                          ? 25
+                          : largeLayout
+                              ? 20
+                              : 15)),
               Container(
                 child: Row(
                   children: [
-                    Text('View All',
-                        textScaleFactor: textScale,
-                        style: const TextStyle(
+                    Container(
+                      child: Row(
+                        children: [
+                          Text('View All',
+                              textScaleFactor: textScale,
+                              style: TextStyle(
+                                  color: Colors.yellow,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: tabLayout
+                                      ? 14
+                                      : largeLayout
+                                          ? 8
+                                          : 6)),
+                          Icon(
+                            Icons.keyboard_arrow_right_outlined,
                             color: Colors.yellow,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 8)),
-                    const Icon(Icons.keyboard_arrow_right_outlined,
-                        color: Colors.yellow)
+                            size: tabLayout
+                                ? 30
+                                : largeLayout
+                                    ? 20
+                                    : 18,
+                          )
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -93,7 +141,7 @@ class HomeContentState extends State<HomeContent> {
           Container(
               // width: double.infinity,
               width: width * 1,
-              height: height * 0.32,
+              height: tabLayout && largeLayout ? height * 0.32 : height * 0.375,
               padding: EdgeInsets.only(left: width * 0.02, right: width * 0.02),
               // color: Colors.yellow,
               child: Center(child: MomsGenieWidget())),
@@ -102,18 +150,26 @@ class HomeContentState extends State<HomeContent> {
           SizedBox(height: height * 0.02),
           Text('Bonus For You',
               textScaleFactor: textScale,
-              style: const TextStyle(
+              style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  fontSize: 20)),
+                  fontSize: tabLayout
+                      ? 25
+                      : largeLayout
+                          ? 20
+                          : 15)),
           BonusOffer(),
           SizedBox(height: height * 0.05),
-          Text('Expert Choice',
+          Text('Bonus For You',
               textScaleFactor: textScale,
-              style: const TextStyle(
+              style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  fontSize: 20)),
+                  fontSize: tabLayout
+                      ? 25
+                      : largeLayout
+                          ? 20
+                          : 15)),
           SizedBox(height: height * 0.03),
           ExpertChoice(),
           SizedBox(height: height * 0.05),
@@ -122,10 +178,14 @@ class HomeContentState extends State<HomeContent> {
             children: [
               Text('Popular Restaurants',
                   textScaleFactor: textScale,
-                  style: const TextStyle(
+                  style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
-                      fontSize: 20)),
+                      fontSize: tabLayout
+                          ? 25
+                          : largeLayout
+                              ? 20
+                              : 15)),
               InkWell(
                 onTap: () =>
                     Navigator.of(context).pushNamed('/restaurant-list'),
@@ -134,12 +194,23 @@ class HomeContentState extends State<HomeContent> {
                     children: [
                       Text('View All',
                           textScaleFactor: textScale,
-                          style: const TextStyle(
+                          style: TextStyle(
                               color: Colors.yellow,
                               fontWeight: FontWeight.bold,
-                              fontSize: 8)),
-                      const Icon(Icons.keyboard_arrow_right_outlined,
-                          color: Colors.yellow)
+                              fontSize: tabLayout
+                                  ? 14
+                                  : largeLayout
+                                      ? 8
+                                      : 6)),
+                      Icon(
+                        Icons.keyboard_arrow_right_outlined,
+                        color: Colors.yellow,
+                        size: tabLayout
+                            ? 30
+                            : largeLayout
+                                ? 20
+                                : 18,
+                      )
                     ],
                   ),
                 ),

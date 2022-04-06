@@ -83,6 +83,7 @@ class SignInFormState extends State<SignInForm> {
                     child: TextFormField(
                       // controller: textController,
                       decoration: InputDecoration(
+                          // errorText: 'Please Enter Email',
                           errorStyle: TextStyle(
                               fontSize: tabLayout
                                   ? 16
@@ -113,8 +114,10 @@ class SignInFormState extends State<SignInForm> {
                       validator: (email) {
                         if (email!.isEmpty) {
                           return '\u26A0 Please Enter Email';
+                        } else {
+                          inputEmail = email;
+                          return null;
                         }
-                        return null;
                       },
                     ),
                   ),
@@ -221,11 +224,13 @@ class SignInFormState extends State<SignInForm> {
                               borderSide:
                                   BorderSide(color: Colors.black, width: 1.0))),
                       style: TextStyle(color: Colors.black),
-                      validator: (email) {
-                        if (email!.isEmpty) {
+                      validator: (password) {
+                        if (password!.isEmpty) {
                           return '\u26A0 Please Enter Password.';
+                        } else {
+                          inputPassword = password;
+                          return null;
                         }
-                        return null;
                       },
                     ),
                   ),
@@ -259,22 +264,30 @@ class SignInFormState extends State<SignInForm> {
                     },
                     child: Text('Forgot your Password?',
                         textScaleFactor: tabLayout
-                            ? MediaQuery.of(context).textScaleFactor * 0.95
-                            : MediaQuery.of(context).textScaleFactor * 1.1,
+                            ? MediaQuery.of(context).textScaleFactor * 1.5
+                            : largeLayout
+                                ? MediaQuery.of(context).textScaleFactor * 1
+                                : MediaQuery.of(context).textScaleFactor * 0.75,
                         style: TextStyle(
                             color: Colors.white, fontWeight: FontWeight.bold)),
                   ),
                   SizedBox(height: height * 0.06),
                   Text('or Login With',
                       textScaleFactor: tabLayout
-                          ? MediaQuery.of(context).textScaleFactor * 1.1
-                          : MediaQuery.of(context).textScaleFactor * 1.2,
+                          ? MediaQuery.of(context).textScaleFactor * 1.5
+                          : largeLayout
+                              ? MediaQuery.of(context).textScaleFactor * 1
+                              : MediaQuery.of(context).textScaleFactor * 0.75,
                       style: TextStyle(
                           color: Colors.white, fontWeight: FontWeight.bold)),
                   InkWell(
                     onTap: facebookSignIn,
                     child: Container(
-                      height: tabLayout ? height * 0.06 : height * 0.07,
+                      height: tabLayout
+                          ? height * 0.055
+                          : largeLayout
+                              ? height * 0.06
+                              : height * 0.055,
                       width: double.infinity,
                       margin: EdgeInsets.only(
                           top: height * 0.015, bottom: height * 0.025),
@@ -291,14 +304,29 @@ class SignInFormState extends State<SignInForm> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Image.asset('assets/images/facebook-letter-logo.png',
-                              width: width * 0.03, height: height * 0.03),
-                          SizedBox(width: width * 0.05),
+                          tabLayout
+                              ? Image.asset(
+                                  'assets/images/facebook-letter-logo.png',
+                                  width: width * 0.025,
+                                  height: height * 0.06)
+                              : largeLayout
+                                  ? Image.asset(
+                                      'assets/images/facebook-letter-logo.png',
+                                      width: width * 0.025,
+                                      height: height * 0.025)
+                                  : Image.asset(
+                                      'assets/images/facebook-letter-logo.png',
+                                      width: width * 0.02,
+                                      height: height * 0.02),
+                          SizedBox(width: width * 0.02),
                           Text('Login with Facebook',
                               textScaleFactor: tabLayout
-                                  ? MediaQuery.of(context).textScaleFactor * 1
-                                  : MediaQuery.of(context).textScaleFactor *
-                                      1.1,
+                                  ? MediaQuery.of(context).textScaleFactor * 1.5
+                                  : largeLayout
+                                      ? MediaQuery.of(context).textScaleFactor *
+                                          1
+                                      : MediaQuery.of(context).textScaleFactor *
+                                          0.75,
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold))
@@ -309,7 +337,11 @@ class SignInFormState extends State<SignInForm> {
                   InkWell(
                     onTap: googleSignIn,
                     child: Container(
-                      height: tabLayout ? height * 0.06 : height * 0.07,
+                      height: tabLayout
+                          ? height * 0.055
+                          : largeLayout
+                              ? height * 0.06
+                              : height * 0.055,
                       width: double.infinity,
                       // margin: EdgeInsets.only(bottom: height * 0.025),
                       decoration: BoxDecoration(
@@ -325,14 +357,30 @@ class SignInFormState extends State<SignInForm> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Image.asset('assets/images/google-plus-logo.png',
-                              width: width * 0.06, height: height * 0.06),
-                          SizedBox(width: width * 0.02),
+                          // 'assets/images/google-plus-logo.png'
+                          tabLayout
+                              ? Image.asset(
+                                  'assets/images/google-plus-logo.png',
+                                  width: width * 0.045,
+                                  height: height * 0.08)
+                              : largeLayout
+                                  ? Image.asset(
+                                      'assets/images/google-plus-logo.png',
+                                      width: width * 0.1,
+                                      height: height * 0.1)
+                                  : Image.asset(
+                                      'assets/images/google-plus-logo.png',
+                                      width: width * 0.08,
+                                      height: height * 0.08),
+                          SizedBox(width: width * 0.01),
                           Text('Login with Google',
                               textScaleFactor: tabLayout
-                                  ? MediaQuery.of(context).textScaleFactor * 1
-                                  : MediaQuery.of(context).textScaleFactor *
-                                      1.1,
+                                  ? MediaQuery.of(context).textScaleFactor * 1.5
+                                  : largeLayout
+                                      ? MediaQuery.of(context).textScaleFactor *
+                                          1
+                                      : MediaQuery.of(context).textScaleFactor *
+                                          0.75,
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold))

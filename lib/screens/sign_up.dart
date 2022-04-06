@@ -15,6 +15,8 @@ class SignUpState extends State<SignUp> {
     var responsive =
         MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
     var textScale = MediaQuery.of(context).textScaleFactor * 1.2;
+    bool tabLayout = width > 600;
+    bool largeLayout = width > 350 && width < 600;
 
     // TODO: implement build
     return Scaffold(
@@ -29,7 +31,11 @@ class SignUpState extends State<SignUp> {
           children: [
             Container(
               // color: Colors.red,
-              height: (height - MediaQuery.of(context).padding.top) * 0.80,
+              height: tabLayout
+                  ? (height - MediaQuery.of(context).padding.top) * 0.9
+                  : largeLayout
+                      ? (height - MediaQuery.of(context).padding.top) * 0.8
+                      : (height - MediaQuery.of(context).padding.top) * 0.8,
               padding: EdgeInsets.only(
                   left: width * 0.04,
                   top: responsive * 0.06,
@@ -40,6 +46,7 @@ class SignUpState extends State<SignUp> {
               child: Container(
                 height: double.infinity,
                 width: double.infinity,
+                // color: Colors.red,
                 child: CustomPaint(
                   painter: LogInOutBorderPaint(),
                   child: SignUpForm(),
@@ -47,7 +54,11 @@ class SignUpState extends State<SignUp> {
               ),
             ),
             Container(
-              height: (height - MediaQuery.of(context).padding.top) * 0.20,
+              height: tabLayout
+                  ? (height - MediaQuery.of(context).padding.top) * 0.30
+                  : largeLayout
+                      ? (height - MediaQuery.of(context).padding.top) * 0.20
+                      : (height - MediaQuery.of(context).padding.top) * 0.10,
               width: double.infinity,
               padding: EdgeInsets.only(
                   top: responsive * 0.01, bottom: responsive * 0.01),
@@ -61,10 +72,14 @@ class SignUpState extends State<SignUp> {
                       Text(
                         'Already have an Account?',
                         textScaleFactor: textScale,
-                        style: const TextStyle(
+                        style: TextStyle(
                             color: Colors.grey,
                             fontWeight: FontWeight.bold,
-                            fontSize: 15),
+                            fontSize: tabLayout
+                                ? 20
+                                : largeLayout
+                                    ? 15
+                                    : 12),
                       ),
                       const SizedBox(width: 2),
                       InkWell(
@@ -75,8 +90,14 @@ class SignUpState extends State<SignUp> {
                         child: Text(
                           'Sign In',
                           textScaleFactor: textScale,
-                          style: const TextStyle(
-                              color: Colors.red, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              color: Colors.red,
+                              fontWeight: FontWeight.bold,
+                              fontSize: tabLayout
+                                  ? 20
+                                  : largeLayout
+                                      ? 15
+                                      : 12),
                         ),
                       )
                     ],
@@ -84,9 +105,13 @@ class SignUpState extends State<SignUp> {
                   Text(
                     'Lorem ipsum dolor sit amet, consectetur',
                     textScaleFactor: textScale,
-                    style: const TextStyle(
+                    style: TextStyle(
                         color: Colors.white,
-                        fontSize: 8,
+                        fontSize: tabLayout
+                            ? 12
+                            : largeLayout
+                                ? 8
+                                : 6,
                         fontWeight: FontWeight.bold),
                   ),
                 ],
