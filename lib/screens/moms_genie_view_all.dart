@@ -9,7 +9,9 @@ class MomsGenieViewAllState extends State<MomsGenieViewAll> {
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
-    var textScale = MediaQuery.of(context).textScaleFactor * 1.2;
+    bool tabLayout = width > 600;
+    bool largeLayout = width > 350 && width < 600;
+    var textScale = MediaQuery.of(context).textScaleFactor;
 
     final Map<String, dynamic> _menuItems = {
       "data": [
@@ -108,22 +110,27 @@ class MomsGenieViewAllState extends State<MomsGenieViewAll> {
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
+          centerTitle: true,
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           leading: InkWell(
               onTap: () => Navigator.of(context)
                   .pushReplacementNamed('/moms-genie-screen'),
               child: const Icon(Icons.arrow_back_ios, color: Colors.red)),
-          title: Padding(
-            padding: EdgeInsets.only(left: width * 0.17),
-            child: Text('Mom\'s Menu',
-                textScaleFactor: textScale,
-                style: const TextStyle(
-                    color: Colors.white, fontWeight: FontWeight.bold)),
-          ),
+          title: Text('Mom\'s Menu',
+              textScaleFactor: tabLayout
+                  ? textScale * 1.4
+                  : largeLayout
+                      ? textScale * 1.2
+                      : textScale * 1.1,
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              )),
         ),
         body: ListView.builder(
           itemBuilder: (context, index) => Container(
             margin: EdgeInsets.only(bottom: height * 0.05),
+            // color: Colors.green,
             child: Stack(
               children: [
                 Padding(
@@ -132,8 +139,12 @@ class MomsGenieViewAllState extends State<MomsGenieViewAll> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        width: width * 0.76,
-                        height: height * 0.11,
+                        width: tabLayout || largeLayout
+                            ? width * 0.76
+                            : width * 0.82,
+                        height: tabLayout || largeLayout
+                            ? height * 0.11
+                            : height * 0.14,
                         padding: EdgeInsets.only(
                             // bottom: height * 0.015,
                             left: width * 0.12),
@@ -165,16 +176,17 @@ class MomsGenieViewAllState extends State<MomsGenieViewAll> {
                                           textScaleFactor: textScale,
                                           style: TextStyle(
                                               color: Colors.white,
-                                              fontWeight: FontWeight.bold)),
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: tabLayout ? 20 : 14)),
                                       SizedBox(height: height * 0.005),
                                       Text(
                                           _menuItems["data"][index]
                                               ["restaurant"],
                                           textScaleFactor: textScale,
-                                          style: const TextStyle(
+                                          style: TextStyle(
                                               color: Colors.white,
                                               fontWeight: FontWeight.bold,
-                                              fontSize: 10)),
+                                              fontSize: tabLayout ? 16 : 10)),
                                       SizedBox(height: height * 0.005),
                                       Row(
                                         children: [
@@ -186,18 +198,20 @@ class MomsGenieViewAllState extends State<MomsGenieViewAll> {
                                                       ["rating_star"]
                                                   .toString(),
                                               textScaleFactor: textScale,
-                                              style: const TextStyle(
+                                              style: TextStyle(
                                                   color: Colors.white,
                                                   fontWeight: FontWeight.bold,
-                                                  fontSize: 10)),
+                                                  fontSize:
+                                                      tabLayout ? 16 : 10)),
                                           SizedBox(width: width * 0.01),
                                           Text(
                                               '(${_menuItems["data"][index]["rating_number"].toString()} ratings)',
                                               textScaleFactor: textScale,
-                                              style: const TextStyle(
+                                              style: TextStyle(
                                                   color: Colors.grey,
                                                   fontWeight: FontWeight.bold,
-                                                  fontSize: 10))
+                                                  fontSize:
+                                                      tabLayout ? 16 : 10))
                                         ],
                                       ),
                                       SizedBox(height: height * 0.008),
@@ -206,19 +220,21 @@ class MomsGenieViewAllState extends State<MomsGenieViewAll> {
                                           Text(
                                               _menuItems["data"][index]["type"],
                                               textScaleFactor: textScale,
-                                              style: const TextStyle(
+                                              style: TextStyle(
                                                   color: Colors.grey,
                                                   fontWeight: FontWeight.bold,
-                                                  fontSize: 10)),
+                                                  fontSize:
+                                                      tabLayout ? 16 : 10)),
                                           SizedBox(width: width * 0.05),
                                           Text(
                                               _menuItems["data"][index]
                                                   ["cuisine"],
                                               textScaleFactor: textScale,
-                                              style: const TextStyle(
+                                              style: TextStyle(
                                                   color: Colors.grey,
                                                   fontWeight: FontWeight.bold,
-                                                  fontSize: 10))
+                                                  fontSize:
+                                                      tabLayout ? 16 : 10))
                                         ],
                                       )
                                     ],
@@ -236,19 +252,19 @@ class MomsGenieViewAllState extends State<MomsGenieViewAll> {
                                       children: [
                                         Text('₹',
                                             textScaleFactor: textScale,
-                                            style: const TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                            )),
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: tabLayout ? 20 : 16)),
                                         SizedBox(width: width * 0.01),
                                         Text(
                                             _menuItems["data"][index]["price"]
                                                 .toString(),
                                             textScaleFactor: textScale,
-                                            style: const TextStyle(
-                                              color: Colors.red,
-                                              fontWeight: FontWeight.bold,
-                                            ))
+                                            style: TextStyle(
+                                                color: Colors.red,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: tabLayout ? 20 : 16))
                                       ],
                                     ),
                                   ),
@@ -262,15 +278,23 @@ class MomsGenieViewAllState extends State<MomsGenieViewAll> {
                   ),
                 ),
                 Positioned(
-                  right: width * 0.65,
+                  right: tabLayout || largeLayout ? width * 0.65 : width * 0.68,
                   // left: width * 0.02,
                   // bottom: height * 0.0008,
-                  bottom: height * 0.004,
+                  bottom: tabLayout || largeLayout
+                      ? height * 0.004
+                      : height * 0.006,
                   child: Container(
                       width: width * 0.35,
-                      height: height * 0.1,
+                      height: tabLayout
+                          ? height * 0.15
+                          : largeLayout
+                              ? height * 0.1
+                              : height * 0.13,
                       // color: Colors.yellow,
-                      child: Image.asset(_menuItems["data"][index]["images"])),
+                      child: Image.asset(
+                        _menuItems["data"][index]["images"],
+                      )),
                 ),
               ],
             ),

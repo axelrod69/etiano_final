@@ -23,6 +23,8 @@ class RestaurantScreen extends StatelessWidget {
 
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
+    bool tabLayout = width > 600;
+    bool largeLayout = width > 350 && width < 600;
     final responsive = height - MediaQuery.of(context).padding.top;
     final textScale = MediaQuery.of(context).textScaleFactor * 1.2;
 
@@ -58,10 +60,18 @@ class RestaurantScreen extends StatelessWidget {
                     bottom: height * 0.01,
                     right: width * 0.01,
                     child: CircleAvatar(
-                      radius: 35,
+                      radius: tabLayout
+                          ? 52
+                          : largeLayout
+                              ? 35
+                              : 24,
                       backgroundColor: Colors.white,
                       child: CircleAvatar(
-                        radius: 33,
+                        radius: tabLayout
+                            ? 50
+                            : largeLayout
+                                ? 33
+                                : 22,
                         backgroundColor: const Color.fromRGBO(161, 218, 46, 1),
                         child: Text(
                           rating,
@@ -85,10 +95,10 @@ class RestaurantScreen extends StatelessWidget {
                               blurRadius: 10,
                               offset: Offset(0, 0))
                         ]),
-                        child: const CircleAvatar(
-                          radius: 15,
+                        child: CircleAvatar(
+                          radius: tabLayout ? 20 : 15,
                           backgroundColor: Colors.white,
-                          child: Icon(
+                          child: const Icon(
                             Icons.keyboard_arrow_left,
                             color: Colors.red,
                           ),
@@ -101,7 +111,11 @@ class RestaurantScreen extends StatelessWidget {
             ),
             Container(
                 width: double.infinity,
-                height: height * 0.07,
+                height: tabLayout
+                    ? height * 0.1
+                    : largeLayout
+                        ? height * 0.07
+                        : height * 0.1,
                 padding:
                     EdgeInsets.only(left: width * 0.01, right: width * 0.01),
                 // padding: EdgeInsets.only(left: width * 0.02),
@@ -119,18 +133,26 @@ class RestaurantScreen extends StatelessWidget {
                             Text(
                               name,
                               textScaleFactor: textScale,
-                              style: const TextStyle(
+                              style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 25),
+                                  fontSize: tabLayout
+                                      ? 35
+                                      : largeLayout
+                                          ? 25
+                                          : 18),
                             ),
                             Text(
                               type,
                               textScaleFactor: textScale,
-                              style: const TextStyle(
+                              style: TextStyle(
                                   color: Colors.grey,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 12),
+                                  fontSize: tabLayout
+                                      ? 20
+                                      : largeLayout
+                                          ? 12
+                                          : 11),
                             ),
                           ],
                         ),
@@ -195,7 +217,11 @@ class RestaurantScreen extends StatelessWidget {
                 )),
             Container(
               width: double.infinity,
-              height: height * 0.1,
+              height: tabLayout
+                  ? height * 0.2
+                  : largeLayout
+                      ? height * 0.1
+                      : height * 0.085,
               // color: Colors.pink,
               child: Row(
                 children: [
@@ -211,69 +237,109 @@ class RestaurantScreen extends StatelessWidget {
                           children: [
                             Image.asset(
                               'assets/images/Icon ionic-md-time (2).png',
-                              height: 40,
-                              width: 40,
+                              height: tabLayout
+                                  ? 60
+                                  : largeLayout
+                                      ? 40
+                                      : 30,
+                              width: tabLayout
+                                  ? 60
+                                  : largeLayout
+                                      ? 40
+                                      : 30,
                             ),
                             Text(
                               '${time.toStringAsFixed(1)} hr',
                               textScaleFactor: textScale,
-                              style: const TextStyle(
-                                  color: Colors.white, fontSize: 11),
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: tabLayout
+                                      ? 15
+                                      : largeLayout
+                                          ? 11
+                                          : 8),
                             )
                           ],
                         ),
                       ),
                     ),
                   ),
+                  //  'assets/images/Icon material-location-on.png',
+                  //double.parse(distance.toStringAsFixed(1))
                   Flexible(
                     flex: 1,
                     fit: FlexFit.loose,
                     child: Container(
                       height: double.infinity,
-                      // color: Colors.yellow,
+                      // color: Colors.amber,
                       child: Center(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Image.asset(
                               'assets/images/Icon material-location-on.png',
-                              height: 40,
-                              width: 40,
-                            ),
-                            SizedBox(
-                              height: height * 0.002,
+                              height: tabLayout
+                                  ? 60
+                                  : largeLayout
+                                      ? 40
+                                      : 30,
+                              width: tabLayout
+                                  ? 60
+                                  : largeLayout
+                                      ? 40
+                                      : 30,
                             ),
                             Text(
                               '${double.parse(distance.toStringAsFixed(1))} km',
                               textScaleFactor: textScale,
-                              style: const TextStyle(
-                                  color: Colors.white, fontSize: 11),
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: tabLayout
+                                      ? 15
+                                      : largeLayout
+                                          ? 11
+                                          : 8),
                             )
                           ],
                         ),
                       ),
                     ),
                   ),
+                  // 'assets/images/bbq (2).png'
+                  //Delivery
                   Flexible(
                     flex: 1,
                     fit: FlexFit.loose,
                     child: Container(
                       height: double.infinity,
-                      // color: Colors.red,
+                      // color: Colors.amber,
                       child: Center(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Image.asset(
                               'assets/images/bbq (2).png',
-                              height: 45,
-                              width: 45,
+                              height: tabLayout
+                                  ? 60
+                                  : largeLayout
+                                      ? 40
+                                      : 30,
+                              width: tabLayout
+                                  ? 60
+                                  : largeLayout
+                                      ? 40
+                                      : 30,
                             ),
                             Text(
                               'Delivery',
                               textScaleFactor: textScale,
-                              style: const TextStyle(
-                                  color: Colors.white, fontSize: 11),
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: tabLayout
+                                      ? 15
+                                      : largeLayout
+                                          ? 11
+                                          : 8),
                             )
                           ],
                         ),
@@ -295,11 +361,16 @@ class RestaurantScreen extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        'Lorem ipsum dolor sit amet, consectetur\n adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n Tincidunt dui ut ornare lectus sit amet est. Luctus venenatis lectus magna fringilla urna porttitor rhoncus.',
+                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tincidunt dui ut ornare lectus sit amet est. Luctus venenatis lectus magna fringilla urna porttitor rhoncus.',
                         textAlign: TextAlign.center,
                         textScaleFactor: textScale,
-                        style:
-                            const TextStyle(color: Colors.white, fontSize: 12),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: tabLayout
+                                ? 18
+                                : largeLayout
+                                    ? 12
+                                    : 10),
                       ),
                     ),
                     Row(
@@ -313,12 +384,16 @@ class RestaurantScreen extends StatelessWidget {
                               child: Text(
                                 'Details',
                                 textScaleFactor: textScale,
-                                style: const TextStyle(
+                                style: TextStyle(
                                     color: Colors.red,
                                     // const Color.fromRGBO(161, 218, 46, 1),
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 18,
-                                    shadows: [
+                                    fontSize: tabLayout
+                                        ? 25
+                                        : largeLayout
+                                            ? 18
+                                            : 15,
+                                    shadows: const [
                                       Shadow(
                                           color: Colors.grey,
                                           blurRadius: 10,
@@ -357,12 +432,16 @@ class RestaurantScreen extends StatelessWidget {
                                 child: Text(
                                   'Menu',
                                   textScaleFactor: textScale,
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                       color:
                                           const Color.fromRGBO(161, 218, 46, 1),
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                      shadows: [
+                                      fontSize: tabLayout
+                                          ? 25
+                                          : largeLayout
+                                              ? 18
+                                              : 15,
+                                      shadows: const [
                                         Shadow(
                                             color: Colors.grey,
                                             blurRadius: 10,
@@ -390,12 +469,16 @@ class RestaurantScreen extends StatelessWidget {
                                 child: Text(
                                   'Review',
                                   textScaleFactor: textScale,
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                       color:
                                           const Color.fromRGBO(161, 218, 46, 1),
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                      shadows: [
+                                      fontSize: tabLayout
+                                          ? 25
+                                          : largeLayout
+                                              ? 18
+                                              : 15,
+                                      shadows: const [
                                         Shadow(
                                             color: Colors.grey,
                                             blurRadius: 10,

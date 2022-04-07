@@ -11,8 +11,7 @@ class MomsGenieWidget extends StatelessWidget {
 
     // TODO: implement build
     return InkWell(
-      onTap: () =>
-          Navigator.of(context).pushReplacementNamed('/moms-genie-screen'),
+      onTap: () => Navigator.of(context).pushNamed('/moms-genie-screen'),
       child: Stack(
         children: [
           Container(

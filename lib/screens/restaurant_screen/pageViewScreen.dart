@@ -51,6 +51,8 @@ class PageViewScreenState extends State<PageViewScreen> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
+    bool tabLayout = width > 600;
+    bool largeLayout = width > 350 && width < 600;
     final textScale = MediaQuery.of(context).textScaleFactor * 1.5;
     final argument =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
@@ -78,6 +80,7 @@ class PageViewScreenState extends State<PageViewScreen> {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
+          centerTitle: true,
           automaticallyImplyLeading: false,
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           toolbarHeight: 120,
@@ -135,9 +138,14 @@ class PageViewScreenState extends State<PageViewScreen> {
                                         child: Text(
                                           'Menu',
                                           textScaleFactor: textScale,
-                                          style: const TextStyle(
+                                          style: TextStyle(
                                               color: Colors.white,
-                                              fontWeight: FontWeight.bold),
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: tabLayout
+                                                  ? 20
+                                                  : largeLayout
+                                                      ? 16
+                                                      : 14),
                                         ),
                                       ),
                                     ),

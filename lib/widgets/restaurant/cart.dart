@@ -9,7 +9,12 @@ class Cart extends StatefulWidget {
 class CartState extends State<Cart> {
   @override
   Widget build(BuildContext context) {
+    // final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
+    bool tabLayout = width > 600;
+    bool largeLayout = width > 350 && width < 600;
     final cartProvider = Provider.of<CartItemProvider>(context).cartItems;
+
     // TODO: implement build
     return Container(
       // color: Colors.green,
@@ -24,25 +29,48 @@ class CartState extends State<Cart> {
             // color: Colors.green,
             child: Stack(
               children: [
-                Icon(Icons.shopping_cart, color: Colors.white),
+                Icon(Icons.shopping_cart,
+                    color: Colors.white,
+                    size: tabLayout
+                        ? 50
+                        : largeLayout
+                            ? 24
+                            : 20),
                 cartProvider.length > 0
                     ? Positioned(
-                        left: 15,
-                        bottom: 10,
+                        left: tabLayout
+                            ? 20
+                            : largeLayout
+                                ? 15
+                                : 10,
+                        bottom: tabLayout
+                            ? 15
+                            : largeLayout
+                                ? 10
+                                : 14,
                         child: Container(
-                          width: 15,
-                          height: 15,
+                          width: tabLayout
+                              ? 20
+                              : largeLayout
+                                  ? 15
+                                  : 11,
+                          height: tabLayout
+                              ? 20
+                              : largeLayout
+                                  ? 15
+                                  : 11,
                           decoration: const BoxDecoration(
                               color: Colors.red, shape: BoxShape.circle),
                           child: Center(
-                            child: Text(
-                                cartProvider.length > 9
-                                    ? '9+'
-                                    : cartProvider.length.toString(),
-                                style: const TextStyle(
+                            child: Text('9+',
+                                style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 10)),
+                                    fontSize: tabLayout
+                                        ? 15
+                                        : largeLayout
+                                            ? 10
+                                            : 8)),
                           ),
                         ),
                       )

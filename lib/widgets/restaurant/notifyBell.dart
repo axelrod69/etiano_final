@@ -7,6 +7,10 @@ class NotifyBell extends StatefulWidget {
 class NotifyBellState extends State<NotifyBell> {
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    bool tabLayout = width > 600;
+    bool largeLayout = width > 350 && width < 600;
+
     // TODO: implement build
     return Container(
       // color: Colors.green,
@@ -21,21 +25,47 @@ class NotifyBellState extends State<NotifyBell> {
             // color: Colors.yellow,
             child: Stack(
               children: [
-                Icon(Icons.notifications, color: Colors.white),
+                Icon(Icons.notifications,
+                    color: Colors.white,
+                    size: tabLayout
+                        ? 50
+                        : largeLayout
+                            ? 24
+                            : 20),
                 Positioned(
-                  left: 15,
-                  bottom: 10,
+                  left: tabLayout
+                      ? 20
+                      : largeLayout
+                          ? 15
+                          : 10,
+                  bottom: tabLayout
+                      ? 15
+                      : largeLayout
+                          ? 10
+                          : 14,
                   child: Container(
-                    width: 15,
-                    height: 15,
+                    width: tabLayout
+                        ? 20
+                        : largeLayout
+                            ? 15
+                            : 11,
+                    height: tabLayout
+                        ? 20
+                        : largeLayout
+                            ? 15
+                            : 11,
                     decoration: const BoxDecoration(
                         color: Colors.red, shape: BoxShape.circle),
-                    child: const Center(
+                    child: Center(
                       child: Text('9+',
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
-                              fontSize: 10)),
+                              fontSize: tabLayout
+                                  ? 15
+                                  : largeLayout
+                                      ? 10
+                                      : 8)),
                     ),
                   ),
                 )

@@ -49,7 +49,7 @@ class ItemDetailsState extends State<ItemDetails> {
         Stack(
           children: [
             Container(
-              height: height * 0.32,
+              height: tabLayout || largeLayout ? height * 0.32 : height * 0.38,
               width: double.infinity,
               // color: Colors.red,
             ),
@@ -73,13 +73,28 @@ class ItemDetailsState extends State<ItemDetails> {
                       ])),
             ),
             Positioned(
-                top: height * 0.14,
-                left: width * 0.25,
-                child: Image.asset('assets/images/pngwing.com(5).png')),
+                top: tabLayout
+                    ? height * 0.14
+                    : largeLayout
+                        ? height * 0.08
+                        : height * 0.16,
+                left: tabLayout
+                    ? height * 0.14
+                    : largeLayout
+                        ? width * 0.08
+                        : width * 0.3,
+                child: Image.asset(
+                  'assets/images/pngwing.com(5).png',
+                  height: tabLayout
+                      ? height * 0.4
+                      : largeLayout
+                          ? height * 0.3
+                          : height * 0.2,
+                )),
             Positioned(
               top: height * 0.02,
               child: Container(
-                width: width * 0.999,
+                width: tabLayout ? double.infinity : width * 0.999,
                 height: height * 0.1,
                 // color: Colors.red,
                 child: Row(
@@ -97,8 +112,12 @@ class ItemDetailsState extends State<ItemDetails> {
                               blurRadius: 10,
                               offset: Offset(0, 0))
                         ]),
-                        child: const CircleAvatar(
-                          radius: 15,
+                        child: CircleAvatar(
+                          radius: tabLayout
+                              ? 30
+                              : largeLayout
+                                  ? 15
+                                  : 12,
                           backgroundColor: Colors.white,
                           child: Icon(
                             Icons.keyboard_arrow_left,
@@ -110,10 +129,14 @@ class ItemDetailsState extends State<ItemDetails> {
                     SizedBox(width: width * 0.05),
                     Text(name,
                         textScaleFactor: textScale,
-                        style: const TextStyle(
+                        style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
-                            fontSize: 22))
+                            fontSize: tabLayout
+                                ? 30
+                                : largeLayout
+                                    ? 22
+                                    : 15))
                   ],
                 ),
               ),
@@ -124,10 +147,14 @@ class ItemDetailsState extends State<ItemDetails> {
               child: Text(
                 '₹ $price',
                 textScaleFactor: textScale,
-                style: const TextStyle(
+                style: TextStyle(
                     color: Colors.white,
                     // fontWeight: FontWeight.bold,
-                    fontSize: 18),
+                    fontSize: tabLayout
+                        ? 25
+                        : largeLayout
+                            ? 18
+                            : 16),
               ),
             )
           ],
@@ -170,12 +197,14 @@ class ItemDetailsState extends State<ItemDetails> {
                 });
               },
               child: const CircleAvatar(
-                  radius: 10,
-                  backgroundColor: Color.fromRGBO(58, 69, 84, 1),
-                  child: Text(
-                    '--',
-                    style: TextStyle(color: Colors.white),
-                  )),
+                radius: 10,
+                backgroundColor: Color.fromRGBO(58, 69, 84, 1),
+                // child: Text(
+                //   '--',
+                //   style: TextStyle(color: Colors.white),
+                // )
+                child: Icon(Icons.remove, color: Colors.white, size: 13),
+              ),
             ),
           ],
         ),
@@ -190,10 +219,14 @@ class ItemDetailsState extends State<ItemDetails> {
                   'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
                   textScaleFactor: textScale,
                   textAlign: TextAlign.center,
-                  style: const TextStyle(
+                  style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
-                      fontSize: 15),
+                      fontSize: tabLayout
+                          ? 20
+                          : largeLayout
+                              ? 15
+                              : 12),
                 ),
               ),
             ),
@@ -209,7 +242,8 @@ class ItemDetailsState extends State<ItemDetails> {
                 },
                 child: Container(
                   width: width * 0.5,
-                  height: height * 0.06,
+                  height:
+                      tabLayout || largeLayout ? height * 0.06 : height * 0.075,
                   margin:
                       EdgeInsets.only(left: width * 0.2, right: width * 0.2),
                   decoration: BoxDecoration(
@@ -218,7 +252,7 @@ class ItemDetailsState extends State<ItemDetails> {
                       boxShadow: const [
                         BoxShadow(
                             color: Colors.grey,
-                            spreadRadius: 2,
+                            // spreadRadius: 2,
                             blurRadius: 5,
                             offset: Offset(1, 2))
                       ]),
@@ -226,15 +260,21 @@ class ItemDetailsState extends State<ItemDetails> {
                     child: Text(
                       'Add To Cart',
                       textScaleFactor: textScale,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 18),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: tabLayout
+                              ? 22
+                              : largeLayout
+                                  ? 18
+                                  : 15),
                     ),
                   ),
                 ),
               )
             : Container(
                 width: width * 0.5,
-                height: height * 0.06,
+                height:
+                    tabLayout || largeLayout ? height * 0.06 : height * 0.075,
                 decoration: BoxDecoration(
                   color: const Color.fromRGBO(58, 69, 84, 1),
                   borderRadius: BorderRadius.circular(30),
@@ -250,14 +290,18 @@ class ItemDetailsState extends State<ItemDetails> {
                   child: Text(
                     'Add To Cart',
                     textScaleFactor: textScale,
-                    style: const TextStyle(
+                    style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: 18),
+                        fontSize: tabLayout
+                            ? 22
+                            : largeLayout
+                                ? 18
+                                : 15),
                   ),
                 ),
               ),
-        SizedBox(height: height * 0.03),
+        SizedBox(height: height * 0.05),
         Padding(
           padding: EdgeInsets.only(left: width * 0.05),
           child: Row(
@@ -266,10 +310,14 @@ class ItemDetailsState extends State<ItemDetails> {
                 child: Text(
                   'Get more interested with this',
                   textScaleFactor: textScale,
-                  style: const TextStyle(
+                  style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
-                      fontSize: 15),
+                      fontSize: tabLayout
+                          ? 20
+                          : largeLayout
+                              ? 15
+                              : 13),
                 ),
               )
             ],
@@ -278,7 +326,7 @@ class ItemDetailsState extends State<ItemDetails> {
         // Expanded(child: MoreItems())
         Container(
           width: double.infinity,
-          height: height * 0.256,
+          height: height * 0.3,
           // color: Colors.red,
           child: MoreItems(),
         )

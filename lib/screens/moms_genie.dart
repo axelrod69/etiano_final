@@ -43,12 +43,15 @@ class MomsGenieState extends State<MomsGenie> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
+    bool tabLayout = width > 600;
+    bool largeLayout = width > 350 && width < 600;
     final textScale = MediaQuery.of(context).textScaleFactor * 1.2;
 
     // TODO: implement build
     return Scaffold(
         appBar: AppBar(
             elevation: 5,
+            automaticallyImplyLeading: false,
             backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             // backgroundColor: Colors.green,
             titleSpacing: 0,
@@ -224,15 +227,14 @@ class MomsGenieState extends State<MomsGenie> {
             )),
         body: Padding(
           padding: EdgeInsets.only(left: width * 0.02, right: width * 0.02),
-          child: Column(
+          child: ListView(
             children: [
               Row(
                 children: [
                   InkWell(
-                    onTap: () => Navigator.of(context)
-                        .pushReplacementNamed('/bottom-bar'),
+                    onTap: () => Navigator.of(context).pop(),
                     child: CircleAvatar(
-                      radius: 12,
+                      radius: tabLayout ? 20 : 12,
                       backgroundColor: Colors.white,
                       child: Padding(
                         padding: EdgeInsets.only(left: width * 0.01),
@@ -241,15 +243,21 @@ class MomsGenieState extends State<MomsGenie> {
                       ),
                     ),
                   ),
-                  SizedBox(width: width * 0.02),
-                  Text(
-                    'Lorem ipsum dolor, iscing\n elit, sed do eiusmod tempor incididunt',
-                    textScaleFactor: textScale,
-                    textAlign: TextAlign.start,
-                    style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15),
+                  SizedBox(width: width * 0.03),
+                  Expanded(
+                    child: Text(
+                      'Lorem ipsum dolor, iscing elit, sed do eiusmod tempor incididunt',
+                      textScaleFactor: textScale,
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: tabLayout
+                              ? 22
+                              : largeLayout
+                                  ? 15
+                                  : 12),
+                    ),
                   )
                 ],
               ),
@@ -263,14 +271,16 @@ class MomsGenieState extends State<MomsGenie> {
                     child: Center(
                       child: Container(
                           width: width * 0.7,
-                          height: height * 0.07,
+                          height: tabLayout || largeLayout
+                              ? height * 0.07
+                              : height * 0.08,
                           decoration: BoxDecoration(
                               color: const Color.fromRGBO(58, 69, 84, 1),
                               borderRadius: BorderRadius.circular(10),
                               boxShadow: const [
                                 BoxShadow(
                                     color: Color.fromRGBO(66, 67, 68, 1),
-                                    spreadRadius: 1,
+                                    // spreadRadius: 1,
                                     blurRadius: 5,
                                     offset: Offset(0, 1))
                               ]),
@@ -280,10 +290,14 @@ class MomsGenieState extends State<MomsGenie> {
                               child: Text(
                                 'From The Mom\'s',
                                 textScaleFactor: textScale,
-                                style: const TextStyle(
+                                style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 20),
+                                    fontSize: tabLayout
+                                        ? 30
+                                        : largeLayout
+                                            ? 20
+                                            : 16),
                               ),
                             ),
                           )),
@@ -300,9 +314,9 @@ class MomsGenieState extends State<MomsGenie> {
               Stack(
                 children: [
                   Container(
-                    height: height * 0.35,
-                    width: width * 1,
-                    // color: Colors.red,
+                    height: height * 0.4,
+                    width: double.infinity,
+                    // color: Colors.blue,
                     padding: EdgeInsets.only(
                         left: width * 0.02,
                         top: height * 0.01,
@@ -312,7 +326,7 @@ class MomsGenieState extends State<MomsGenie> {
                       width: double.infinity,
                       height: height * 0.30,
                       decoration: const BoxDecoration(
-                          color: Colors.transparent,
+                          // color: Colors.green,
                           border: Border(
                               top: BorderSide(
                                 color: Colors.red,
@@ -324,25 +338,29 @@ class MomsGenieState extends State<MomsGenie> {
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) => Container(
                           // margin: EdgeInsets.only(right: width * 0.02),
-                          padding: EdgeInsets.only(
-                            // left: width * 0.02,
-                            top: height * 0.001,
-                            // right: width * 0.02
-                          ),
+                          // padding: EdgeInsets.only(
+                          //   // left: width * 0.02,
+                          //   top: height * 0.001,
+                          //   // right: width * 0.02
+                          // ),
                           height: double.infinity,
                           width: width * 0.4,
                           // color: Colors.yellow,
                           child: Column(
                             children: [
                               Container(
-                                  height: height * 0.125,
+                                  height: height * 0.17,
                                   width: double.infinity,
-                                  margin: EdgeInsets.only(top: height * 0.015),
+                                  margin: EdgeInsets.only(top: height * 0.006),
                                   child: Container(
                                     margin: EdgeInsets.only(left: width * 0.02),
-                                    child: Image.asset(
-                                        _popularDishes["data"][index]["image"],
-                                        fit: BoxFit.cover),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(20),
+                                      child: Image.asset(
+                                          _popularDishes["data"][index]
+                                              ["image"],
+                                          fit: BoxFit.cover),
+                                    ),
                                   )),
                               SizedBox(height: height * 0.005),
                               Container(
@@ -357,20 +375,28 @@ class MomsGenieState extends State<MomsGenie> {
                                     Text(
                                       _popularDishes["data"][index]["name"],
                                       textScaleFactor: textScale,
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 10),
+                                          fontSize: tabLayout
+                                              ? 15
+                                              : largeLayout
+                                                  ? 10
+                                                  : 8),
                                     ),
                                     SizedBox(height: height * 0.01),
                                     Text(
                                       _popularDishes["data"][index]
                                           ["restaurantName"],
                                       textScaleFactor: textScale,
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 8),
+                                          fontSize: tabLayout
+                                              ? 12
+                                              : largeLayout
+                                                  ? 8
+                                                  : 7),
                                     ),
                                     SizedBox(height: height * 0.005),
                                     Row(
@@ -384,17 +410,25 @@ class MomsGenieState extends State<MomsGenie> {
                                             _popularDishes["data"][index]
                                                 ["rating"],
                                             textScaleFactor: textScale,
-                                            style: const TextStyle(
+                                            style: TextStyle(
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.bold,
-                                                fontSize: 7)),
+                                                fontSize: tabLayout
+                                                    ? 12
+                                                    : largeLayout
+                                                        ? 8
+                                                        : 7)),
                                         Text(
                                           '(${_popularDishes["data"][index]["totalRatings"]})',
                                           textScaleFactor: textScale,
-                                          style: const TextStyle(
+                                          style: TextStyle(
                                               color: Colors.white,
                                               fontWeight: FontWeight.bold,
-                                              fontSize: 7),
+                                              fontSize: tabLayout
+                                                  ? 12
+                                                  : largeLayout
+                                                      ? 8
+                                                      : 7),
                                         )
                                       ],
                                     )
@@ -409,13 +443,14 @@ class MomsGenieState extends State<MomsGenie> {
                     ),
                   ),
                   Positioned(
-                    top: height * 0.235,
+                    // top: height * 0.235,
+                    top: height * 0.28,
                     child: Image.asset('assets/images/Mom\'s Suggestion.png',
                         height: height * 0.11),
                   ),
                   Positioned(
                     top: height * 0.001,
-                    left: width * 0.8,
+                    left: width * 0.82,
                     child: InkWell(
                       onTap: () => Navigator.of(context)
                           .popAndPushNamed('/moms-genie-screen-view'),
@@ -428,15 +463,20 @@ class MomsGenieState extends State<MomsGenie> {
                             Text(
                               'View All',
                               textScaleFactor: textScale,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 color: Colors.amber,
-                                fontSize: 10,
+                                fontSize: tabLayout
+                                    ? 12
+                                    : largeLayout
+                                        ? 8
+                                        : 7,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                             SizedBox(width: width * 0.01),
-                            const Icon(Icons.arrow_forward_ios,
-                                color: Colors.amber, size: 12)
+                            Icon(Icons.arrow_forward_ios,
+                                color: Colors.amber,
+                                size: tabLayout || largeLayout ? 12 : 8)
                           ],
                         ),
                       ),
@@ -452,10 +492,14 @@ class MomsGenieState extends State<MomsGenie> {
                     'Status',
                     textScaleFactor: textScale,
                     // textAlign: TextAlign.start,
-                    style: const TextStyle(
+                    style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: 20),
+                        fontSize: tabLayout
+                            ? 22
+                            : largeLayout
+                                ? 20
+                                : 18),
                   ),
                 ],
               ),
@@ -463,8 +507,16 @@ class MomsGenieState extends State<MomsGenie> {
               Container(
                   width: width * 0.7,
                   height: height * 0.065,
-                  padding:
-                      EdgeInsets.only(left: width * 0.04, right: width * 0.04),
+                  margin: !largeLayout && !tabLayout
+                      ? EdgeInsets.only(left: width * 0.04, right: width * 0.04)
+                      : null,
+                  padding: EdgeInsets.only(
+                      left: tabLayout || largeLayout
+                          ? width * 0.04
+                          : width * 0.08,
+                      right: tabLayout || largeLayout
+                          ? width * 0.04
+                          : width * 0.08),
                   decoration: BoxDecoration(
                       color: const Color.fromRGBO(58, 69, 84, 1),
                       borderRadius: BorderRadius.circular(10),
@@ -480,22 +532,36 @@ class MomsGenieState extends State<MomsGenie> {
                     children: [
                       Text('Estimated Time',
                           textScaleFactor: textScale,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          )),
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: tabLayout
+                                  ? 22
+                                  : largeLayout
+                                      ? 20
+                                      : 16)),
                       Text('2 Days',
                           textScaleFactor: textScale,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ))
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: tabLayout
+                                  ? 22
+                                  : largeLayout
+                                      ? 20
+                                      : 16))
                     ],
                   )),
               SizedBox(height: height * 0.02),
               Container(
                   width: width * 0.7,
                   height: height * 0.065,
+                  margin: !largeLayout && !tabLayout
+                      ? EdgeInsets.only(
+                          left: width * 0.04,
+                          right: width * 0.04,
+                          bottom: height * 0.04)
+                      : null,
                   decoration: BoxDecoration(
                       color: const Color.fromRGBO(58, 69, 84, 1),
                       borderRadius: BorderRadius.circular(10),
@@ -510,10 +576,14 @@ class MomsGenieState extends State<MomsGenie> {
                     child: Text(
                       'Track Order',
                       textScaleFactor: textScale,
-                      style: const TextStyle(
+                      style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
-                          fontSize: 20),
+                          fontSize: tabLayout
+                              ? 22
+                              : largeLayout
+                                  ? 20
+                                  : 16),
                     ),
                   )),
             ],

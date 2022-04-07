@@ -23,6 +23,8 @@ class MoreItemsState extends State<MoreItems> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
+    bool tabLayout = width > 600;
+    bool largeLayout = width > 350 && width < 600;
     var textScale = MediaQuery.of(context).textScaleFactor * 1.2;
     final provider = Provider.of<PopularDishesProvider>(context).popularDishes;
     // .removeWhere((key, value) => value["data"]["id"] == widget.id);
@@ -31,12 +33,16 @@ class MoreItemsState extends State<MoreItems> {
     // TODO: implement build
     return Container(
       width: double.infinity,
-      // color: Colors.red,
+      color: Colors.red,
       padding: EdgeInsets.only(
           // left: width * 0.02,
           top: height * 0.03,
           // right: width * 0.02,
-          bottom: height * 0.03),
+          bottom: tabLayout
+              ? height * 0.03
+              : largeLayout
+                  ? height * 0.03
+                  : height * 0.02),
       margin: EdgeInsets.only(bottom: height * 0.05),
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
@@ -55,7 +61,7 @@ class MoreItemsState extends State<MoreItems> {
               child: Container(
                 margin:
                     EdgeInsets.only(left: width * 0.05, right: width * 0.05),
-                height: height * 0.2,
+                height: height * 0.18,
                 width: width * 0.22,
                 // padding: EdgeInsets.only(left: width * 0.02, right: width * 0.02),
                 decoration: const BoxDecoration(
@@ -71,17 +77,26 @@ class MoreItemsState extends State<MoreItems> {
                     Text(
                       provider["data"][index]["product_name"],
                       // textScaleFactor: textScale,
-                      style: const TextStyle(
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
-                          fontSize: 12),
+                          fontSize: tabLayout
+                              ? 15
+                              : largeLayout
+                                  ? 12
+                                  : 8),
                     ),
                     SizedBox(height: height * 0.005),
                     Text(
                       '₹ ${provider["data"][index]["product_selling_price"]}',
-                      style: const TextStyle(
+                      style: TextStyle(
                           color: Colors.white,
-                          fontSize: 12,
+                          fontSize: tabLayout
+                              ? 18
+                              : largeLayout
+                                  ? 12
+                                  : 10,
                           fontWeight: FontWeight.bold),
                     ),
                     Row(
@@ -89,7 +104,7 @@ class MoreItemsState extends State<MoreItems> {
                       children: [
                         Padding(
                           padding: EdgeInsets.only(
-                              right: width * 0.01, bottom: height * 0.004),
+                              right: width * 0.02, bottom: height * 0.008),
                           child: InkWell(
                             // onTap: () => _onClicked(provider["data"][index]["product_id"].toString()),
                             // onTap: () {
@@ -106,10 +121,20 @@ class MoreItemsState extends State<MoreItems> {
                                   .toString(),
                             ),
                             child: !clicked
-                                ? const Icon(Icons.favorite_border_outlined,
-                                    color: Colors.white, size: 16)
-                                : const Icon(Icons.favorite,
-                                    color: Colors.pink, size: 16),
+                                ? Icon(Icons.favorite_border_outlined,
+                                    color: Colors.white,
+                                    size: tabLayout
+                                        ? 22
+                                        : largeLayout
+                                            ? 16
+                                            : 12)
+                                : Icon(Icons.favorite,
+                                    color: Colors.pink,
+                                    size: tabLayout
+                                        ? 22
+                                        : largeLayout
+                                            ? 16
+                                            : 12),
                           ),
                         )
                       ],
@@ -120,7 +145,7 @@ class MoreItemsState extends State<MoreItems> {
             ),
             Positioned(
               left: width * 0.035,
-              bottom: height * 0.077,
+              bottom: tabLayout || largeLayout ? height * 0.077 : height * 0.12,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(100),
                 // child: Image.asset(
