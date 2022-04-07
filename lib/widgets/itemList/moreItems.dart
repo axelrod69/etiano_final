@@ -33,7 +33,7 @@ class MoreItemsState extends State<MoreItems> {
     // TODO: implement build
     return Container(
       width: double.infinity,
-      color: Colors.red,
+      // color: Colors.red,
       padding: EdgeInsets.only(
           // left: width * 0.02,
           top: height * 0.03,
@@ -41,7 +41,7 @@ class MoreItemsState extends State<MoreItems> {
           bottom: tabLayout
               ? height * 0.03
               : largeLayout
-                  ? height * 0.03
+                  ? height * 0.009
                   : height * 0.02),
       margin: EdgeInsets.only(bottom: height * 0.05),
       child: ListView.builder(
