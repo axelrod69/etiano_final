@@ -49,6 +49,7 @@ import './widgets/home/restaurantViewAll.dart';
 import './model/profile/profileProvider.dart';
 import './model/changeLocation/changeLocation.dart';
 import './model/payment/orderId/orderIdProvider.dart';
+import './model/testAPi/testProvider.dart';
 
 void main() {
   runApp(MyApp());
@@ -97,7 +98,8 @@ class MyAppState extends State<MyApp> {
             create: (context) => RestaurantProductProvider()),
         ChangeNotifierProvider(create: (context) => ProfileProvider()),
         ChangeNotifierProvider(create: (context) => ChangeLocationProvider()),
-        ChangeNotifierProvider(create: (context) => OrderIdProvider())
+        ChangeNotifierProvider(create: (context) => OrderIdProvider()),
+        ChangeNotifierProvider(create: (context) => TestProvider())
       ],
       builder: (context, child) {
         final provider = Provider.of<LocationProvider>(context).loading;

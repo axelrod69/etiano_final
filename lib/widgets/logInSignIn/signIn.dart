@@ -12,6 +12,7 @@ import '../../model/network_utils/facebookModel.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:random_password_generator/random_password_generator.dart';
+import '../../model/testAPi/testProvider.dart';
 
 class SignInForm extends StatefulWidget {
   @override
@@ -31,9 +32,31 @@ class SignInFormState extends State<SignInForm> {
   String randomPassword = '';
 
   @override
+  void initState() {
+    // TODO: implement initState
+    Provider.of<TestProvider>(context, listen: false).getTestData();
+    super.initState();
+  }
+
+  @override
   void dispose() {
     _passwordFocus.dispose();
     super.dispose();
+  }
+
+  Future<void> dummyFunc(dynamic data) async {
+    print('Dhur Baaaal $data');
+    var res = Provider.of<Network>(context, listen: false)
+        .facebookSignUp(data, 'api/auth/signup')
+        .then((res) async {
+      var body = json.decode(res.body);
+      SharedPreferences localStorage = await SharedPreferences.getInstance();
+      localStorage.setString('token', body['access_token']);
+      print(
+          'Response ${localStorage.setString('token', body['access_token'])}');
+      Navigator.of(context).pushNamed('/bottom-bar');
+    });
+    // Provider.of<TestProvider>(context, listen: false).getTestData();
   }
 
   @override
@@ -469,31 +492,79 @@ class SignInFormState extends State<SignInForm> {
                             numbers: true,
                             specialChar: false,
                             passwordLength: 7);
-                        final result = await FacebookAuth.i
-                            .login(permissions: ['public_profile', 'email']);
-                        if (result.status == LoginStatus.success) {
-                          final userData = await FacebookAuth.i.getUserData();
-                          print(userData);
-                          print(phoneNumber);
-                          print(randomPassword);
-                          var data = {
-                            'email': userData['email'],
-                            'name': userData['name'],
-                            'password': randomPassword,
-                            'phone': phoneNumber,
-                            'fb_id': userData['id'],
-                            'country': 'India'
-                          };
-                          var res = Provider.of<Network>(context, listen: false)
-                              .facebookSignUp(data, 'api/auth/signup');
-                          var body = json.decode(res.body);
-                          SharedPreferences localStorage =
-                              await SharedPreferences.getInstance();
-                          await localStorage.setString(
-                              'token', body['access_token']);
-                          print('Response $body');
-                          Navigator.of(context).pushNamed('/bottom-bar');
-                        }
+                        final result = await FacebookAuth.i.login(permissions: [
+                          'public_profile',
+                          'email'
+                        ]).then((result) async {
+                          // print('Facebook Response ${result.accessToken}');
+                          // print('Facebook Response ${result.message}');
+                          // print('Facebook Response ${result.status}');
+                          if (result.status == LoginStatus.success) {
+                            await FacebookAuth.i
+                                .getUserData()
+                                .then((userData) async {
+                              var data = {
+                                'email': userData['email'],
+                                'name': userData['name'],
+                                'password': randomPassword,
+                                'phone': phoneNumber,
+                                'fb_id': userData['id'],
+                                'country': 'India'
+                              };
+                              print('Facebook Data $data');
+                              // var res =
+                              //     Provider.of<Network>(context, listen: false)
+                              //         .facebookSignUp(data, 'api/auth/signup');
+                              // var res = Provider.of<TestProvider>(context,
+                              //         listen: false)
+                              //     .getTestData();
+                              dummyFunc(data);
+                              // var body = json.decode(res.body);
+                              // SharedPreferences localStorage =
+                              //     await SharedPreferences.getInstance();
+                              // await localStorage.setString(
+                              //     'token', body['access_token']);
+                              // print('Response $body');
+                              // Navigator.of(context).pushNamed('/bottom-bar');
+                            });
+                            // print(userData);
+                            // print(phoneNumber);
+                            // print(randomPassword);
+
+                            // var res = Provider.of<Network>(context, listen: false)
+                            //     .facebookSignUp(data, 'api/auth/signup');
+                            // var body = json.decode(res.body);
+                            // SharedPreferences localStorage =
+                            //     await SharedPreferences.getInstance();
+                            // await localStorage.setString(
+                            //     'token', body['access_token']);
+                            // print('Response $body');
+                            // Navigator.of(context).pushNamed('/bottom-bar');
+                          }
+                        });
+                        // if (result.status == LoginStatus.success) {
+                        //   final userData = await FacebookAuth.i.getUserData();
+                        //   print(userData);
+                        //   print(phoneNumber);
+                        //   print(randomPassword);
+                        //   var data = {
+                        //     'email': userData['email'],
+                        //     'name': userData['name'],
+                        //     'password': randomPassword,
+                        //     'phone': phoneNumber,
+                        //     'fb_id': userData['id'],
+                        //     'country': 'India'
+                        //   };
+                        //   var res = Provider.of<Network>(context, listen: false)
+                        //       .facebookSignUp(data, 'api/auth/signup');
+                        //   var body = json.decode(res.body);
+                        //   SharedPreferences localStorage =
+                        //       await SharedPreferences.getInstance();
+                        //   await localStorage.setString(
+                        //       'token', body['access_token']);
+                        //   print('Response $body');
+                        //   Navigator.of(context).pushNamed('/bottom-bar');
+                        // }
                       } else {
                         print('error-response');
                       }
