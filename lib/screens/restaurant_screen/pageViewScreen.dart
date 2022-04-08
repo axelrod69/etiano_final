@@ -28,6 +28,7 @@ class PageViewScreenState extends State<PageViewScreen> {
   List<dynamic> categoryTemp = [];
   bool isLoading = true;
   List<dynamic> menuTitle = [];
+  String category = '';
 
   @override
   void initState() {
@@ -40,6 +41,8 @@ class PageViewScreenState extends State<PageViewScreen> {
             Provider.of<RestaurantProductProvider>(context, listen: false)
                 .category;
         isLoading = false;
+        category = menuTitle[counter];
+        print('Category $category');
         print('Menus $menuTitle');
       });
     });
@@ -54,12 +57,8 @@ class PageViewScreenState extends State<PageViewScreen> {
     bool tabLayout = width > 600;
     bool largeLayout = width > 350 && width < 600;
     final textScale = MediaQuery.of(context).textScaleFactor * 1.5;
-    final argument =
-        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-
-    String category = menuTitle[counter];
-
-    print('Category $category');
+    // final argument =
+    //     ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
 
     // final List<String> menuTitle = [
     //   'Side Dish',
@@ -186,8 +185,8 @@ class PageViewScreenState extends State<PageViewScreen> {
                                         });
                                         pageController.animateToPage(
                                             --pageChanged,
-                                            duration:
-                                                Duration(milliseconds: 250),
+                                            duration: const Duration(
+                                                milliseconds: 250),
                                             curve: Curves.bounceIn);
                                       }
                                     : () {},
@@ -232,8 +231,8 @@ class PageViewScreenState extends State<PageViewScreen> {
                                           counter++;
                                           pageController.animateToPage(
                                               ++pageChanged,
-                                              duration:
-                                                  Duration(milliseconds: 250),
+                                              duration: const Duration(
+                                                  milliseconds: 250),
                                               curve: Curves.bounceIn);
                                         });
                                       }
