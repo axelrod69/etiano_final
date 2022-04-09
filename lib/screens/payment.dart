@@ -10,6 +10,11 @@ import '../model/profile/profileProvider.dart';
 import '../model/payment/orderId/orderIdProvider.dart';
 
 class PaymentScreen extends StatefulWidget {
+  final double discountAmount;
+  final String couponCode;
+
+  PaymentScreen(this.discountAmount, this.couponCode);
+
   PaymentScreenState createState() => PaymentScreenState();
 }
 
@@ -18,6 +23,8 @@ class PaymentScreenState extends State<PaymentScreen> {
   int _selectedValue = 1;
   bool payPalButton = true;
   bool razorPayButton = false;
+  List<dynamic> orderIdList = [];
+  Map<String, dynamic> ordersId = {};
 
   void payPal() {
     Navigator.of(context).push(
@@ -36,20 +43,30 @@ class PaymentScreenState extends State<PaymentScreen> {
   void initState() {
     // TODO: implement initState
     Provider.of<ProfileProvider>(context, listen: false).fetchData();
-    print(
-        'State ${Provider.of<LocationProvider>(context, listen: false).state}');
+    Provider.of<OrderIdProvider>(context, listen: false)
+        .getOrderId('West Bengal', widget.couponCode);
+    // print(
+    //     'State ${Provider.of<LocationProvider>(context, listen: false).state}');
+    // orderIdList = Provider.of<OrderIdProvider>(context, listen: false).orderId;
+    // print(orderIdList);
+    // orderId = Provider.of<OrderIdProvider>(context, listen: false).orderId;
+    // print('ORDER ID $orderId');
     super.initState();
+    // openCheckOut;
     razorpay = Razorpay();
     razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
   }
 
-  Future<void> openCheckOut(amount) async {
+  Future<void> openCheckOut(amount, paymentId) async {
+    // print('PAYMENT ID $paymentId');
+    // print('Order ID ${orderIdList[0]}');
     var options = {
       'key': 'rzp_test_Y6HLJNhTBmNio8',
       'amount': amount * 100,
       'name': 'Eatiano Order',
+      'order_id': paymentId,
       // 'description': 'Fine T-Shirt',
       'prefill': {
         'contact': Provider.of<ProfileProvider>(context, listen: false)
@@ -60,8 +77,11 @@ class PaymentScreenState extends State<PaymentScreen> {
     };
     try {
       Provider.of<OrderIdProvider>(context, listen: false)
-          .getOrderId('West Bengal', 'KOL21')
+          .getOrderId('West Bengal', '7')
           .then((_) {
+        Provider.of<OrderIdProvider>(context, listen: false).orderId;
+
+        print('OPTIONS $options');
         razorpay.open(options);
       });
     } catch (e) {
@@ -110,13 +130,17 @@ class PaymentScreenState extends State<PaymentScreen> {
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final discount = route['discount'];
     final discountCode = route['code'];
+
+    final discountCalculation =
+        Provider.of<CartItemProvider>(context).itemAmount * (discount / 100);
     final withDeliveryCost =
         // (Provider.of<CartItemProvider>(context).itemAmount +
         //         Provider.of<CartItemProvider>(context).deliveryCost) -
         //     Provider.of<CartItemProvider>(context).discountCost;
         (Provider.of<CartItemProvider>(context).itemAmount +
                 Provider.of<CartItemProvider>(context).deliveryCost) -
-            discount;
+            discountCalculation;
+    final paymentId = Provider.of<OrderIdProvider>(context).orderId;
     // final provider = Provider.of<ProfileProvider>(context).profile;
 
     // TODO: implement build
@@ -461,7 +485,8 @@ class PaymentScreenState extends State<PaymentScreen> {
                   : openCheckOut(
                       // Provider.of<CartItemProvider>(context, listen: false)
                       //     .checkOutAmount
-                      withDeliveryCost),
+                      withDeliveryCost,
+                      paymentId['id']),
               // onTap: () => RazorpayGateWay(
               //     Provider.of<CartItemProvider>(context, listen: false)
               //         .checkOutAmount),

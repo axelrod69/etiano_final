@@ -147,7 +147,7 @@ class MyAppState extends State<MyApp> {
             '/item-details': (context) => ItemDetails(),
             '/cart-screen': (context) => CartScreen(),
             '/cart-screen-detail': (context) => CartDetailScreen(),
-            '/payment-screen': (context) => PaymentScreen(),
+            // '/payment-screen': (context) => PaymentScreen(),
             '/change-location': (context) => ChangeLocation(),
             '/device-location': (context) => DeviceLocationPage(),
             '/search-screen': (context) => SearchScreen(),

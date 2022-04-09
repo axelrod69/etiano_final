@@ -25,6 +25,7 @@ class CouponProvider with ChangeNotifier {
     });
     Coupon couponModel = couponFromJson(response.body);
     _coupons = couponModel.toJson();
+    print(_coupons);
   }
 
   void selectedCoupon(String code, double amount) async {

@@ -40,7 +40,8 @@ class CartItemProvider with ChangeNotifier {
 
   String baseUrl = 'https://achievexsolutions.in/current_work/eatiano/';
 
-  double deliveryCost = 40;
+  // double deliveryCost = 40;
+  double deliveryCost = 0.0;
   double discountCost = 50;
 
   // List<CartItem> get cartItems {
@@ -194,7 +195,8 @@ class CartItemProvider with ChangeNotifier {
   double get checkOutAmount {
     double total = 0.0;
     _individualItems.forEach((value) => total += value.price * value.quantity);
-    return (total + deliveryCost) - discountCost;
+    // return (total + deliveryCost) - discountCost;
+    return total - discountCost;
   }
 }
 

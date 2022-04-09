@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../model/cart/cart_provider.dart';
 import '../model/coupon/couponProvider.dart';
+import '../screens/payment.dart';
 
 class CartDetailScreen extends StatefulWidget {
   CartDetailScreenState createState() => CartDetailScreenState();
@@ -482,13 +483,19 @@ class CartDetailScreenState extends State<CartDetailScreen> {
               padding: EdgeInsets.only(left: width * 0.08, right: width * 0.08),
               child: InkWell(
                 onTap: () {
-                  Navigator.of(context)
-                      .pushNamed('/payment-screen', arguments: {
-                    'discount': couponProvider['amount'] ?? 0.0,
-                    'code': couponProvider['code'] ?? ''
-                  });
-                  print('Coupon Discount Amount ${couponProvider['amount']}');
-                  print('Coupon Discount Code ${couponProvider['code']}');
+                  // Navigator.of(context)
+                  //     .pushNamed('/payment-screen', arguments: {
+                  //   'discount': couponProvider['amount'] ?? 0.0,
+                  //   'code': couponProvider['code'] ?? ''
+                  // });
+                  // print('Coupon Discount Amount ${couponProvider['amount']}');
+                  // print('Coupon Discount Code ${couponProvider['code']}');
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => PaymentScreen(
+                              couponProvider['amount'] ?? 0.0,
+                              couponProvider['coupon_id'] ?? '')));
                 },
                 child: Container(
                   width: double.infinity,
