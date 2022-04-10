@@ -39,12 +39,25 @@ class PaymentScreenState extends State<PaymentScreen> {
     );
   }
 
+  // @override
+  // void didChangeDependencies() {
+  //   Provider.of<ProfileProvider>(context, listen: false).fetchData();
+  //   Provider.of<OrderIdProvider>(context)
+  //       .getOrderId('West Bengal', widget.couponCode);
+  //   // TODO: implement didChangeDependencies
+  //   super.didChangeDependencies();
+  //   razorpay = Razorpay();
+  //   razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+  //   razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+  //   razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+  // }
+
   @override
   void initState() {
     // TODO: implement initState
     Provider.of<ProfileProvider>(context, listen: false).fetchData();
-    Provider.of<OrderIdProvider>(context, listen: false)
-        .getOrderId('West Bengal', widget.couponCode);
+    // Provider.of<OrderIdProvider>(context, listen: false)
+    //     .getOrderId('West Bengal', widget.couponCode);
     // print(
     //     'State ${Provider.of<LocationProvider>(context, listen: false).state}');
     // orderIdList = Provider.of<OrderIdProvider>(context, listen: false).orderId;
@@ -60,30 +73,35 @@ class PaymentScreenState extends State<PaymentScreen> {
   }
 
   Future<void> openCheckOut(amount, paymentId) async {
-    // print('PAYMENT ID $paymentId');
     // print('Order ID ${orderIdList[0]}');
-    var options = {
-      'key': 'rzp_test_Y6HLJNhTBmNio8',
-      'amount': amount * 100,
-      'name': 'Eatiano Order',
-      'order_id': paymentId,
-      // 'description': 'Fine T-Shirt',
-      'prefill': {
-        'contact': Provider.of<ProfileProvider>(context, listen: false)
-            .profile['phone'],
-        'email': Provider.of<ProfileProvider>(context, listen: false)
-            .profile['email']
-      }
-    };
     try {
+      print('Discount Amount ${widget.discountAmount}');
+      print('Coupon Code ${widget.couponCode}');
       Provider.of<OrderIdProvider>(context, listen: false)
-          .getOrderId('West Bengal', '7')
+          .getOrderId('West Bengal', widget.couponCode)
           .then((_) {
         Provider.of<OrderIdProvider>(context, listen: false).orderId;
-
+        var options = {
+          'key': 'rzp_test_Y6HLJNhTBmNio8',
+          'amount': amount * 100,
+          'name': 'Eatiano Order',
+          'order_id': Provider.of<OrderIdProvider>(context, listen: false)
+              .orderId['id'],
+          // 'description': 'Fine T-Shirt',
+          'prefill': {
+            'contact': Provider.of<ProfileProvider>(context, listen: false)
+                .profile['phone'],
+            'email': Provider.of<ProfileProvider>(context, listen: false)
+                .profile['email']
+          }
+        };
+        // print(
+        //     'PAYMENT ID ${Provider.of<OrderIdProvider>(context, listen: false).orderId['id']}');
         print('OPTIONS $options');
         razorpay.open(options);
       });
+      // print('PAYMENT ID AGAIN $paymentId');
+      // razorpay.open(options);
     } catch (e) {
       debugPrint('Error: e');
     }
@@ -99,7 +117,8 @@ class PaymentScreenState extends State<PaymentScreen> {
   void _handlePaymentSuccess(PaymentSuccessResponse paymentSuccessResponse) {
     Fluttertoast.showToast(
         msg: "SUCCESS: " + paymentSuccessResponse.paymentId!,
-        toastLength: Toast.LENGTH_SHORT);
+        toastLength: Toast.LENGTH_LONG);
+
     print('Payment Success Order ID ${paymentSuccessResponse.orderId}');
     print('Payment Success Payment ID ${paymentSuccessResponse.paymentId}');
     print('Payment Success Signature ${paymentSuccessResponse.signature}');
@@ -112,7 +131,9 @@ class PaymentScreenState extends State<PaymentScreen> {
             paymentFailureResponse.code.toString() +
             "-" +
             paymentFailureResponse.message!,
-        toastLength: Toast.LENGTH_SHORT);
+        toastLength: Toast.LENGTH_LONG);
+    print('PAYMENT ERROR ${paymentFailureResponse.code.toString()}');
+    print('PAYMENT DESCRIPTION ${paymentFailureResponse.message}');
   }
 
   void _handleExternalWallet(ExternalWalletResponse externalWalletResponse) {
@@ -126,13 +147,14 @@ class PaymentScreenState extends State<PaymentScreen> {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     final textScale = MediaQuery.of(context).textScaleFactor * 1.2;
-    final route =
-        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-    final discount = route['discount'];
-    final discountCode = route['code'];
+    // final route =
+    //     ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    // final discount = route['discount'];
+    // final discountCode = route['code'];
 
     final discountCalculation =
-        Provider.of<CartItemProvider>(context).itemAmount * (discount / 100);
+        Provider.of<CartItemProvider>(context).itemAmount *
+            (widget.discountAmount / 100);
     final withDeliveryCost =
         // (Provider.of<CartItemProvider>(context).itemAmount +
         //         Provider.of<CartItemProvider>(context).deliveryCost) -
@@ -142,7 +164,7 @@ class PaymentScreenState extends State<PaymentScreen> {
             discountCalculation;
     final paymentId = Provider.of<OrderIdProvider>(context).orderId;
     // final provider = Provider.of<ProfileProvider>(context).profile;
-
+    print('PAYMENT IDDDDD $paymentId');
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
@@ -336,7 +358,7 @@ class PaymentScreenState extends State<PaymentScreen> {
                               fontWeight: FontWeight.bold,
                               fontSize: 12)),
                       SizedBox(width: width * 0.02),
-                      Text(discount.toString(),
+                      Text(widget.discountAmount.toString(),
                           textScaleFactor: textScale,
                           style: const TextStyle(
                             color: Colors.red,

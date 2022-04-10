@@ -16,6 +16,13 @@ class CartDetailScreenState extends State<CartDetailScreen> {
   String text = 'Add';
 
   @override
+  void initState() {
+    // TODO: implement initState
+    Provider.of<CouponProvider>(context, listen: false).fetchCoupons();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
@@ -495,7 +502,7 @@ class CartDetailScreenState extends State<CartDetailScreen> {
                       MaterialPageRoute(
                           builder: (_) => PaymentScreen(
                               couponProvider['amount'] ?? 0.0,
-                              couponProvider['coupon_id'] ?? '')));
+                              couponProvider['code'] ?? '')));
                 },
                 child: Container(
                   width: double.infinity,

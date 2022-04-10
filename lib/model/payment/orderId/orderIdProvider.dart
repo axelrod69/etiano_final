@@ -18,7 +18,7 @@ class OrderIdProvider with ChangeNotifier {
   //   return [..._orderId];
   // }
 
-  Future<void> getOrderId(
+  Future<Map<String, dynamic>> getOrderId(
     String state,
     // String couponCode,
     String couponId,
@@ -41,6 +41,8 @@ class OrderIdProvider with ChangeNotifier {
 
     print(_orderId);
 
+    return _orderId;
+    // return _orderId;
     // res['data'].map((element) => _orderId.add(element)).toList();
     // // res['data'].forEach((key, value) => _orderId.add(value));
     // // _orderId = ;
