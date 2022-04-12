@@ -82,7 +82,8 @@ class PaymentScreenState extends State<PaymentScreen> {
           .then((_) {
         Provider.of<OrderIdProvider>(context, listen: false).orderId;
         var options = {
-          'key': 'rzp_test_Y6HLJNhTBmNio8',
+          // 'key': 'rzp_test_Y6HLJNhTBmNio8',
+          'key': 'rzp_test_Su2RqsYhHFrQnI',
           'amount': amount * 100,
           'name': 'Eatiano Order',
           'order_id': Provider.of<OrderIdProvider>(context, listen: false)

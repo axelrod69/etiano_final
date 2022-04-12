@@ -50,6 +50,7 @@ class SignInFormState extends State<SignInForm> {
         .facebookSignUp(data, 'api/auth/signup')
         .then((res) async {
       var body = json.decode(res.body);
+      print('Responseeeeeeeee ${res.body}');
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.setString('token', body['access_token']);
       print(
