@@ -12,13 +12,23 @@ class HomeContent extends StatefulWidget {
 }
 
 class HomeContentState extends State<HomeContent> {
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   Provider.of<CouponProvider>(context, listen: false).fetchCoupons();
+  //   super.initState();
+  // }
+
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
-    var textScale = MediaQuery.of(context).textScaleFactor * 1.2;
+    // var textScale = MediaQuery.of(context).textScaleFactor * 1.2;
     bool tabLayout = width > 600;
     bool largeLayout = width > 350 && width < 600;
+    // final provider = Provider.of<CouponProvider>(context).coupons;
+
+    // print('Length ${provider['data'][0]['coupon_image'].length}');
     // var responsive =
     //     MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
 
@@ -33,7 +43,7 @@ class HomeContentState extends State<HomeContent> {
             children: [
               Expanded(
                 child: Text('Lorem ipsum dolor sit amet, consectetur',
-                    textScaleFactor: textScale,
+                    // textScaleFactor: textScale,
                     style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -50,7 +60,7 @@ class HomeContentState extends State<HomeContent> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('City With Foods',
-                  textScaleFactor: textScale,
+                  // textScaleFactor: textScale,
                   style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -63,7 +73,7 @@ class HomeContentState extends State<HomeContent> {
               //   child: Row(
               //     children: [
               //       Text('View All',
-              //           textScaleFactor: textScale,
+              // textScaleFactor: textScale,
               //           style: TextStyle(
               //               color: Colors.yellow,
               //               fontWeight: FontWeight.bold,
@@ -93,7 +103,7 @@ class HomeContentState extends State<HomeContent> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('Popular Dishes',
-                  textScaleFactor: textScale,
+                  // textScaleFactor: textScale,
                   style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -102,35 +112,32 @@ class HomeContentState extends State<HomeContent> {
                           : largeLayout
                               ? 20
                               : 15)),
-              Container(
-                child: Row(
-                  children: [
-                    Container(
-                      child: Row(
-                        children: [
-                          Text('View All',
-                              textScaleFactor: textScale,
-                              style: TextStyle(
-                                  color: Colors.yellow,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: tabLayout
-                                      ? 14
-                                      : largeLayout
-                                          ? 8
-                                          : 6)),
-                          Icon(
-                            Icons.keyboard_arrow_right_outlined,
-                            color: Colors.yellow,
-                            size: tabLayout
-                                ? 30
-                                : largeLayout
-                                    ? 20
-                                    : 18,
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
+              InkWell(
+                onTap: () => Navigator.of(context).pushNamed('/dishview-all'),
+                child: SizedBox(
+                  child: Row(
+                    children: [
+                      Text('View All',
+                          // textScaleFactor: textScale,
+                          style: TextStyle(
+                              color: Colors.yellow,
+                              fontWeight: FontWeight.bold,
+                              fontSize: tabLayout
+                                  ? 14
+                                  : largeLayout
+                                      ? 8
+                                      : 6)),
+                      Icon(
+                        Icons.keyboard_arrow_right_outlined,
+                        color: Colors.yellow,
+                        size: tabLayout
+                            ? 30
+                            : largeLayout
+                                ? 20
+                                : 18,
+                      )
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -149,7 +156,7 @@ class HomeContentState extends State<HomeContent> {
           TasteBudRelief(),
           SizedBox(height: height * 0.04),
           Text('Bonus For You',
-              textScaleFactor: textScale,
+              // textScaleFactor: textScale,
               style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -161,7 +168,7 @@ class HomeContentState extends State<HomeContent> {
           BonusOffer(),
           SizedBox(height: height * 0.05),
           Text('Expert\'s Choice',
-              textScaleFactor: textScale,
+              // textScaleFactor: textScale,
               style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -177,7 +184,7 @@ class HomeContentState extends State<HomeContent> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('Popular Restaurants',
-                  textScaleFactor: textScale,
+                  // textScaleFactor: textScale,
                   style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -193,7 +200,7 @@ class HomeContentState extends State<HomeContent> {
                   child: Row(
                     children: [
                       Text('View All',
-                          textScaleFactor: textScale,
+                          // textScaleFactor: textScale,
                           style: TextStyle(
                               color: Colors.yellow,
                               fontWeight: FontWeight.bold,

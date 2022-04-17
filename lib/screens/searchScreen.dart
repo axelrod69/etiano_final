@@ -1,4 +1,5 @@
 import 'package:eatiano_app/model/restaurantProducts/restaurantProductProvider.dart';
+import 'package:eatiano_app/screens/itemDetails.dart';
 import 'package:flutter/material.dart';
 import '../widgets/home/homeContent.dart';
 import 'package:provider/provider.dart';
@@ -76,7 +77,7 @@ class SearchScreenState extends State<SearchScreen> {
     final width = MediaQuery.of(context).size.width;
     bool tabLayout = width > 600;
     bool largeLayout = width > 350 && width < 600;
-    final textScale = MediaQuery.of(context).textScaleFactor * 1.2;
+    // final textScale = MediaQuery.of(context).textScaleFactor * 1.2;
     final provider = Provider.of<CartItemProvider>(context).cartItems;
 
     print('Controller ${_controller.text}');
@@ -320,11 +321,15 @@ class SearchScreenState extends State<SearchScreen> {
                 children: [
                   Text(
                     'Restaurants',
-                    textScaleFactor: textScale,
-                    style: const TextStyle(
+                    // textScaleFactor: textScale,
+                    style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: 12),
+                        fontSize: tabLayout
+                            ? 18
+                            : largeLayout
+                                ? 16
+                                : 14),
                   ),
                   Transform.scale(
                     scale: 1.2,
@@ -346,11 +351,15 @@ class SearchScreenState extends State<SearchScreen> {
                   ),
                   Text(
                     'Food',
-                    textScaleFactor: textScale,
-                    style: const TextStyle(
+                    // textScaleFactor: textScale,
+                    style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: 12),
+                        fontSize: tabLayout
+                            ? 18
+                            : largeLayout
+                                ? 16
+                                : 14),
                   ),
                 ],
               ),
@@ -363,15 +372,65 @@ class SearchScreenState extends State<SearchScreen> {
                           width: double.infinity,
                           // color: Colors.red,
                           child: ListView.builder(
-                            itemBuilder: (context, index) => Container(
-                              margin: EdgeInsets.only(bottom: height * 0.01),
-                              child: ListTile(
-                                  leading: Image.network(
-                                      'https://achievexsolutions.in/current_work/eatiano/${query[index]['product_image']}'),
-                                  title: Text(
-                                    query[index]['product_name'],
-                                    style: TextStyle(color: Colors.white),
-                                  )),
+                            itemBuilder: (context, index) => InkWell(
+                              onTap: () => Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                      builder: (_) => ItemDetails(query[index]
+                                              ['product_id']
+                                          .toString()))),
+                              child: Container(
+                                margin: EdgeInsets.only(bottom: height * 0.01),
+                                padding: EdgeInsets.only(left: width * 0.02),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: width * 0.25,
+                                      // height: height * 0.2,
+                                      decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: Colors.green, width: 2),
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: Image.network(
+                                          'https://achievexsolutions.in/current_work/eatiano/${query[index]['product_image']}',
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(width: width * 0.02),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          query[index]['product_name'],
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: tabLayout
+                                                  ? 18
+                                                  : largeLayout
+                                                      ? 16
+                                                      : 14),
+                                        ),
+                                        Text(
+                                          'from ${query[index]['restaurant_name']}',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: tabLayout
+                                                  ? 18
+                                                  : largeLayout
+                                                      ? 16
+                                                      : 14),
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
                             ),
                             // dishProvider['data'][index]['product_name']),
                             // provider[index]['product_name'])),
@@ -389,13 +448,58 @@ class SearchScreenState extends State<SearchScreen> {
                           child: ListView.builder(
                             itemBuilder: (context, index) => Container(
                               margin: EdgeInsets.only(bottom: height * 0.01),
-                              child: ListTile(
-                                leading: Image.network(
-                                    'https://achievexsolutions.in/current_work/eatiano/${queryRestaurant[index]['restaurant_image']}'),
-                                title: Text(
-                                  queryRestaurant[index]['restaurant_name'],
-                                  style: TextStyle(color: Colors.white),
-                                ),
+                              padding: EdgeInsets.only(left: width * 0.02),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width: width * 0.25,
+                                    // height: height * 0.2,
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: Colors.green, width: 2),
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: Image.network(
+                                        'https://achievexsolutions.in/current_work/eatiano/${queryRestaurant[index]['restaurant_image']}',
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: width * 0.02),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        queryRestaurant[index]
+                                            ['restaurant_name'],
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: tabLayout
+                                                ? 18
+                                                : largeLayout
+                                                    ? 16
+                                                    : 14),
+                                      ),
+                                      SizedBox(height: height * 0.01),
+                                      Text(
+                                        queryRestaurant[index]
+                                            ['restaurant_address'],
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: tabLayout
+                                                ? 15
+                                                : largeLayout
+                                                    ? 13
+                                                    : 11),
+                                      ),
+                                    ],
+                                  )
+                                ],
                               ),
                             ),
                             itemCount: queryRestaurant.length,

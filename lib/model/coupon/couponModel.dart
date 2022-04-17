@@ -31,6 +31,7 @@ class Datum {
     required this.couponCode,
     required this.condition,
     required this.discount,
+    required this.couponImage,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -39,6 +40,7 @@ class Datum {
   final String couponCode;
   final String condition;
   final String discount;
+  final String couponImage;
   final DateTime createdAt;
   final DateTime updatedAt;
 
@@ -47,6 +49,7 @@ class Datum {
         couponCode: json["coupon_code"],
         condition: json["condition"],
         discount: json["discount"],
+        couponImage: json["coupon_image"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
       );
@@ -56,6 +59,7 @@ class Datum {
         "coupon_code": couponCode,
         "condition": condition,
         "discount": discount,
+        "coupon_image": couponImage,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
       };

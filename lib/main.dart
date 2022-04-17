@@ -1,6 +1,8 @@
 import 'package:eatiano_app/screens/payment.dart';
 import 'package:eatiano_app/screens/log_in.dart';
 import 'package:eatiano_app/screens/restaurant_screen/reviewScreen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import './screens/sign_in.dart';
@@ -50,8 +52,20 @@ import './model/profile/profileProvider.dart';
 import './model/changeLocation/changeLocation.dart';
 import './model/payment/orderId/orderIdProvider.dart';
 import './model/testAPi/testProvider.dart';
+import './model/itemDetails/itemDetailsProvider.dart';
+import './screens/dishViewAll.dart';
+import './notificationService/localNotificationService.dart';
 
-void main() {
+Future<void> backgroundHandler(RemoteMessage message) async {
+  print(message.data.toString());
+  print(message.notification!.title);
+}
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  FirebaseMessaging.onBackgroundMessage(backgroundHandler);
+  LocalNotificationService.initialize();
   runApp(MyApp());
 }
 
@@ -99,7 +113,8 @@ class MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (context) => ProfileProvider()),
         ChangeNotifierProvider(create: (context) => ChangeLocationProvider()),
         ChangeNotifierProvider(create: (context) => OrderIdProvider()),
-        ChangeNotifierProvider(create: (context) => TestProvider())
+        ChangeNotifierProvider(create: (context) => TestProvider()),
+        ChangeNotifierProvider(create: (context) => ItemDetailsProvider())
       ],
       builder: (context, child) {
         final provider = Provider.of<LocationProvider>(context).loading;
@@ -144,7 +159,7 @@ class MyAppState extends State<MyApp> {
             '/membership-screen': (context) => MembershipScreen(),
             '/moms-genie-screen-view': (context) => MomsGenieViewAll(),
             '/about-us': (context) => AboutUs(),
-            '/item-details': (context) => ItemDetails(),
+            // '/item-details': (context) => ItemDetails(),
             '/cart-screen': (context) => CartScreen(),
             '/cart-screen-detail': (context) => CartDetailScreen(),
             // '/payment-screen': (context) => PaymentScreen(),
@@ -152,7 +167,8 @@ class MyAppState extends State<MyApp> {
             '/device-location': (context) => DeviceLocationPage(),
             '/search-screen': (context) => SearchScreen(),
             '/wishlist-screen': (context) => Wishlist(),
-            '/coupon-screen': (context) => CouponScreen()
+            '/coupon-screen': (context) => CouponScreen(),
+            '/dishview-all': (context) => DishViewAll()
           },
         );
       },

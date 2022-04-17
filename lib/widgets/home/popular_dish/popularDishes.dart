@@ -1,3 +1,4 @@
+import 'package:eatiano_app/screens/itemDetails.dart';
 import 'package:flutter/material.dart';
 import './priceWidget.dart';
 import 'package:provider/provider.dart';
@@ -73,21 +74,25 @@ class PopularDishesState extends State<PopularDishes> {
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) => InkWell(
                 onTap: () {
-                  Navigator.of(context).pushNamed('/item-details', arguments: {
-                    'id': provider["data"][index]["product_id"],
-                    'restaurantName': provider["data"][index]
-                        ["restaurant_name"],
-                    'restaurantId': provider["data"][index]["restaurant_id"],
-                    'name': provider["data"][index]["product_name"],
-                    'description': provider["data"][index]
-                        ["product_description"],
-                    'image': provider["data"][index]["product_image"],
-                    'price': provider["data"][index]["product_selling_price"],
-                    // 'rating': provider["data"][index]["rating"],
-                    'rating': "4.5",
-                    // 'totalRatings': provider["data"][index]["totalRatings"]
-                    'totalRatings': "124",
-                  });
+                  // Navigator.of(context).pushNamed('/item-details', arguments: {
+                  //   'id': provider["data"][index]["product_id"],
+                  //   'restaurantName': provider["data"][index]
+                  //       ["restaurant_name"],
+                  //   'restaurantId': provider["data"][index]["restaurant_id"],
+                  //   'name': provider["data"][index]["product_name"],
+                  //   'description': provider["data"][index]
+                  //       ["product_description"],
+                  //   'image': provider["data"][index]["product_image"],
+                  //   'price': provider["data"][index]["product_selling_price"],
+                  //   // 'rating': provider["data"][index]["rating"],
+                  //   'rating': "4.5",
+                  //   // 'totalRatings': provider["data"][index]["totalRatings"]
+                  //   'totalRatings': "124",
+                  // }
+                  // );
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (_) => ItemDetails(
+                          provider["data"][index]["product_id"].toString())));
                   // print(provider["data"][index]["name"]);
                 },
                 child: Container(

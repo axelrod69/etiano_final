@@ -1,5 +1,6 @@
 // ignore_for_file: sized_box_for_whitespace
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import '../widgets/home/homeContent.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +11,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import '../model/location/location.dart';
 import '../model/popular_dishes/popular_dishes_provider.dart';
+import '../notificationService/localNotificationService.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreenState createState() => HomeScreenState();
@@ -20,12 +22,56 @@ class HomeScreenState extends State<HomeScreen> {
   bool _searchIcon = false;
   final _controller = TextEditingController();
 
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   super.initState();
-  //   Provider.of<PopularDishesProvider>(context).fetchData();
-  // }
+  @override
+  void initState() {
+    // TODO: implement initState
+    // 1. This method call when app in terminated state and you get a notification
+    // when you click on notification app open from terminated state and you can get notification data in this method
+
+    FirebaseMessaging.instance.getInitialMessage().then(
+      (message) {
+        print("FirebaseMessaging.instance.getInitialMessage");
+        if (message != null) {
+          print("New Notification");
+          // if (message.data['_id'] != null) {
+          //   Navigator.of(context).push(
+          //     MaterialPageRoute(
+          //       builder: (context) => DemoScreen(
+          //         id: message.data['_id'],
+          //       ),
+          //     ),
+          //   );
+          // }
+        }
+      },
+    );
+
+    // 2. This method only call when App in forground it mean app must be opened
+    FirebaseMessaging.onMessage.listen(
+      (message) {
+        print("FirebaseMessaging.onMessage.listen");
+        if (message.notification != null) {
+          print(message.notification!.title);
+          print(message.notification!.body);
+          print("message.data11 ${message.data}");
+          LocalNotificationService.createanddisplaynotification(message);
+        }
+      },
+    );
+
+    // 3. This method only call when App in background and not terminated(not closed)
+    FirebaseMessaging.onMessageOpenedApp.listen(
+      (message) {
+        print("FirebaseMessaging.onMessageOpenedApp.listen");
+        if (message.notification != null) {
+          print(message.notification!.title);
+          print(message.notification!.body);
+          print("message.data22 ${message.data['_id']}");
+        }
+      },
+    );
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -312,34 +358,6 @@ class HomeScreenState extends State<HomeScreen> {
               width: MediaQuery.of(context).size.width * 1,
               // color: Colors.red,
               child: HomeContent()),
-          // Positioned(
-          //   right: width * 0.02,
-          //   bottom: height * 0.05,
-          //   child: Container(
-          //     width: width * 0.15,
-          //     height: height * 0.15,
-          //     decoration: const BoxDecoration(
-          //         color: Colors.black, shape: BoxShape.circle),
-          //     child: Image.asset(
-          //       'assets/images/3D Torus Loading.png',
-          //       fit: BoxFit.cover,
-          //     ),
-          //   ),
-          // ),
-          // Positioned(
-          //   right: width * 0.05,
-          //   bottom: height * 0.115,
-          //   child: Padding(
-          //     padding: EdgeInsets.only(left: width * 0.05),
-          //     child: const Text(
-          //       'Hello',
-          //       style: TextStyle(
-          //           color: Colors.white,
-          //           fontWeight: FontWeight.bold,
-          //           fontSize: 15),
-          //     ),
-          //   ),
-          // )
         ],
       ),
     );

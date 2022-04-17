@@ -60,7 +60,7 @@ class PopularRestaurantProvider with ChangeNotifier {
     PopularRestaurants popularRestaurants =
         popularRestaurantsFromJson(response.body);
     _temp = popularRestaurants.toJson();
-    _restaurantsList = _temp['data']['data'] as List;
+    _restaurantsList = _temp['data'] as List;
     print(_restaurantsList);
   }
 

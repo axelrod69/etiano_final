@@ -35,7 +35,7 @@ class PopularDishesProvider with ChangeNotifier {
     // print(response.body);
     PopularDishes popularDishes = popularDishesFromJson(response.body);
     _popularDishes = popularDishes.toJson();
-    // print(_popularDishes);
+    print(_popularDishes);
   }
 
   Future<void> searchFoodData() async {
