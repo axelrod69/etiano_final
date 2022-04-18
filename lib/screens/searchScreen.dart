@@ -28,6 +28,35 @@ class SearchScreenState extends State<SearchScreen> {
   List<dynamic> queryRestaurant = [];
   List<dynamic> restauranData = [];
 
+  final Map<String, dynamic> _restaurants = {
+    "data": [
+      {
+        "id": 1,
+        "name": "Peter Cat",
+        "type": "Continental",
+        "rating": "4.9",
+        "numberOfRatings": "124",
+        "image": "assets/images/davide-cantelli-jpkfc5_d-DI-unsplash.png"
+      },
+      {
+        "id": 2,
+        "name": "Barista",
+        "type": "Coffee",
+        "rating": "4.9",
+        "numberOfRatings": "124",
+        "image": "assets/images/allison-griffith-VCXk_bO97VQ-unsplash.png"
+      },
+      {
+        "id": 3,
+        "name": "Pizza Rush Hour",
+        "type": "Italian",
+        "rating": "4.9",
+        "numberOfRatings": "124",
+        "image": "assets/images/davide-cantelli-jpkfc5_d-DI-unsplash.png"
+      }
+    ]
+  };
+
   @override
   void initState() {
     // TODO: implement initState
@@ -446,60 +475,80 @@ class SearchScreenState extends State<SearchScreen> {
                           width: double.infinity,
                           // color: Colors.blue,
                           child: ListView.builder(
-                            itemBuilder: (context, index) => Container(
-                              margin: EdgeInsets.only(bottom: height * 0.01),
-                              padding: EdgeInsets.only(left: width * 0.02),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    width: width * 0.25,
-                                    // height: height * 0.2,
-                                    decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: Colors.green, width: 2),
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(10),
-                                      child: Image.network(
-                                        'https://achievexsolutions.in/current_work/eatiano/${queryRestaurant[index]['restaurant_image']}',
-                                        fit: BoxFit.cover,
+                            itemBuilder: (context, index) => InkWell(
+                              onTap: () => Navigator.of(context)
+                                  .pushNamed('/restaurants-screen', arguments: {
+                                // 'id': _restaurants["data"][index]["id"],
+                                // 'id': provider[index]['restaurant_id'],
+                                'id': query[index]['restaurant_id'],
+                                // 'name': _restaurants["data"][index]["name"],
+                                'name': query[index]['restaurant_name'],
+                                'type': _restaurants["data"][index]["type"],
+                                // 'rating': _restaurants["data"][index]["rating"],
+                                'rating': query[index]['restaurant_rating'],
+                                // 'image': _restaurants["data"][index]["image"],
+                                'image': query[index]["restaurant_image"],
+                                // 'numberOfRatings': _restaurants["data"][index]
+                                //     ["numberOfRatings"]
+                                'numberOfRatings': query[index]
+                                    ['restaurant_rating_count'],
+                                'distance': query[index]['distance']
+                              }),
+                              child: Container(
+                                margin: EdgeInsets.only(bottom: height * 0.01),
+                                padding: EdgeInsets.only(left: width * 0.02),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: width * 0.25,
+                                      // height: height * 0.2,
+                                      decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: Colors.green, width: 2),
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: Image.network(
+                                          'https://achievexsolutions.in/current_work/eatiano/${queryRestaurant[index]['restaurant_image']}',
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  SizedBox(width: width * 0.02),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        queryRestaurant[index]
-                                            ['restaurant_name'],
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: tabLayout
-                                                ? 18
-                                                : largeLayout
-                                                    ? 16
-                                                    : 14),
-                                      ),
-                                      SizedBox(height: height * 0.01),
-                                      Text(
-                                        queryRestaurant[index]
-                                            ['restaurant_address'],
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: tabLayout
-                                                ? 15
-                                                : largeLayout
-                                                    ? 13
-                                                    : 11),
-                                      ),
-                                    ],
-                                  )
-                                ],
+                                    SizedBox(width: width * 0.02),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          queryRestaurant[index]
+                                              ['restaurant_name'],
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: tabLayout
+                                                  ? 18
+                                                  : largeLayout
+                                                      ? 16
+                                                      : 14),
+                                        ),
+                                        SizedBox(height: height * 0.01),
+                                        Text(
+                                          queryRestaurant[index]
+                                              ['restaurant_address'],
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: tabLayout
+                                                  ? 15
+                                                  : largeLayout
+                                                      ? 13
+                                                      : 11),
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                             itemCount: queryRestaurant.length,

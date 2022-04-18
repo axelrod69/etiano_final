@@ -14,11 +14,12 @@ class ReviewScreen extends StatelessWidget {
     final name = arguments["name"];
     final type = arguments["type"];
     final rating = arguments["rating"];
+    final image = arguments["image"];
 
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     final responsive = height - MediaQuery.of(context).padding.top;
-    final textScale = MediaQuery.of(context).textScaleFactor * 1.2;
+    // final textScale = MediaQuery.of(context).textScaleFactor * 1.2;
 
     final Map<String, dynamic> _reviews = {
       'data': [
@@ -100,8 +101,8 @@ class ReviewScreen extends StatelessWidget {
                     // color: Colors.yellow,
                     child: Container(
                       // height: height * 0.25,
-                      child: Image.asset(
-                        'assets/images/peter-cat-restaurant-park-street-kolkata-restaurants-2dxpzo0.png',
+                      child: Image.network(
+                        'https://achievexsolutions.in/current_work/eatiano/$image',
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -117,7 +118,7 @@ class ReviewScreen extends StatelessWidget {
                         backgroundColor: const Color.fromRGBO(161, 218, 46, 1),
                         child: Text(
                           rating,
-                          textScaleFactor: textScale,
+                          // textScaleFactor: textScale,
                           style: const TextStyle(
                               color: Colors.black, fontSize: 25),
                         ),
@@ -170,7 +171,7 @@ class ReviewScreen extends StatelessWidget {
                           children: [
                             Text(
                               name,
-                              textScaleFactor: textScale,
+                              // textScaleFactor: textScale,
                               style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
@@ -178,7 +179,7 @@ class ReviewScreen extends StatelessWidget {
                             ),
                             Text(
                               type,
-                              textScaleFactor: textScale,
+                              // textScaleFactor: textScale,
                               style: const TextStyle(
                                   color: Colors.grey,
                                   fontWeight: FontWeight.bold,
@@ -213,25 +214,25 @@ class ReviewScreen extends StatelessWidget {
                                   children: [
                                     Text(
                                       '₹',
-                                      textScaleFactor: textScale,
+                                      // textScaleFactor: textScale,
                                       style: const TextStyle(
                                           color: Colors.greenAccent),
                                     ),
                                     Text(
                                       '₹',
-                                      textScaleFactor: textScale,
+                                      // textScaleFactor: textScale,
                                       style: const TextStyle(
                                           color: Colors.greenAccent),
                                     ),
                                     Text(
                                       '₹',
-                                      textScaleFactor: textScale,
+                                      // textScaleFactor: textScale,
                                       style: const TextStyle(
                                           color: Colors.greenAccent),
                                     ),
                                     Text(
                                       '₹',
-                                      textScaleFactor: textScale,
+                                      // textScaleFactor: textScale,
                                       style:
                                           const TextStyle(color: Colors.white),
                                     )
@@ -271,7 +272,7 @@ class ReviewScreen extends StatelessWidget {
                         }),
                     child: Text(
                       'Write A Review',
-                      textScaleFactor: textScale,
+                      // textScaleFactor: textScale,
                       style: const TextStyle(
                           color: Colors.red, fontWeight: FontWeight.bold),
                     )),
@@ -287,7 +288,7 @@ class ReviewScreen extends StatelessWidget {
                     child: Center(
                       child: Text(
                         'Details',
-                        textScaleFactor: textScale,
+                        // textScaleFactor: textScale,
                         style: const TextStyle(
                             color: const Color.fromRGBO(161, 218, 46, 1),
                             fontWeight: FontWeight.bold,
@@ -314,7 +315,7 @@ class ReviewScreen extends StatelessWidget {
                       child: Center(
                         child: Text(
                           'Menu',
-                          textScaleFactor: textScale,
+                          // textScaleFactor: textScale,
                           style: const TextStyle(
                               color: const Color.fromRGBO(161, 218, 46, 1),
                               fontWeight: FontWeight.bold,
@@ -338,7 +339,7 @@ class ReviewScreen extends StatelessWidget {
                     child: Center(
                       child: Text(
                         'Reviews',
-                        textScaleFactor: textScale,
+                        // textScaleFactor: textScale,
                         style: const TextStyle(
                             color: Colors.red,
                             fontWeight: FontWeight.bold,

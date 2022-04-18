@@ -460,7 +460,8 @@ class RestaurantScreen extends StatelessWidget {
                               'id': id,
                               'name': name,
                               'type': type,
-                              'rating': rating
+                              'rating': rating,
+                              'image': image,
                             }),
                             child: Container(
                               height: height * 0.05,
