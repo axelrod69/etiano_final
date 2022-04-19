@@ -6,12 +6,16 @@ import './tasteBudRelief.dart';
 import './bonusOffer.dart';
 import './expertChoice.dart';
 import './restaurants.dart';
+import '../../model/location/location.dart';
+import 'package:provider/provider.dart';
 
 class HomeContent extends StatefulWidget {
   HomeContentState createState() => HomeContentState();
 }
 
 class HomeContentState extends State<HomeContent> {
+  double lat = 0.0;
+  double lng = 0.0;
   // @override
   // void initState() {
   //   // TODO: implement initState
@@ -26,6 +30,9 @@ class HomeContentState extends State<HomeContent> {
     // var textScale = MediaQuery.of(context).textScaleFactor * 1.2;
     bool tabLayout = width > 600;
     bool largeLayout = width > 350 && width < 600;
+    lat = Provider.of<LocationProvider>(context).coorDinates['lat'];
+    lng = Provider.of<LocationProvider>(context).coorDinates['lng'];
+
     // final provider = Provider.of<CouponProvider>(context).coupons;
 
     // print('Length ${provider['data'][0]['coupon_image'].length}');
@@ -225,7 +232,7 @@ class HomeContentState extends State<HomeContent> {
             ],
           ),
           SizedBox(height: height * 0.03),
-          Restaurants(),
+          Restaurants(lat, lng),
           SizedBox(height: height * 0.01),
         ],
       ),

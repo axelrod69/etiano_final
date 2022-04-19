@@ -3,6 +3,11 @@ import 'package:provider/provider.dart';
 import '../../model/popularRestaurants/popularRestaurantProvider.dart';
 
 class Restaurants extends StatefulWidget {
+  final double latitude;
+  final double longitude;
+
+  Restaurants(this.latitude, this.longitude);
+
   RestaurantsState createState() => RestaurantsState();
 }
 
@@ -13,7 +18,7 @@ class RestaurantsState extends State<Restaurants> {
   void initState() {
     // TODO: implement initState
     Provider.of<PopularRestaurantProvider>(context, listen: false)
-        .fetchRestaurants()
+        .fetchRestaurants(widget.latitude, widget.longitude)
         .then((_) {
       setState(() {
         _isLoading = false;
@@ -33,6 +38,7 @@ class RestaurantsState extends State<Restaurants> {
     //     Provider.of<PopularRestaurantProvider>(context).restaurantList;
     final response =
         Provider.of<PopularRestaurantProvider>(context).restaurants;
+
     // final response =
     //     Provider.of<PopularRestaurantProvider>(context).fetchAllRestaurants;
 

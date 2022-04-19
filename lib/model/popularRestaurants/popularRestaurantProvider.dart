@@ -28,16 +28,16 @@ class PopularRestaurantProvider with ChangeNotifier {
     return [..._fetchRestaurants];
   }
 
-  Future<void> fetchRestaurants() async {
+  Future<void> fetchRestaurants(double latitude, double longitude) async {
     // final url = Uri.https('achievexsolutions.in/current_work/eatiano/',
     //     'api/all_restaurant', queryParams);
     // SharedPreferences localStorage = await SharedPreferences.getInstance();
     final url = Uri.parse(baseUrl +
         'api/all_restaurant' +
         '?' +
-        'lat=${queryParams['lat']}' +
+        'lat=${latitude.toString()}' +
         '&' +
-        'lng=${queryParams['lng']}');
+        'lng=${longitude.toString()}');
     final response = await http.get(url);
 
     // print(response.body);
