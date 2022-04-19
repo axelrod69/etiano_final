@@ -21,8 +21,9 @@ class SideDishState extends State<SideDish> {
   bool isLoading = true;
 
   @override
-  void initState() {
+  void didChangeDependencies() {
     // TODO: implement initState
+    print('This is the Category ${widget.category}');
     Provider.of<RestaurantProductProvider>(context, listen: false)
         .productFilter(widget.category)
         .then((_) {
@@ -30,7 +31,7 @@ class SideDishState extends State<SideDish> {
         isLoading = false;
       });
     });
-    super.initState();
+    super.didChangeDependencies();
   }
 
   @override
@@ -109,6 +110,7 @@ class SideDishState extends State<SideDish> {
             : Container(
                 width: width * 1,
                 height: height * 1,
+                // color: Colors.red,
                 padding:
                     EdgeInsets.only(left: width * 0.05, right: width * 0.05),
                 // color: Colors.red,

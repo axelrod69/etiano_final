@@ -9,34 +9,34 @@ class RestaurantList extends StatefulWidget {
 class RestaurantListState extends State<RestaurantList> {
   bool isLoading = true;
 
-  final Map<String, dynamic> _restaurants = {
-    "data": [
-      {
-        "id": 1,
-        "name": "Peter Cat",
-        "type": "Continental",
-        "rating": "4.9",
-        "numberOfRatings": "124",
-        "image": "assets/images/davide-cantelli-jpkfc5_d-DI-unsplash.png"
-      },
-      {
-        "id": 2,
-        "name": "Barista",
-        "type": "Coffee",
-        "rating": "4.9",
-        "numberOfRatings": "124",
-        "image": "assets/images/allison-griffith-VCXk_bO97VQ-unsplash.png"
-      },
-      {
-        "id": 3,
-        "name": "Pizza Rush Hour",
-        "type": "Italian",
-        "rating": "4.9",
-        "numberOfRatings": "124",
-        "image": "assets/images/davide-cantelli-jpkfc5_d-DI-unsplash.png"
-      }
-    ]
-  };
+  // final Map<String, dynamic> _restaurants = {
+  //   "data": [
+  //     {
+  //       "id": 1,
+  //       "name": "Peter Cat",
+  //       "type": "Continental",
+  //       "rating": "4.9",
+  //       "numberOfRatings": "124",
+  //       "image": "assets/images/davide-cantelli-jpkfc5_d-DI-unsplash.png"
+  //     },
+  //     {
+  //       "id": 2,
+  //       "name": "Barista",
+  //       "type": "Coffee",
+  //       "rating": "4.9",
+  //       "numberOfRatings": "124",
+  //       "image": "assets/images/allison-griffith-VCXk_bO97VQ-unsplash.png"
+  //     },
+  //     {
+  //       "id": 3,
+  //       "name": "Pizza Rush Hour",
+  //       "type": "Italian",
+  //       "rating": "4.9",
+  //       "numberOfRatings": "124",
+  //       "image": "assets/images/davide-cantelli-jpkfc5_d-DI-unsplash.png"
+  //     }
+  //   ]
+  // };
 
   @override
   void initState() {
@@ -100,7 +100,8 @@ class RestaurantListState extends State<RestaurantList> {
                     'id': provider['data'][index]['restaurant_id'],
                     // 'name': _restaurants["data"][index]["name"],
                     'name': provider['data'][index]['restaurant_name'],
-                    'type': _restaurants["data"][index]["type"],
+                    'type': 'Continental',
+                    // 'type': _restaurants["data"][index]["type"],
                     // 'rating': _restaurants["data"][index]["rating"],
                     'rating': provider['data'][index]['restaurant_rating'],
                     // 'image': _restaurants["data"][index]["image"],

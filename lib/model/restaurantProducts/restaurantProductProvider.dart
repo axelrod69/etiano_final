@@ -56,7 +56,12 @@ class RestaurantProductProvider with ChangeNotifier {
     _productList = _products.where((element) {
       return element['category_name'].contains(category);
     }).toList();
-    // print('Product List $_productList');
+    print('Product List $_productList');
     notifyListeners();
+  }
+
+  Future<void> clearData() async {
+    _productList.clear();
+    _category.clear();
   }
 }
