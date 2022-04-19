@@ -14,6 +14,12 @@ class LocationProvider with ChangeNotifier {
     return isLoading;
   }
 
+  Map<String, dynamic> _coorDinates = {'lat': 0.0, 'lng': 0.0};
+
+  Map<String, dynamic> get coorDinates {
+    return {..._coorDinates};
+  }
+
   String _address = '';
   String _deliveryAddress = '';
   String? _state = '';
@@ -65,6 +71,8 @@ class LocationProvider with ChangeNotifier {
     _deliveryAddress =
         '${place.street}, ${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';
     _state = place.administrativeArea;
+    _coorDinates['lat'] = position.latitude;
+    _coorDinates['lng'] = position.longitude;
     // setState(() {});
     notifyListeners();
   }
@@ -78,6 +86,8 @@ class LocationProvider with ChangeNotifier {
         '${place.street}, ${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';
     // setState(() {});
     _state = place.administrativeArea;
+    _coorDinates['lat'] = latitude;
+    _coorDinates['lng'] = longitude;
     notifyListeners();
   }
 

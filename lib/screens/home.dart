@@ -21,13 +21,17 @@ class HomeScreenState extends State<HomeScreen> {
   bool _toggleDropDown = false;
   bool _searchIcon = false;
   final _controller = TextEditingController();
+  Map<String, dynamic> _loc = {'lat': 0.0, 'lng': 0.0};
 
   @override
   void initState() {
     // TODO: implement initState
     // 1. This method call when app in terminated state and you get a notification
     // when you click on notification app open from terminated state and you can get notification data in this method
-
+    _loc['lat'] = Provider.of<LocationProvider>(context, listen: false)
+        .coorDinates['lat'];
+    _loc['lng'] = Provider.of<LocationProvider>(context, listen: false)
+        .coorDinates['lng'];
     FirebaseMessaging.instance.getInitialMessage().then(
       (message) {
         print("FirebaseMessaging.instance.getInitialMessage");
@@ -80,6 +84,7 @@ class HomeScreenState extends State<HomeScreen> {
     bool tabLayout = width > 600;
     bool largeLayout = width > 350 && width < 600;
     final provider = Provider.of<CartItemProvider>(context).cartItems;
+    print('Location Provider : $_loc');
 
     print('height $height');
     print('width $width');

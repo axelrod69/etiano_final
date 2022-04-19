@@ -127,10 +127,7 @@ class PageViewScreenState extends State<PageViewScreen> {
                                 // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   InkWell(
-                                    onTap: () async {
-                                      provider.clearData().then(
-                                          (_) => Navigator.of(context).pop());
-                                    },
+                                    onTap: () => Navigator.of(context).pop(),
                                     child: Container(
                                       decoration:
                                           const BoxDecoration(boxShadow: [

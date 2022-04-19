@@ -63,5 +63,6 @@ class RestaurantProductProvider with ChangeNotifier {
   Future<void> clearData() async {
     _productList.clear();
     _category.clear();
+    notifyListeners();
   }
 }
