@@ -35,9 +35,11 @@ class PopularRestaurantProvider with ChangeNotifier {
     final url = Uri.parse(baseUrl +
         'api/all_restaurant' +
         '?' +
-        'lat=${latitude.toString()}' +
-        '&' +
-        'lng=${longitude.toString()}');
+        // 'lat=${latitude.toString()}' +
+        'lat=${queryParams['lat']}'
+            '&' +
+        // 'lng=${longitude.toString()}'
+        'lng=${queryParams['lng']}');
     final response = await http.get(url);
 
     // print(response.body);
@@ -53,8 +55,10 @@ class PopularRestaurantProvider with ChangeNotifier {
     final url = Uri.parse(baseUrl +
         'api/all_restaurant' +
         '?' +
+        // 'lat=${latitude.toString()}' +
         'lat=${queryParams['lat']}' +
         '&' +
+        // 'lng=${longitude.toString()}'
         'lng=${queryParams['lng']}');
     final response = await http.get(url);
     PopularRestaurants popularRestaurants =

@@ -1,3 +1,4 @@
+import 'package:eatiano_app/widgets/home/restaurantViewAll.dart';
 import 'package:flutter/material.dart';
 import './cityList.dart';
 import 'popular_dish/popularDishes.dart';
@@ -201,8 +202,9 @@ class HomeContentState extends State<HomeContent> {
                               ? 20
                               : 15)),
               InkWell(
-                onTap: () =>
-                    Navigator.of(context).pushNamed('/restaurant-list'),
+                onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => RestaurantList(lat, lng))),
+                // Navigator.of(context).pushNamed('/restaurant-list'),
                 child: Container(
                   child: Row(
                     children: [

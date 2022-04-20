@@ -147,7 +147,7 @@ class MyAppState extends State<MyApp> {
             '/profile-screen': (context) => Profile(),
             '/moms-genie-screen': (context) => MomsGenie(),
             '/restaurants-screen': (context) => RestaurantScreen(),
-            '/restaurant-list': (context) => RestaurantList(),
+            // '/restaurant-list': (context) => RestaurantList(),
             // '/page-view-screen': (context) => PageViewScreen(),
             '/review-screen': (context) => ReviewScreen(),
             '/post-review': (context) => PostReview(),

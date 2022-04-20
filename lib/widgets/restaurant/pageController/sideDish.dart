@@ -42,62 +42,6 @@ class SideDishState extends State<SideDish> {
     // int counter = 0;
     final provider =
         Provider.of<RestaurantProductProvider>(context).productList;
-    print('Provider $provider');
-
-    // print('Category ${widget.category}');
-
-    // final Map<String, dynamic> _sideDish = {
-    //   "data": [
-    //     {
-    //       "id": "1",
-    //       "name": "Chelo Kebab",
-    //       "description":
-    //           'Lorem ipsum dolor sit amet, consectetur adipiscing elit,\nsed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    //       "price": "455",
-    //       "image": 'assets/images/pngwing.com(4).png'
-    //     },
-    //     {
-    //       "id": "2",
-    //       "name": "Reshmi Kebab",
-    //       "description":
-    //           'Lorem ipsum dolor sit amet, consectetur adipiscing elit,\nsed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    //       "price": "455",
-    //       "image": 'assets/images/pngwing.com(4).png'
-    //     },
-    //     {
-    //       "id": "3",
-    //       "name": "Chicken Tandoori",
-    //       "description":
-    //           'Lorem ipsum dolor sit amet, consectetur adipiscing elit,\nsed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    //       "price": "455",
-    //       "image": 'assets/images/pngwing.com(4).png'
-    //     },
-    //     {
-    //       "id": "4",
-    //       "name": "Butter Chicken",
-    //       "description":
-    //           'Lorem ipsum dolor sit amet, consectetur adipiscing elit,\nsed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    //       "price": "455",
-    //       "image": 'assets/images/pngwing.com(4).png'
-    //     },
-    //     {
-    //       "id": "5",
-    //       "name": "Palak Paneer",
-    //       "description":
-    //           'Lorem ipsum dolor sit amet, consectetur adipiscing elit,\nsed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    //       "price": "455",
-    //       "image": 'assets/images/pngwing.com(4).png'
-    //     },
-    //     {
-    //       "id": "6",
-    //       "name": "Chicken Bharta",
-    //       "description":
-    //           'Lorem ipsum dolor sit amet, consectetur adipiscing elit,\nsed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    //       "price": "455",
-    //       "image": 'assets/images/pngwing.com(4).png'
-    //     },
-    //   ]
-    // };
 
     // TODO: implement build
     return Scaffold(

@@ -26,7 +26,7 @@ class RestaurantProductProvider with ChangeNotifier {
     return [..._productList];
   }
 
-  Future<void> fetchCategory(String id) async {
+  Future<List<dynamic>> fetchCategory(String id) async {
     final url = Uri.parse(baseUrl + 'api/restaurant_product/$id');
     final response = await http.get(url);
 
@@ -36,20 +36,14 @@ class RestaurantProductProvider with ChangeNotifier {
     _map['data'].forEach((value) => list.add(value['category_name'][0]));
     _map['data'].forEach((value) => _products.add(value));
     // !_category.contains(list[0]) ? _category.add(list[0]) : null;
+    print('List $list');
+    print('Category From Response $_category');
+
     list.forEach((value) {
       !_category.contains(value) ? _category.add(value) : null;
     });
 
-    print('List $list');
-    print('Category From Response $_category');
-
-    // print('Category Response ${response.body}');
-    // _products = _products.where((element) {
-    //   return element['category_name'].contains('efg');
-    // }).toList();
-    // print(_products);
-    // // print(list);
-    // print('Category List $_category');
+    return _category;
   }
 
   Future<void> productFilter(String category) async {

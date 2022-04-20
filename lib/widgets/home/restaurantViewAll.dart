@@ -3,7 +3,12 @@ import 'package:provider/provider.dart';
 import '../../model/popularRestaurants/popularRestaurantProvider.dart';
 
 class RestaurantList extends StatefulWidget {
+  final double lat;
+  final double lng;
+
   RestaurantListState createState() => RestaurantListState();
+
+  RestaurantList(this.lat, this.lng);
 }
 
 class RestaurantListState extends State<RestaurantList> {
@@ -42,7 +47,7 @@ class RestaurantListState extends State<RestaurantList> {
   void initState() {
     // TODO: implement initState
     Provider.of<PopularRestaurantProvider>(context, listen: false)
-        .fetchRestaurants()
+        .fetchRestaurants(widget.lat, widget.lng)
         .then((_) {
       setState(() {
         isLoading = false;
