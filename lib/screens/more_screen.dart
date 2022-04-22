@@ -27,24 +27,23 @@ class MoreScreen extends StatelessWidget {
           NotifyBell(),
         ],
       ),
-      body: Center(
-          child: ListView(children: [
+      body: Column(children: [
         ListItem(
             'assets/images/Path 10146.png', 'Wishlist', '/wishlist-screen'),
         SizedBox(height: height * 0.02),
-        ListItem('assets/images/Path 10146.png', 'Payment Details', ''),
-        SizedBox(height: height * 0.02),
+        // ListItem('assets/images/Path 10146.png', 'Payment Details', ''),
+        // SizedBox(height: height * 0.02),
         ListItem(
             'assets/images/Group 8094.png', 'My Orders', '/my-order-screen'),
         SizedBox(height: height * 0.02),
         ListItem('assets/images/003-bell.png', 'Notifications',
             '/notification-screen'),
-        SizedBox(height: height * 0.02),
-        ListItem('assets/images/Icon material-rate-review.png', 'Inbox',
-            '/inbox-screen'),
-        SizedBox(height: height * 0.02),
-        ListItem('assets/images/Icon awesome-user-friends.png',
-            'Refer A Friend', '/refer-screen'),
+        // SizedBox(height: height * 0.02),
+        // ListItem('assets/images/Icon material-rate-review.png', 'Inbox',
+        //     '/inbox-screen'),
+        // SizedBox(height: height * 0.02),
+        // ListItem('assets/images/Icon awesome-user-friends.png',
+        //     'Refer A Friend', '/refer-screen'),
         SizedBox(height: height * 0.02),
         ListItem('assets/images/Icon material-rate-review.png', 'Reviews',
             '/reviews-screen'),
@@ -54,7 +53,7 @@ class MoreScreen extends StatelessWidget {
         SizedBox(height: height * 0.02),
         ListItem('assets/images/Path 14675.png', 'About Us', '/about-us'),
         SizedBox(height: height * 0.05),
-      ])),
+      ]),
     );
   }
 }

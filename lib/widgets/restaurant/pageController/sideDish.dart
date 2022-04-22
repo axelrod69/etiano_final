@@ -20,8 +20,22 @@ class SideDish extends StatefulWidget {
 class SideDishState extends State<SideDish> {
   bool isLoading = true;
 
+  // @override
+  // void didChangeDependencies() {
+  //   // TODO: implement initState
+  //   print('This is the Category ${widget.category}');
+  //   Provider.of<RestaurantProductProvider>(context, listen: false)
+  //       .productFilter(widget.category)
+  //       .then((_) {
+  //     setState(() {
+  //       isLoading = false;
+  //     });
+  //   });
+  //   super.didChangeDependencies();
+  // }
+
   @override
-  void didChangeDependencies() {
+  void initState() {
     // TODO: implement initState
     print('This is the Category ${widget.category}');
     Provider.of<RestaurantProductProvider>(context, listen: false)
@@ -31,7 +45,7 @@ class SideDishState extends State<SideDish> {
         isLoading = false;
       });
     });
-    super.didChangeDependencies();
+    super.initState();
   }
 
   @override

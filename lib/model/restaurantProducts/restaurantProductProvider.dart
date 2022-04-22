@@ -47,6 +47,7 @@ class RestaurantProductProvider with ChangeNotifier {
   }
 
   Future<void> productFilter(String category) async {
+    _productList.clear();
     _productList = _products.where((element) {
       return element['category_name'].contains(category);
     }).toList();
