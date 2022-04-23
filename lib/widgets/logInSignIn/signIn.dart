@@ -13,6 +13,7 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:random_password_generator/random_password_generator.dart';
 import '../../model/testAPi/testProvider.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 class SignInForm extends StatefulWidget {
   @override
@@ -30,10 +31,17 @@ class SignInFormState extends State<SignInForm> {
   late var phoneNumber;
   final generatedPassword = RandomPasswordGenerator();
   String randomPassword = '';
+  String? fcm;
+
+  Future<void> fcmCodeGenerate() async {
+    fcm = await FirebaseMessaging.instance.getToken();
+    print('FCM Code $fcm');
+  }
 
   @override
   void initState() {
     // TODO: implement initState
+    fcmCodeGenerate();
     Provider.of<TestProvider>(context, listen: false).getTestData();
     super.initState();
   }
@@ -422,8 +430,13 @@ class SignInFormState extends State<SignInForm> {
   }
 
   void _login() async {
-    final data = {'email': inputEmail, 'password': inputPassword};
-    print('Email ${data['email']} Password ${data['password']}');
+    final data = {
+      'email': inputEmail,
+      'password': inputPassword,
+      'fcm_code': fcm
+    };
+    print(
+        'Email ${data['email']} Password ${data['password']} FCM Code ${data['fcm_code']}');
     var res = await Provider.of<Network>(context, listen: false)
         .authData(data, 'api/auth/login');
     final provider =

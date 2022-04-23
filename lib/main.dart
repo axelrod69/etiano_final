@@ -57,7 +57,7 @@ import './screens/dishViewAll.dart';
 import './notificationService/localNotificationService.dart';
 
 Future<void> backgroundHandler(RemoteMessage message) async {
-  print(message.data.toString());
+  print('Firebase Response ${message.data.toString()}');
   print(message.notification!.title);
 }
 
