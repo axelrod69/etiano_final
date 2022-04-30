@@ -6,7 +6,7 @@ class RestaurantProductProvider with ChangeNotifier {
   String baseUrl = 'https://achievexsolutions.in/current_work/eatiano/';
   Map<String, dynamic> _map = {};
   List<dynamic> list = [];
-  final List<dynamic> _products = [];
+  List<dynamic> _products = [];
   List<dynamic> _productList = [];
   final List<dynamic> _category = [];
 
@@ -29,13 +29,19 @@ class RestaurantProductProvider with ChangeNotifier {
   Future<List<dynamic>> fetchCategory(String id) async {
     final url = Uri.parse(baseUrl + 'api/restaurant_product/$id');
     final response = await http.get(url);
-
     Category category = categoryFromJson(response.body);
 
     _map = category.toJson();
     _map['data'].forEach((value) => list.add(value['category_name'][0]));
-    _map['data'].forEach((value) => _products.add(value));
+    // _map['data'].forEach((value) => _products.add(value));
+    _products = _map['data'];
+
+    // for (int index in _map['data']) {
+    //   print(_map['data'][index]['category_name'][0]);
+    // }
+
     // !_category.contains(list[0]) ? _category.add(list[0]) : null;
+    print('Productssssssssssssss $_products');
     print('List $list');
     print('Category From Response $_category');
 
@@ -47,7 +53,7 @@ class RestaurantProductProvider with ChangeNotifier {
   }
 
   Future<void> productFilter(String category) async {
-    _productList.clear();
+    // _productList.clear();
     _productList = _products.where((element) {
       return element['category_name'].contains(category);
     }).toList();
@@ -58,6 +64,8 @@ class RestaurantProductProvider with ChangeNotifier {
   Future<void> clearData() async {
     _productList.clear();
     _category.clear();
+    print('Products Clear $_productList');
+    print('Category Clear $_category');
     notifyListeners();
   }
 }

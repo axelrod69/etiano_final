@@ -84,11 +84,13 @@ class PaymentScreenState extends State<PaymentScreen> {
         var options = {
           // 'key': 'rzp_test_Y6HLJNhTBmNio8',
           // 'key': 'rzp_test_Su2RqsYhHFrQnI',
-          'key': 'rzp_test_pLeJZKECvw4lZM',
+          // 'key': 'rzp_test_pLeJZKECvw4lZM', //Prabhu's
+          'key': 'rzp_test_xGrQHFJAeQY8uD',
           'amount': amount * 100,
           'name': 'Eatiano Order',
-          'order_id': Provider.of<OrderIdProvider>(context, listen: false)
-              .orderId['id'],
+          'order_id': 'order_JOl9lnYqSnpZmR',
+          // 'order_id': Provider.of<OrderIdProvider>(context, listen: false)
+          //     .orderId['id'],
           // 'description': 'Fine T-Shirt',
           'prefill': {
             'contact': Provider.of<ProfileProvider>(context, listen: false)
