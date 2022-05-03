@@ -56,7 +56,7 @@ class PageViewScreenState extends State<PageViewScreen> {
     bool tabLayout = width > 600;
     bool largeLayout = width > 350 && width < 600;
     final textScale = MediaQuery.of(context).textScaleFactor * 1.5;
-    final provider = Provider.of<RestaurantProductProvider>(context);
+    final provider = Provider.of<RestaurantProductProvider>(context).products;
 
     // TODO: implement build
     return Scaffold(
@@ -94,8 +94,11 @@ class PageViewScreenState extends State<PageViewScreen> {
                                               context,
                                               listen: false)
                                           .clearData()
-                                          .then((_) =>
-                                              Navigator.of(context).pop());
+                                          .then((_) {
+                                        Navigator.of(context).pop();
+                                        print(
+                                            'Menu Title Post Deletion $provider');
+                                      });
                                     },
                                     child: Container(
                                       decoration:
@@ -203,6 +206,7 @@ class PageViewScreenState extends State<PageViewScreen> {
                                 width: width * 0.1,
                               ),
                               Text(
+                                // provider[counter]["category_name"][0],
                                 menuTitle[counter],
                                 // menuTitle[pageChanged],
                                 textScaleFactor: textScale,
@@ -291,8 +295,11 @@ class PageViewScreenState extends State<PageViewScreen> {
                   widget.rating,
                   widget.image,
                   widget.numberOfRatings,
-                  menuTitle[counter]),
+                  menuTitle[counter]
+                  // provider[counter]["category_name"][0]
+                  ),
               itemCount: menuTitle.length,
+              // itemCount: provider.length,
             ),
     );
   }

@@ -8,7 +8,7 @@ class RestaurantProductProvider with ChangeNotifier {
   List<dynamic> list = [];
   List<dynamic> _products = [];
   List<dynamic> _productList = [];
-  final List<dynamic> _category = [];
+  List<dynamic> _category = [];
 
   Map<String, dynamic> get map {
     return {..._map};
@@ -32,8 +32,14 @@ class RestaurantProductProvider with ChangeNotifier {
     Category category = categoryFromJson(response.body);
 
     _map = category.toJson();
-    _map['data'].forEach((value) => list.add(value['category_name'][0]));
+    // _map['data'].forEach((value) => list.add(value['category_name'][0]));
+
+    // list = _map['data'].forEach((value) => value['category_name'][0]);
+
     // _map['data'].forEach((value) => _products.add(value));
+
+    list = _map['data'].map((value) => value['category_name'][0]).toList();
+
     _products = _map['data'];
 
     // for (int index in _map['data']) {
@@ -43,11 +49,13 @@ class RestaurantProductProvider with ChangeNotifier {
     // !_category.contains(list[0]) ? _category.add(list[0]) : null;
     print('Productssssssssssssss $_products');
     print('List $list');
-    print('Category From Response $_category');
+    // print('Category From Response $_category');
 
-    list.forEach((value) {
-      !_category.contains(value) ? _category.add(value) : null;
-    });
+    // list.forEach((value) {
+    //   !_category.contains(value) ? _category.add(value) : null;
+    // });
+    _category = list.toSet().toList();
+    print('Category From Responseeeee $_category');
 
     return _category;
   }
@@ -62,7 +70,7 @@ class RestaurantProductProvider with ChangeNotifier {
   }
 
   Future<void> clearData() async {
-    _productList.clear();
+    // _productList.clear();
     _category.clear();
     print('Products Clear $_productList');
     print('Category Clear $_category');
